@@ -1,0 +1,48 @@
+MeetingSchedulerApp/
+├── build/                        # Thư mục chứa các file biên dịch (nếu có)
+├── src/                          # Thư mục chứa mã nguồn chính
+│   ├── client/                   # Mã nguồn cho Client
+│   │   ├── Client.cpp            # Code của client, bao gồm kết nối và gửi nhận dữ liệu
+│   │   └── Client.h              # Khai báo lớp Client
+│   ├── server/                   # Mã nguồn cho Server
+│   │   ├── Server.cpp            # Code của server, bao gồm xử lý kết nối và logic chính
+│   │   ├── Server.h              # Khai báo lớp Server
+│   │   ├── ServerLogs.cpp        # Xử lý log tin nhắn và hoạt động của server
+│   │   └── ServerLogs.h          # Khai báo lớp ServerLogs
+│   ├── models/                   # Thư mục chứa các lớp mô hình
+│   │   ├── User.h                # Lớp User (cơ sở cho Student và Teacher)
+│   │   ├── Student.h             # Lớp Student, kế thừa từ User
+│   │   ├── Teacher.h             # Lớp Teacher, kế thừa từ User
+│   │   ├── Meeting.h             # Lớp Meeting để quản lý thông tin cuộc họp
+│   │   └── Schedule.h            # Lớp Schedule quản lý lịch rảnh của giáo viên
+│   ├── controllers/              # Thư mục chứa các controller quản lý logic ứng dụng
+│   │   ├── UserController.cpp    # Quản lý logic đăng nhập, đăng ký cho User
+│   │   ├── MeetingController.cpp # Quản lý logic đặt lịch, hủy lịch, xem lịch sử họp
+│   │   └── ScheduleController.cpp# Quản lý logic khai báo và sửa đổi lịch rảnh
+│   ├── utils/                    # Các hàm tiện ích chung
+│   │   ├── Utils.h               # Các hàm tiện ích như xử lý thời gian, format dữ liệu
+│   │   └── Logger.h              # Các hàm hỗ trợ ghi log
+│   └── main.cpp                  # Hàm main để chạy chương trình (có thể tách thành main_client.cpp và main_server.cpp)
+├── gui/                          # Thư mục chứa mã GUI nếu có
+│   ├── Qt/                       # Nếu sử dụng Qt cho GUI
+│   │   ├── MainWindow.ui         # File thiết kế giao diện chính
+│   │   ├── MainWindow.cpp        # Logic chính cho giao diện
+│   │   └── MainWindow.h          # Khai báo lớp MainWindow
+│   └── SFML/                     # Nếu sử dụng SFML cho GUI
+├── data/                         # Thư mục chứa dữ liệu
+│   ├── logs/                     # Log của server, các tin nhắn và hoạt động được ghi lại
+│   │   └── server_logs.txt
+│   └── db/                       # File lưu trữ dữ liệu người dùng và lịch họp
+│       ├── users.db              # Thông tin người dùng (username, password, vai trò)
+│       ├── meetings.db           # Thông tin cuộc họp (thời gian, người tham gia, nội dung)
+│       └── schedule.db           # Lịch rảnh của giáo viên
+├── tests/                        # Thư mục chứa các file test
+│   ├── ClientTests.cpp           # Các test case cho client
+│   ├── ServerTests.cpp           # Các test case cho server
+│   └── ModelTests.cpp            # Các test case cho model (User, Meeting, ...)
+├── docs/                         # Tài liệu mô tả dự án
+│   ├── README.md                 # Giới thiệu tổng quan về project
+│   ├── API_Documentation.md      # Tài liệu API nếu có
+│   └── Design_Document.md        # Tài liệu thiết kế hệ thống
+├── Makefile                      # File Makefile để build project
+└── README.md                     # Hướng dẫn sử dụng và giới thiệu project
