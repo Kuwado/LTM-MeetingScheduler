@@ -1,8 +1,9 @@
 #include <iostream>
+#include "models/Student.h"
 
 int main() {
-    std::cout << "ở đâu";
-    std::cout << "fff";
+    Student student;
+    student.registerUser();
     return 0;
 }
 
