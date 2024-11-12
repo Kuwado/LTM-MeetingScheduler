@@ -24,7 +24,7 @@ int main() {
     wc.hInstance = GetModuleHandle(NULL);
     wc.lpszClassName = "BasicWindowClass";
 
-    // Đăng ký lớp cửa sổ
+    // 
     if (!RegisterClass(&wc)) {
         MessageBox(NULL, "Lỗi đăng ký lớp cửa sổ", "Lỗi", MB_OK | MB_ICONERROR);
         return 1;
