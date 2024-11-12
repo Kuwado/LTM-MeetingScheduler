@@ -1,7 +1,23 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": []
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C++ Launch",
+      "type": "cppvsdbg", // Sử dụng cppvsdbg cho Visual Studio Debugger trên Windows
+      "request": "launch",
+      "program": "${fileDirname}\\${fileBasenameNoExtension}.exe", // Đảm bảo rằng tên file thực thi là chính xác
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${fileDirname}",
+      "environment": [],
+      "externalConsole": true, // Chạy trong console bên ngoài
+      "preLaunchTask": "C/C++: g++.exe build active file", // Tên task biên dịch trong tasks.json
+      "logging": {
+        "moduleLoad": false,
+        "trace": false,
+        "traceResponse": false,
+        "engineLogging": false
+      }
+    }
+  ]
 }
