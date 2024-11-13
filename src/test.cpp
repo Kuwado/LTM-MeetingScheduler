@@ -2,11 +2,12 @@
 #include "../data/Database.h"
 
 int main() {
-    Database db("root", "your_password", "ltm");
+    Database db;
 
     if (db.connect()) {
-        // db.executeQuery("SELECT * FROM your_table");
+        db.executeQuery("SELECT username FROM user");
         std::cout << "connected";
     }
+
     return 0;
 }

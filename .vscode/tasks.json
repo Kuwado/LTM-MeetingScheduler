@@ -8,10 +8,8 @@
                 "-fdiagnostics-color=always",
                 "-g",
                 "${file}",
-                "${workspaceFolder}/src/*.cpp",  // Biên dịch tất cả các file trong thư mục src
-                "${workspaceFolder}/data/*.cpp", // Biên dịch tất cả các file trong thư mục data
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}.exe",
+                "${fileDirname}/${fileBasenameNoExtension}",
                 "-lmysqlcppconn"
             ],
             "options": {
