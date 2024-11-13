@@ -1,6 +1,6 @@
 #ifndef STUDENT_H
 #define STUDENT_H
-#include "User.h"
+#include "user/User.h"
 
 #include <iostream>
 #include <fstream> 
@@ -10,9 +10,7 @@ using namespace std;
 class Student : public User {
 public:
 
-    void login() override {
-
-    }
+    Student(const string& uname, const string& pass) : User(uname, pass, "student") {}
 
     void registerUser() override {
         cout << "Nhập tên đăng nhập của học sinh: ";

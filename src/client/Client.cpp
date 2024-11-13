@@ -1,8 +1,9 @@
 #include <iostream>
-#include <winsock2.h>
-#include <string>
-
-#pragma comment(lib, "ws2_32.lib")
+#include <cstring>
+#include <arpa/inet.h>
+#include <unistd.h> // Thư viện cho close() trên Linux
+#include <sys/socket.h>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -12,24 +13,13 @@ public:
     void connectToServer();
     void sendMessage(const string& message);
     void receiveMessage();
-    SOCKET clientSocket;
-
-
-
+    int clientSocket; // Thay SOCKET thành int trên Linux
 };
 
 void Client::init() {
-    WSADATA wsaData;
-    int result = WSAStartup(MAKEWORD(2, 2), &wsaData);
-    if (result != 0) {
-        cerr << "WSAStartup failed with error: " << result << endl;
-        exit(1);
-    }
-
-    clientSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-    if (clientSocket == INVALID_SOCKET) {
-        cerr << "Socket creation failed with error: " << WSAGetLastError() << endl;
-        WSACleanup();
+    clientSocket = socket(AF_INET, SOCK_STREAM, 0);
+    if (clientSocket == -1) {
+        cerr << "Socket creation failed with error" << endl;
         exit(1);
     }
 }
@@ -41,10 +31,9 @@ void Client::connectToServer() {
     serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1"); // Localhost address
 
     int result = connect(clientSocket, (sockaddr*)&serverAddr, sizeof(serverAddr));
-    if (result == SOCKET_ERROR) {
-        cerr << "Connect failed with error: " << WSAGetLastError() << endl;
-        closesocket(clientSocket);
-        WSACleanup();
+    if (result == -1) {
+        cerr << "Connect failed with error" << endl;
+        close(clientSocket);
         exit(1);
     }
     cout << "Connected to the server successfully!" << endl;
@@ -52,10 +41,9 @@ void Client::connectToServer() {
 
 void Client::sendMessage(const string& message) {
     int result = send(clientSocket, message.c_str(), message.size(), 0);
-    if (result == SOCKET_ERROR) {
-        cerr << "Send failed with error: " << WSAGetLastError() << endl;
-        closesocket(clientSocket);
-        WSACleanup();
+    if (result == -1) {
+        cerr << "Send failed with error" << endl;
+        close(clientSocket);
         exit(1);
     }
     cout << "Message sent: " << message << endl;
@@ -63,13 +51,16 @@ void Client::sendMessage(const string& message) {
 
 void Client::receiveMessage() {
     char buffer[1024];
-    int bytesReceived = recv(clientSocket, buffer, sizeof(buffer), 0);
+    int bytesReceived = recv(clientSocket, buffer, sizeof(buffer) - 1, 0);
     if (bytesReceived > 0) {
         buffer[bytesReceived] = '\0'; // Ensure null-termination
         cout << "Received from server: " << buffer << endl;
     }
+    else if (bytesReceived == 0) {
+        cout << "Connection closed by server." << endl;
+    }
     else {
-        cerr << "Receive failed with error: " << WSAGetLastError() << endl;
+        cerr << "Receive failed with error" << endl;
     }
 }
 
@@ -83,14 +74,13 @@ int main() {
     client.connectToServer();
 
     // Send a message to the server
-    client.sendMessage("Hello, Server2!");
+    client.sendMessage("Hello, Serveraijnaisfn!");
 
     // Receive the response from the server
     client.receiveMessage();
 
     // Clean up and close the connection
-    closesocket(client.clientSocket);
-    WSACleanup();
+    close(client.clientSocket);
 
     return 0;
 }

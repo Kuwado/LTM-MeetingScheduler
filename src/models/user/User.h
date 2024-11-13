@@ -7,11 +7,15 @@ class User {
 protected:
     string username;
     string password;
+    string role;
 
 public:
-    virtual void login() = 0;
+    // Constructor
+    User(const string& uname, const string& pass, const string &role);
+    void login();
     virtual void registerUser() = 0;
-    virtual ~User() {}
+    void showProfile();
+
 };
 
 #endif

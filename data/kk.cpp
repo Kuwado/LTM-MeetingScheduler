@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../data/Database.h"
+#include "Database.h"
 
 int main() {
     Database db("root", "your_password", "ltm");
