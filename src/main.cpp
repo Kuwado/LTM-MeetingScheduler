@@ -13,11 +13,12 @@ int main() {
     }
 
     UserController userController;
-    User us1("haha123", "123", "student", "Viet ox", "Hoan oy");
+    User us1("kuwado", "123", "student", "Tanashi", "Kuwado");
 
-    userController.create(us1);
-    // User us2 = userController.getUserByUsername("haha");
+    // userController.create(us1);
+    // User us2 = userController.getUserByUsername("haha123");
     // us2.show();
+    userController.registerAccount();
 
     return 0;
 }

@@ -29,7 +29,7 @@ class Database {
             driver = sql::mysql::get_mysql_driver_instance();
             con = driver->connect(host, user, password);
             con->setSchema(database);
-            cout << "Connected to database successfully!" << endl;
+            // cout << "Connected to database successfully!" << endl;
             return true;
         } catch (sql::SQLException &e) {
             cerr << "Connection error: " << e.what() << endl;

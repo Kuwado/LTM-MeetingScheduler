@@ -5,7 +5,7 @@ using namespace std;
 
 class User {
   protected:
-    int id;
+    int id = 0;
     string username;
     string password;
     string role;
@@ -38,7 +38,8 @@ class User {
         cout << "User: " << username << " ,pass: " << password << " ,role: " << role << " , ho: " << first_name
              << ", ten: " << last_name << endl;
     }
-    void login();
+
+    void login() {}
     void registerUser();
     void showProfile();
 };

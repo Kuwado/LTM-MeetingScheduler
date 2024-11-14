@@ -1,8 +1,8 @@
 #ifndef USERCONTROLLER_H
 #define USERCONTROLLER_H
 
-#include "../../data/Database.h"
 #include "../models/User.h"
+#include "../repository/UserRepository.h"
 #include <cppconn/prepared_statement.h>
 #include <iostream>
 
@@ -10,120 +10,96 @@ using namespace std;
 
 class UserController {
   private:
-    Database db;
+    UserRepository userRepository;
 
   public:
     UserController() {}
 
     User getUserByUsername(const string &username) {
-        User user;
-
-        if (db.connect()) {
-            string query = "SELECT * FROM users WHERE username = ?";
-            try {
-                sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
-                pstmt->setString(1, username);
-                sql::ResultSet *res = pstmt->executeQuery();
-
-                if (res->next()) {
-                    user.setId(res->getInt("id"));
-                    user.setUsername(res->getString("username"));
-                    user.setPassword(res->getString("password"));
-                    user.setRole(res->getString("role"));
-                    user.setFirstName(res->getString("first_name"));
-                    user.setLastName(res->getString("last_name"));
-                }
-                delete res;
-                delete pstmt;
-            } catch (sql::SQLException &e) {
-                cerr << "Loi lay du lieu user: " << e.what() << endl;
-            }
-        } else {
-            cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
+        User user = userRepository.getUserByUsername(username);
+        if (user.getId() == 0) {
+            cout << "Khong co user " << endl;
+            return User();
         }
-
         return user;
     }
 
     User getUserById(const int &id) {
-        User user;
-
-        if (db.connect()) {
-            string query = "SELECT * FROM users WHERE id = ?";
-            try {
-                sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
-                pstmt->setInt(1, id);
-                sql::ResultSet *res = pstmt->executeQuery();
-
-                if (res->next()) {
-                    user.setId(res->getInt("id"));
-                    user.setUsername(res->getString("username"));
-                    user.setPassword(res->getString("password"));
-                    user.setRole(res->getString("role"));
-                    user.setFirstName(res->getString("first_name"));
-                    user.setLastName(res->getString("last_name"));
-                }
-                delete res;
-                delete pstmt;
-            } catch (sql::SQLException &e) {
-                cerr << "Loi lay du lieu user: " << e.what() << endl;
-            }
-        } else {
-            cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
-        }
+        User user = userRepository.getUserById(id);
         return user;
     }
 
-    bool checkUsernameExists(const string &username) {
-        if (db.connect()) {
-            string query = "SELECT COUNT(*) FROM users WHERE username = ?";
-            try {
-                sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
-                pstmt->setString(1, username);
+    void create(const User &user) { userRepository.create(user); }
 
-                sql::ResultSet *res = pstmt->executeQuery();
-                if (res->next() && res->getInt(1) > 0) {
-                    delete res;
-                    delete pstmt;
-                    return true;
-                }
+    void login() {
+        string username, password;
+        bool loggedIn = false;
 
-                delete res;
-                delete pstmt;
-            } catch (sql::SQLException &e) {
-                cerr << "Lỗi khi kiểm tra username: " << e.what() << endl;
+        while (!loggedIn) {
+            cout << "Nhập tên đăng nhập: ";
+            getline(cin, username);
+            cout << "Nhập mật khẩu: ";
+            getline(cin, password);
+            cout << "--------------------------------------------" << endl;
+
+            User user = userRepository.getUserByUsername(username);
+            if (user.getId() == 0) {
+                cout << "Tên đăng nhập không chính xác!" << endl;
+            } else if (user.getPassword() != password) {
+                cout << "Mật khẩu không chính xác!" << endl;
+            } else {
+                cout << "Xin chào, " << username << "!!!" << endl;
+                loggedIn = true;
             }
-        } else {
-            cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
-
-        return false; // Username không tồn tại
     }
 
-    void create(const User &user) {
-        if (db.connect()) {
-            if (checkUsernameExists(user.getUsername())) {
-                cout << "Ten dang nhap da ton tai!" << endl;
-                return;
-            }
-            string query = "INSERT INTO users (username, password, role, first_name, last_name) VALUES (?, ?, ?, ?, ?)";
-            try {
-                sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
-                pstmt->setString(1, user.getUsername());
-                pstmt->setString(2, user.getPassword());
-                pstmt->setString(3, user.getRole());
-                pstmt->setString(4, user.getFirstName());
-                pstmt->setString(5, user.getLastName());
+    void registerAccount() {
+        bool choiceChoosen = false, usernameExist = true;
+        int choice;
+        string username, password, role, first_name, last_name;
+        cout << "------------------------Dang ky--------------------------" << endl;
+        while (!choiceChoosen) {
+            cout << "1. Hoc sinh\n" << "2. Giao vien\n" << "Ban la ai (1 hoac 2): ";
+            cin >> choice;
+            cin.ignore();
 
-                pstmt->executeUpdate();
-                cout << "User: " << user.getUsername() << " da duoc tao thanh cong" << endl;
-                delete pstmt;
-            } catch (sql::SQLException &e) {
-                cerr << "Loi them user: " << e.what() << endl;
+            switch (choice) {
+            case 1:
+                role = "student";
+                choiceChoosen = true;
+                cout << "Ban la hoc sinh" << endl;
+                break;
+            case 2:
+                role = "teacher";
+                choiceChoosen = true;
+                cout << "Ban la giao vien" << endl;
+                break;
+            default:
+                cout << "Lua chon khong phu hop (1 hoac 2)" << endl;
+                break;
             }
-        } else {
-            cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
+
+        while (usernameExist) {
+            cout << "Nhập tên đăng nhập: ";
+            getline(cin, username);
+            if (userRepository.checkUsernameExists(username)) {
+                cout << "Ten dang nhap da ton tai" << endl;
+            } else {
+                usernameExist = false;
+            }
+        }
+
+        cout << "Nhập mật khẩu: ";
+        getline(cin, password);
+        cout << "Nhập ho: ";
+        getline(cin, first_name);
+        cout << "Nhập ten: ";
+        getline(cin, last_name);
+        User user(username, password, role, first_name, last_name);
+        userRepository.create(user);
+        cout << "--------------------------------------------" << endl;
     }
 };
 
