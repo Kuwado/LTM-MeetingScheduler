@@ -6,7 +6,7 @@
 #include "models/Timeslot.h"
 #include "repository/TimeslotRepository.h"
 #include <iostream>
-
+#include <vector>
 using namespace std;
 
 int main() {
@@ -22,7 +22,12 @@ int main() {
     Timeslot ts1("03:30", "06:00", "2024-11-20", "group", 7);
     // tr.create(ts1);
     TeacherController tc;
-    tc.declareTimeslot(6);
+    // tc.declareTimeslot(6);
+    vector<Timeslot> tisls = tr.getTimeslotsByTeacherId(6);
+
+    for (int i = 0; i < tisls.size(); i++) {
+        cout << tisls[i].getStart() << endl;
+    }
 
     // userController.create(us1);
     // User us2 = userController.getUserByUsername("haha123");

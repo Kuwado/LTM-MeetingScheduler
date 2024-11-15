@@ -33,7 +33,7 @@ class Timeslot {
     void setEnd(const string &newEnd) { end = newEnd; }
     void setDate(const string &newDate) { date = newDate; }
     void setType(const string &newType) { type = newType; }
-    void getTeacherId(const int &newTeacherId) { teacher_id = newTeacherId; }
+    void setTeacherId(const int &newTeacherId) { teacher_id = newTeacherId; }
 };
 
 #endif

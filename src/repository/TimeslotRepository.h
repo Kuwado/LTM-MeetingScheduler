@@ -7,6 +7,7 @@
 #include "UserRepository.h"
 #include <cppconn/prepared_statement.h>
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -48,6 +49,38 @@ class TimeslotRepository {
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
+    }
+
+    vector<Timeslot> getTimeslotsByTeacherId(const int &teacher_id) {
+        vector<Timeslot> timeslots;
+
+        if (db.connect()) {
+            string query = "SELECT * FROM timeslots WHERE teacher_id = ?";
+            try {
+                sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
+                pstmt->setInt(1, teacher_id);
+                sql::ResultSet *res = pstmt->executeQuery();
+
+                while (res->next()) {
+                    Timeslot ts;
+                    ts.setId(res->getInt("id"));
+                    ts.setStart(res->getString("start"));
+                    ts.setEnd(res->getString("end"));
+                    ts.setDate(res->getString("date"));
+                    ts.setType(res->getString("type"));
+                    ts.setTeacherId(res->getInt("teacher_id"));
+                    timeslots.push_back(ts);
+                }
+                delete res;
+                delete pstmt;
+            } catch (sql::SQLException &e) {
+                std::cerr << "Lỗi khi lấy dữ liệu từ timeslots: " << e.what() << std::endl;
+            }
+        } else {
+            cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
+        }
+
+        return timeslots;
     }
 };
 
