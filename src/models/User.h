@@ -27,7 +27,7 @@ class User {
     string getLastName() const { return last_name; }
 
     // Setters
-    void setId(int newId) { id = newId; }
+    void setId(const int &newId) { id = newId; }
     void setUsername(const string &uname) { username = uname; }
     void setPassword(const string &pass) { password = pass; }
     void setRole(const string &r) { role = r; }
