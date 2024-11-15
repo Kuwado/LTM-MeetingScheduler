@@ -17,7 +17,7 @@ class TeacherController {
   public:
     TeacherController() {}
 
-    void declareTimeslot(const int &teacher_id) {
+    void declareTimeslots(const int &teacher_id) {
         string startH, startM, endH, endM, day, month, year, type;
         bool done = false, typechosen = false;
         cout << "------------------------Khai bao thoi gian ranh--------------------------" << endl;
@@ -110,6 +110,8 @@ class TeacherController {
             done = true;
         }
     }
+
+    void viewTimeslots(const int &teacher_id) {}
 };
 
 #endif

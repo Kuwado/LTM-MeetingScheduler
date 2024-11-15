@@ -1,6 +1,7 @@
 #ifndef DATABASE_H
 #define DATABASE_H
 
+#include "../environment.h"
 #include <cppconn/resultset.h>
 #include <cppconn/statement.h>
 #include <mysql_connection.h>
@@ -11,11 +12,12 @@ using namespace std;
 
 class Database {
   private:
+    Environment env;
     sql::mysql::MySQL_Driver *driver;
     sql::Connection *con;
-    string host = "tcp://127.0.0.1:3306";
-    string user = "root";
-    string password = "your_password";
+    string host = env.getHost();
+    string user = env.getUser();
+    string password = env.getPassword();
     string database = "ltm";
 
   public:
