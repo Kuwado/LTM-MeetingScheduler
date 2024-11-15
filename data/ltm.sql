@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 14, 2024 at 11:15 PM
+-- Generation Time: Nov 15, 2024 at 07:17 PM
 -- Server version: 8.0.40-0ubuntu0.22.04.1
 -- PHP Version: 8.1.2-1ubuntu2.19
 
@@ -30,6 +30,30 @@ SET time_zone = "+00:00";
 CREATE TABLE `meetings` (
   `id` bigint UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `timeslots`
+--
+
+CREATE TABLE `timeslots` (
+  `id` bigint UNSIGNED NOT NULL,
+  `start` time NOT NULL,
+  `end` time NOT NULL,
+  `date` date NOT NULL,
+  `type` enum('personal','group','both') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'personal',
+  `teacher_id` bigint UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `timeslots`
+--
+
+INSERT INTO `timeslots` (`id`, `start`, `end`, `date`, `type`, `teacher_id`) VALUES
+(1, '05:00:00', '06:00:00', '2024-11-15', 'group', 6),
+(2, '03:30:00', '06:00:00', '2024-11-20', 'group', 6),
+(3, '05:12:00', '08:23:00', '2024-12-05', 'both', 6);
 
 -- --------------------------------------------------------
 
@@ -69,6 +93,14 @@ ALTER TABLE `meetings`
   ADD UNIQUE KEY `id` (`id`);
 
 --
+-- Indexes for table `timeslots`
+--
+ALTER TABLE `timeslots`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`),
+  ADD KEY `fk_teacher_id_users` (`teacher_id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -86,10 +118,26 @@ ALTER TABLE `meetings`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `timeslots`
+--
+ALTER TABLE `timeslots`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `timeslots`
+--
+ALTER TABLE `timeslots`
+  ADD CONSTRAINT `fk_teacher_id_users` FOREIGN KEY (`teacher_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
