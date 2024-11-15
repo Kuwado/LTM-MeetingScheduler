@@ -1,5 +1,7 @@
 #include "../data/Database.h"
+#include "../src/controllers/TeacherController.h"
 #include "../src/controllers/UserController.h"
+
 #include "../src/models/User.h"
 #include "models/Timeslot.h"
 #include "repository/TimeslotRepository.h"
@@ -17,8 +19,10 @@ int main() {
     UserController userController;
     User us1("kuwado", "123", "student", "Tanashi", "Kuwado");
     TimeslotRepository tr;
-    Timeslot ts1("03:30", "06:00", "2024-11-20", "group", 6);
-    tr.create(ts1);
+    Timeslot ts1("03:30", "06:00", "2024-11-20", "group", 7);
+    // tr.create(ts1);
+    TeacherController tc;
+    tc.declareTimeslot(6);
 
     // userController.create(us1);
     // User us2 = userController.getUserByUsername("haha123");

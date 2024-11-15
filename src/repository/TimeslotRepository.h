@@ -3,6 +3,8 @@
 
 #include "../../data/Database.h"
 #include "../models/Timeslot.h"
+#include "../models/User.h"
+#include "UserRepository.h"
 #include <cppconn/prepared_statement.h>
 #include <iostream>
 
@@ -11,16 +13,22 @@ using namespace std;
 class TimeslotRepository {
   private:
     Database db;
+    UserRepository userRepo;
 
   public:
     TimeslotRepository() {}
 
     void create(const Timeslot &timeslot) {
         if (db.connect()) {
-            // if (checkUsernameExists(user.getUsername())) {
-            //     cout << "Ten dang nhap da ton tai!" << endl;
-            //     return;
-            // }
+            User user = userRepo.getUserById(timeslot.getTeacherId());
+            if (user.getId() == 0) {
+                cout << "User khong ton tai!" << endl;
+                return;
+            } else if (user.getRole() != "teacher") {
+                cout << "User khong phai giao vien!" << endl;
+                return;
+            }
+
             string query = "INSERT INTO timeslots (start, end, date, type, teacher_id) VALUES (?, ?, ?, ?, ?)";
             try {
                 sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
