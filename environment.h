@@ -7,7 +7,7 @@ class Environment {
   private:
     string host = "tcp://127.0.0.1:3306";
     string user = "root";
-    string password = "your_password";
+    string password = "admin";
 
   public:
     // Constructor
