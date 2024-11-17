@@ -7,6 +7,7 @@
 #include "UserRepository.h"
 #include <cppconn/prepared_statement.h>
 #include <iostream>
+#include <map>
 #include <vector>
 
 using namespace std;
@@ -51,8 +52,9 @@ class TimeslotRepository {
         }
     }
 
-    vector<Timeslot> getTimeslotsByTeacherId(const int &teacher_id) {
-        vector<Timeslot> timeslots;
+    map<string, vector<Timeslot>> getTimeslotsByTeacherId(const int &teacher_id) {
+        map<string, vector<Timeslot>> timeslotsByDate;
+        Database db;
 
         if (db.connect()) {
             string query = "SELECT * FROM timeslots WHERE teacher_id = ?";
@@ -69,8 +71,11 @@ class TimeslotRepository {
                     ts.setDate(res->getString("date"));
                     ts.setType(res->getString("type"));
                     ts.setTeacherId(res->getInt("teacher_id"));
-                    timeslots.push_back(ts);
+
+                    string date = ts.getDate();
+                    timeslotsByDate[date].push_back(ts);
                 }
+
                 delete res;
                 delete pstmt;
             } catch (sql::SQLException &e) {
@@ -80,7 +85,13 @@ class TimeslotRepository {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
 
-        return timeslots;
+        // Sắp xếp lại Timeslots trong mỗi ngày theo giờ tăng dần
+        for (auto &entry : timeslotsByDate) {
+            sort(entry.second.begin(), entry.second.end(),
+                 [](const Timeslot &a, const Timeslot &b) { return a.getStart() < b.getStart(); });
+        }
+
+        return timeslotsByDate;
     }
 };
 

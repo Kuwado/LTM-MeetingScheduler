@@ -2,7 +2,7 @@
 #define REPORTREPOSITTORY_HH
 
 #include "../../data/Database.h"
-#include "../models/Timeslot.h"
+#include "../models/Report.h"
 #include "../models/User.h"
 #include "UserRepository.h"
 #include <cppconn/prepared_statement.h>
@@ -11,13 +11,13 @@
 
 using namespace std;
 
-class TimeslotRepository {
+class ReportRepository {
   private:
     Database db;
     UserRepository userRepo;
 
   public:
-    TimeslotRepository() {}
+    ReportRepository() {}
 
     void create(const Timeslot &timeslot) {
         if (db.connect()) {
@@ -30,7 +30,8 @@ class TimeslotRepository {
                 return;
             }
 
-            string query = "INSERT INTO timeslots (start, end, date, type, teacher_id) VALUES (?, ?, ?, ?, ?)";
+            string query =
+                "INSERT INTO timeslots (teacher_id, status, type, start, end, date ) VALUES (?, ?, ?, ?, ?, ?)";
             try {
                 sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
                 pstmt->setString(1, timeslot.getStart());
