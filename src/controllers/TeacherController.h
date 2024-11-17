@@ -117,29 +117,101 @@ class TeacherController {
 
     void viewTimeslots(const int &teacher_id) {
         map<string, vector<Timeslot>> timeslots = timeslotRepository.getTimeslotsByTeacherId(teacher_id);
+        map<int, Timeslot> editTimeslots; // index - timeslot
+        int index = 0;
+        int choice;
+        bool typechosen = false;
 
         if (timeslots.empty()) {
             cout << "Ban chua khai bao thoi gian ranh" << endl;
             return;
         }
 
+        cout << "------------------Thoi gian ranh cua ban-------------------" << endl;
         for (const auto &ts : timeslots) {
             cout << "Ngay: " << ts.first << endl;
             vector<Timeslot> tss = ts.second;
             for (int i = 0; i < tss.size(); i++) {
-                cout << "Tu: " << tss[i].getStart() << " - Den: " << tss[i].getEnd() << endl;
+                index++;
+                editTimeslots[index] = tss[i];
+                cout << index << ". Tu: " << tss[i].getStart() << " - Den: " << tss[i].getEnd() << "( "
+                     << tss[i].getType() << " )" << endl;
             }
         }
-        std::vector<int> dateTime = utils.getCurrentDateTimeVector();
 
-        // In ra kết quả
-        std::cout << "Current Date and Time: " << dateTime[0] << "-" // Năm
-                  << dateTime[1] << "-"                              // Tháng
-                  << dateTime[2] << " "                              // Ngày
-                  << dateTime[3] << ":"                              // Giờ
-                  << dateTime[4] << std::endl;                       // Phút
+        cout << "-----------" << endl;
+        cout << "Ban co muon sua doi khong? Nhap so dong can sua(hoac 0 de thoat): ";
+        cin >> choice;
+        cin.ignore();
+        if (choice > 1 && choice <= index) {
+            int id = editTimeslots[choice].getId();
+            string type = editTimeslots[choice].getType();
+            string startH, startM, endH, endM;
 
-        for (int i = 0; i < timeslots.size(); i++) {
+            cout << "Nhập thoi gian bat dau:" << endl;
+            while (!utils.checkHour(startH)) {
+                cout << "- Gio: ";
+                getline(cin, startH);
+                if (!utils.checkHour(startH)) {
+                    cout << "Gio khong hop le!" << endl;
+                }
+            }
+            while (!utils.checkMinute(startM)) {
+                cout << "- Phut: ";
+                getline(cin, startM);
+                if (!utils.checkMinute(startM)) {
+                    cout << "Phut khong hop le!" << endl;
+                }
+            }
+
+            cout << "Nhập thoi gian ket thuc:" << endl;
+            while (!utils.checkHour(endH)) {
+                cout << "- Gio: ";
+                getline(cin, endH);
+                if (!utils.checkHour(endH)) {
+                    cout << "Gio khong hop le!" << endl;
+                }
+            }
+            while (!utils.checkMinute(endM)) {
+                cout << "- Phut: ";
+                getline(cin, endM);
+                if (!utils.checkMinute(endM)) {
+                    cout << "Phut khong hop le!" << endl;
+                }
+            }
+
+            while (!typechosen) {
+                int choice = 0;
+                cout << "Loai cuoc hen: 1. Ca nhan; 2. Nhom; 3. Ca hai; 0. Khong doi" << endl;
+                cin >> choice;
+                cin.ignore();
+                switch (choice) {
+                case 0:
+                    typechosen = true;
+                    break;
+                case 1:
+                    type = "personal";
+                    typechosen = true;
+                    break;
+                case 2:
+                    type = "group";
+                    typechosen = true;
+                    break;
+                case 3:
+                    type = "both";
+                    typechosen = true;
+                    break;
+                default:
+                    cout << "Lua chon khong hop le" << endl;
+                    break;
+                }
+            }
+
+            string start = startH + ":" + startM;
+            string end = endH + ":" + endM;
+            timeslotRepository.updateTimeAndType(id, start, end, type);
+        } else {
+            return;
         }
     }
 };
