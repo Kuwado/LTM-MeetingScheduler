@@ -38,10 +38,6 @@ class User {
         cout << "User: " << username << " ,pass: " << password << " ,role: " << role << " , ho: " << first_name
              << ", ten: " << last_name << endl;
     }
-
-    void login() {}
-    void registerUser();
-    void showProfile();
 };
 
 #endif

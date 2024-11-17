@@ -1,24 +1,23 @@
-#ifndef TIMESLOTREPOSITORY_H
-#define TIMESLOTREPOSITORY_H
+#ifndef REPORTREPOSITTORY_HH
+#define REPORTREPOSITTORY_HH
 
 #include "../../data/Database.h"
-#include "../models/Timeslot.h"
+#include "../models/Report.h"
 #include "../models/User.h"
 #include "UserRepository.h"
 #include <cppconn/prepared_statement.h>
 #include <iostream>
-#include <map>
 #include <vector>
 
 using namespace std;
 
-class TimeslotRepository {
+class ReportRepository {
   private:
     Database db;
     UserRepository userRepo;
 
   public:
-    TimeslotRepository() {}
+    ReportRepository() {}
 
     void create(const Timeslot &timeslot) {
         if (db.connect()) {
@@ -31,7 +30,8 @@ class TimeslotRepository {
                 return;
             }
 
-            string query = "INSERT INTO timeslots (start, end, date, type, teacher_id) VALUES (?, ?, ?, ?, ?)";
+            string query =
+                "INSERT INTO timeslots (teacher_id, status, type, start, end, date ) VALUES (?, ?, ?, ?, ?, ?)";
             try {
                 sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
                 pstmt->setString(1, timeslot.getStart());
@@ -52,9 +52,8 @@ class TimeslotRepository {
         }
     }
 
-    map<string, vector<Timeslot>> getTimeslotsByTeacherId(const int &teacher_id) {
-        map<string, vector<Timeslot>> timeslotsByDate;
-        Database db;
+    vector<Timeslot> getTimeslotsByTeacherId(const int &teacher_id) {
+        vector<Timeslot> timeslots;
 
         if (db.connect()) {
             string query = "SELECT * FROM timeslots WHERE teacher_id = ?";
@@ -71,11 +70,8 @@ class TimeslotRepository {
                     ts.setDate(res->getString("date"));
                     ts.setType(res->getString("type"));
                     ts.setTeacherId(res->getInt("teacher_id"));
-
-                    string date = ts.getDate();
-                    timeslotsByDate[date].push_back(ts);
+                    timeslots.push_back(ts);
                 }
-
                 delete res;
                 delete pstmt;
             } catch (sql::SQLException &e) {
@@ -85,13 +81,7 @@ class TimeslotRepository {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
 
-        // Sắp xếp lại Timeslots trong mỗi ngày theo giờ tăng dần
-        for (auto &entry : timeslotsByDate) {
-            sort(entry.second.begin(), entry.second.end(),
-                 [](const Timeslot &a, const Timeslot &b) { return a.getStart() < b.getStart(); });
-        }
-
-        return timeslotsByDate;
+        return timeslots;
     }
 };
 

@@ -1,8 +1,11 @@
 #ifndef UTILS_H
 #define UTILS_H
 #include <cctype>
+#include <ctime>
 #include <iostream>
+#include <sstream>
 #include <string>
+#include <vector>
 using namespace std;
 
 class Utils {
@@ -10,6 +13,35 @@ class Utils {
   public:
     // Constructor
     Utils() {};
+
+    vector<int> getCurrentDateTimeVector() {
+        time_t t = time(nullptr);
+        tm *now = localtime(&t);
+        vector<int> dateTime = {now->tm_year + 1900, now->tm_mon + 1, now->tm_mday, now->tm_hour, now->tm_min};
+        return dateTime;
+    }
+
+    vector<int> getDateVector(const string &stringDate) {
+        vector<int> dateVector;
+        istringstream ss(stringDate);
+        string token;
+
+        while (getline(ss, token, '-')) {
+            dateVector.push_back(stoi(token));
+        }
+        return dateVector;
+    }
+
+    vector<int> getTimeVector(const string &stringTime) {
+        vector<int> timeVector;
+        istringstream ss(stringTime);
+        string token;
+
+        while (getline(ss, token, ':')) {
+            timeVector.push_back(stoi(token));
+        }
+        return timeVector;
+    }
 
     bool checkHour(const string &hour) {
         if (hour.length() != 2)

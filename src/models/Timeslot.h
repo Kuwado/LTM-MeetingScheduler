@@ -34,6 +34,11 @@ class Timeslot {
     void setDate(const string &newDate) { date = newDate; }
     void setType(const string &newType) { type = newType; }
     void setTeacherId(const int &newTeacherId) { teacher_id = newTeacherId; }
+
+    void show() {
+        cout << "TimeSlot, Id: " << id << " ,start: " << start << " ,end: " << end << " ,date: " << date
+             << " ,teacher_id: " << teacher_id << endl;
+    }
 };
 
 #endif

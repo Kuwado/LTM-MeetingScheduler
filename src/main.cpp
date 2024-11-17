@@ -23,16 +23,18 @@ int main() {
     // tr.create(ts1);
     TeacherController tc;
     // tc.declareTimeslot(6);
-    vector<Timeslot> tisls = tr.getTimeslotsByTeacherId(6);
+    // vector<Timeslot> tisls = tr.getTimeslotsByTeacherId(6);
 
-    for (int i = 0; i < tisls.size(); i++) {
-        cout << tisls[i].getStart() << endl;
-    }
+    // for (int i = 0; i < tisls.size(); i++) {
+    //     cout << tisls[i].getStart() << endl;
+    // }
 
     // userController.create(us1);
     // User us2 = userController.getUserByUsername("haha123");
     // us2.show();
     // userController.registerAccount();
+
+    tc.viewTimeslots(6);
 
     return 0;
 }

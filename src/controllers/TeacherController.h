@@ -1,11 +1,15 @@
 #ifndef TEACHERCONTROLLER_H
 #define TEACHERCONTROLLER_H
 
+#include "../models/Timeslot.h"
 #include "../models/User.h"
+
 #include "../repository/TimeslotRepository.h"
 #include "../utils/Utils.h"
 #include <cppconn/prepared_statement.h>
 #include <iostream>
+#include <map>
+#include <vector>
 
 using namespace std;
 
@@ -111,7 +115,33 @@ class TeacherController {
         }
     }
 
-    void viewTimeslots(const int &teacher_id) {}
+    void viewTimeslots(const int &teacher_id) {
+        map<string, vector<Timeslot>> timeslots = timeslotRepository.getTimeslotsByTeacherId(teacher_id);
+
+        if (timeslots.empty()) {
+            cout << "Ban chua khai bao thoi gian ranh" << endl;
+            return;
+        }
+
+        for (const auto &ts : timeslots) {
+            cout << "Ngay: " << ts.first << endl;
+            vector<Timeslot> tss = ts.second;
+            for (int i = 0; i < tss.size(); i++) {
+                cout << "Tu: " << tss[i].getStart() << " - Den: " << tss[i].getEnd() << endl;
+            }
+        }
+        std::vector<int> dateTime = utils.getCurrentDateTimeVector();
+
+        // In ra kết quả
+        std::cout << "Current Date and Time: " << dateTime[0] << "-" // Năm
+                  << dateTime[1] << "-"                              // Tháng
+                  << dateTime[2] << " "                              // Ngày
+                  << dateTime[3] << ":"                              // Giờ
+                  << dateTime[4] << std::endl;                       // Phút
+
+        for (int i = 0; i < timeslots.size(); i++) {
+        }
+    }
 };
 
 #endif
