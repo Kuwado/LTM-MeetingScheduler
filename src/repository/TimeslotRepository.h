@@ -52,6 +52,31 @@ class TimeslotRepository {
         }
     }
 
+    void updateTimeAndType(const int &id, const string &start, const string &end, const string &type) {
+        if (db.connect()) {
+            string query = "UPDATE timeslots SET start = ?, end = ?, type = ? WHERE id = ?";
+            try {
+                sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
+                pstmt->setString(1, start);
+                pstmt->setString(2, end);
+                pstmt->setString(3, type);
+                pstmt->setInt(4, id);
+
+                int rowsUpdated = pstmt->executeUpdate();
+                if (rowsUpdated > 0) {
+                    cout << "Cập nhật thành công timeslot với id: " << id << endl;
+                } else {
+                    cout << "Không tìm thấy timeslot với id: " << id << endl;
+                }
+                delete pstmt;
+            } catch (sql::SQLException &e) {
+                cerr << "Lỗi khi cập nhật thời gian: " << e.what() << endl;
+            }
+        } else {
+            cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
+        }
+    }
+
     map<string, vector<Timeslot>> getTimeslotsByTeacherId(const int &teacher_id) {
         map<string, vector<Timeslot>> timeslotsByDate;
         Database db;
