@@ -5,3 +5,47 @@ Hello, Hoan!
 Hello, Hoan!
 Hello, Hoan!
 Received: Hello, Serveraijnaisfn!
+Received: LOGIN
+Server response: 0|Dang nhap thanh cong
+Received: LOGIN
+Server response: 0|Dang nhap thanh cong
+Received: LOGIN|hoan|22
+Server response: 0|Dang nhap thanh cong
+Received: LOGIN|hoan|123
+Server response: 1Tên đăng nhập không chính xác!
+Received: LOGIN|haha|1234
+Server response: 2Mật khẩu không chính xác!
+Received: LOGIN|haha|123
+Server response: 0Dang nhap thanh cong
+Received: LOGIN|haha|1234
+Server response: 2Mật khẩu không chính xác!
+Received: LOGIN|haha|123
+Server response: 0Dang nhap thanh cong
+Received: LOGIN|haha|1234
+Server response: 2|Mật khẩu không chính xác!
+Received: LOGIN|haha|123
+Server response: 0|Dang nhap thanh cong
+Received: LOGIN|haha|123
+Server response: 0|Dang nhap thanh cong
+Received: LOGIN|haha|123
+Server response: 0|Dang nhap thanh cong
+Received: LOGIN|haha|123
+Server response: 0|Dang nhap thanh cong
+Received: LOGIN|haha|123
+Server response: 0|1|student|Dang nhap thanh cong
+Received: LOGIN|giaovien|123
+Server response: 2|Mật khẩu không chính xác!
+Received: LOGIN|giaovien|123456
+Server response: 0|6|teacher|Dang nhap thanh cong
+Received: LOGIN|kuwado|123
+Server response: 0|5|student|Dang nhap thanh cong
+Received: LOGIN|haha|123
+Server response: 0|1|student|Dang nhap thanh cong
+Received: LOGIN|giaovien|123
+Server response: 2|Mật khẩu không chính xác!
+Received: LOGIN|kuwado|123
+Server response: 0|5|student|Dang nhap thanh cong
+Received: LOGIN|giaovien|123
+Server response: 2|Mật khẩu không chính xác!
+Received: LOGIN|giaovien|123456
+Server response: 0|6|teacher|Dang nhap thanh cong

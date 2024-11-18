@@ -1,18 +1,26 @@
+#include "../controllers/UserController.h"
+#include "../utils/MessageUtils.h"
+#include "../views/UserView.h"
+#include <arpa/inet.h>
 #include <iostream>
+#include <map>
+#include <sstream>
 #include <string>
 #include <sys/socket.h>
-#include <arpa/inet.h>
 #include <unistd.h>
-#include "../utils/MessageUtils.h"
-#include "../controllers/UserController.h"
+#include <vector>
 
 #define SERVER_IP "127.0.0.1"
 #define SERVER_PORT 8080
 #define BUFFER_SIZE 1024
 
+using namespace std;
+
 int clientSocket;
 struct sockaddr_in serverAddr;
 UserController userController;
+int user_id = 0;
+string role = "none";
 
 void connectToServer() {
     // Tạo socket
@@ -34,29 +42,43 @@ void connectToServer() {
     }
 }
 
-void sendRequestToServer(const std::string &command) {
+vector<string> splitString(const string &str, char delimiter) {
+    vector<string> tokens;
+    string token;
+    stringstream ss(str);
+
+    // Sử dụng getline để tách chuỗi
+    while (getline(ss, token, delimiter)) {
+        tokens.push_back(token);
+    }
+    return tokens;
+}
+
+void sendRequestToServer(const string &command) {
     send(clientSocket, command.c_str(), command.size(), 0);
 
     // Nhận phản hồi từ server
     char buffer[BUFFER_SIZE];
     int bytesReceived = recv(clientSocket, buffer, BUFFER_SIZE, 0);
     if (bytesReceived > 0) {
-        std::string response(buffer, bytesReceived);
-        std::cout << "Server response: " << response << std::endl;
+        string response(buffer, bytesReceived);
+        string cmd = command.substr(0, command.find('|'));
+        if (cmd == "LOGIN") {
+            vector<string> result = splitString(response, '|');
+            if (result[0] == "0") {
+                user_id = stoi(result[1]);
+                role = result[2];
+                cout << user_id << " - " << role << endl;
+                response = result[0] + "|" + result[3];
+            } else {
+                user_id = 0;
+                role = "none";
+            }
+        }
+        cout << "Server response: " << response << endl;
     }
 }
 
-void loginView() {
-    std::string username, password;
-    std::cout << "Nhập tên đăng nhập: ";
-    std::getline(std::cin, username);
-    std::cout << "Nhập mật khẩu: ";
-    std::getline(std::cin, password);
-
-    // Tạo message login và gửi đến server
-    std::string loginCommand = "LOGIN|" + username + "|" + password;
-    sendRequestToServer(loginCommand);
-}
 void registerView() {
     int choice;
     std::string role, username, password, first_name, last_name;
@@ -67,15 +89,15 @@ void registerView() {
     std::cin.ignore();
 
     switch (choice) {
-        case 1:
-            role = "student";
-            break;
-        case 2:
-            role = "teacher";
-            break;
-        default:
-            std::cout << "Lua chon khong phu hop!" << std::endl;
-            return;
+    case 1:
+        role = "student";
+        break;
+    case 2:
+        role = "teacher";
+        break;
+    default:
+        std::cout << "Lua chon khong phu hop!" << std::endl;
+        return;
     }
 
     // Nhập thông tin đăng ký
@@ -89,9 +111,11 @@ void registerView() {
     std::getline(std::cin, last_name);
 
     // Tạo message register và gửi đến server
-    std::string registerCommand = "REGISTER|" + username + "|" + password + "|" + role + "|" + first_name + "|" + last_name;
+    std::string registerCommand =
+        "REGISTER|" + username + "|" + password + "|" + role + "|" + first_name + "|" + last_name;
     sendRequestToServer(registerCommand);
 }
+
 void handleUserCommand() {
     std::string command;
     while (true) {
@@ -105,15 +129,25 @@ void handleUserCommand() {
         if (command == "REGISTER") {
             registerView();
         } else if (command == "LOGIN") {
-            loginView();
+            UserView uv;
+            map<string, string> info = uv.showLogin();
+            string loginCommand = "LOGIN|" + info["username"] + "|" + info["password"];
+            sendRequestToServer(loginCommand);
+            if (role == "teacher") {
+                cout << "Xin chao giao vien" << endl;
+            } else if (role == "student") {
+                cout << "Xin chao hoc sinh" << endl;
+            }
+
+        } else if (command == "VIEW") {
+
         } else {
             std::cout << "Lenh khong hop le. Vui long nhap lai!" << std::endl;
         }
     }
 }
-void closeConnection() {
-    close(clientSocket);
-}
+
+void closeConnection() { close(clientSocket); }
 
 int main() {
     connectToServer();
