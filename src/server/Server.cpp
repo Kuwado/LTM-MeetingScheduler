@@ -1,155 +1,123 @@
 #include <iostream>
-#include <cstring>
 #include <string>
+#include <thread>
 #include <vector>
-#include <fstream>
-#include <pthread.h>
+#include <map>
+#include <sys/socket.h>
+#include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
-#include <sys/socket.h>
-#include <sstream>
-#include "../controllers/UserController1.h"  // Bao gồm UserController
+#include "../controllers/UserController.h"
+#include "../Status.h"
+#include "../utils/MessageUtils.h"
+#include <fstream>
 
-using namespace std;
+#define PORT 8080
+#define BUFFER_SIZE 1024
 
-class Server {
-public:
-    void init();
-    void run();
-    static void* handleClient(void* arg);
+UserController userController;
 
-private:
-    int serverSocket;
-    vector<string> logs;
-    
-    // Phương thức để ghi log vào tệp
-    void logMessage(const string& message) {
-        logs.push_back(message);
-        ofstream logFile("server_logs.txt", ios::app);
-        logFile << message << endl;
+// Hàm ghi log vào file
+void logToFile(const std::string &message) {
+    std::ofstream logFile("server_logs.txt", std::ios::app);
+    if (logFile.is_open()) {
+        logFile << message << std::endl;
         logFile.close();
-    }
-};
-
-// Khởi tạo server
-void Server::init() {
-    serverSocket = socket(AF_INET, SOCK_STREAM, 0);
-    if (serverSocket == -1) {
-        cerr << "Socket creation failed" << endl;
-        exit(1);
-    }
-
-    sockaddr_in serverAddr;
-    serverAddr.sin_family = AF_INET;
-    serverAddr.sin_port = htons(8080);
-    serverAddr.sin_addr.s_addr = INADDR_ANY;
-
-    if (bind(serverSocket, (sockaddr*)&serverAddr, sizeof(serverAddr)) == -1) {
-        cerr << "Bind failed" << endl;
-        close(serverSocket);
-        exit(1);
-    }
-
-    if (listen(serverSocket, 5) == -1) {
-        cerr << "Listen failed" << endl;
-        close(serverSocket);
-        exit(1);
     }
 }
 
-void Server::run() {
-    cout << "Server running on port 8080...\n";
+void processClientRequest(int clientSocket, const std::string &request) {
+    std::string response;
+    std::string command = request.substr(0, request.find('|'));
+
+    // Sử dụng switch-case để xử lý yêu cầu từ client
+    if (command == "REGISTER") {
+        response = MessageUtils::createMessage(Status::SUCCESS, "Dang ky thanh cong");
+    } else if (command == "LOGIN") {
+        response = MessageUtils::createMessage(Status::SUCCESS, "Dang nhap thanh cong");
+    } else {
+        response = MessageUtils::createMessage(Status::UNKNOWN_ERROR, "Yeu cau khong hop le");
+    }
+
+    // Ghi log phản hồi vào file
+    logToFile("Server response: " + response);
+
+    // Gửi phản hồi về client
+    send(clientSocket, response.c_str(), response.size(), 0);
+}
+
+void handleClient(int clientSocket) {
+    char buffer[BUFFER_SIZE];
     while (true) {
-        int clientSocket = accept(serverSocket, NULL, NULL);
-        if (clientSocket == -1) {
-            cerr << "Accept failed" << endl;
+        // Nhận message từ client
+        int bytesReceived = recv(clientSocket, buffer, BUFFER_SIZE, 0);
+        if (bytesReceived <= 0) {
+            break; // Ngắt kết nối
+        }
+
+        std::string request(buffer, bytesReceived);
+        std::cout << "Received: " << request << std::endl;
+
+        // Ghi log request vào file
+        logToFile("Received: " + request);
+
+        // Xử lý yêu cầu từ client
+        processClientRequest(clientSocket, request);
+    }
+
+    // Đóng kết nối khi xử lý xong
+    close(clientSocket);
+}
+
+void startServer() {
+    int serverSocket, clientSocket;
+    struct sockaddr_in serverAddr, clientAddr;
+    socklen_t addrLen = sizeof(clientAddr);
+
+    // Tạo socket
+    serverSocket = socket(AF_INET, SOCK_STREAM, 0);
+    if (serverSocket < 0) {
+        std::cerr << "Lỗi tạo socket" << std::endl;
+        return;
+    }
+
+    // Cấu hình địa chỉ server
+    serverAddr.sin_family = AF_INET;
+    serverAddr.sin_addr.s_addr = INADDR_ANY;
+    serverAddr.sin_port = htons(PORT);
+
+    // Gắn socket vào địa chỉ
+    if (bind(serverSocket, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) < 0) {
+        std::cerr << "Lỗi bind socket" << std::endl;
+        return;
+    }
+
+    // Lắng nghe kết nối
+    if (listen(serverSocket, 5) < 0) {
+        std::cerr << "Lỗi lắng nghe kết nối" << std::endl;
+        return;
+    }
+
+    std::cout << "Server đang chạy trên cổng " << PORT << std::endl;
+
+    while (true) {
+        // Chấp nhận kết nối từ client
+        clientSocket = accept(serverSocket, (struct sockaddr *)&clientAddr, &addrLen);
+        if (clientSocket < 0) {
+            std::cerr << "Lỗi chấp nhận kết nối" << std::endl;
             continue;
         }
 
-        pthread_t threadId;
-        // Tạo một luồng mới để xử lý client
-        if (pthread_create(&threadId, NULL, &Server::handleClient, (void*)(&clientSocket)) != 0) {
-            cerr << "Failed to create thread" << endl;
-            close(clientSocket);
-        }
+        // Tạo thread mới để xử lý client
+        std::thread clientThread(handleClient, clientSocket);
+        clientThread.detach();
     }
-}
 
-// Xử lý yêu cầu từ client
-void* Server::handleClient(void* arg) {
-    int clientSocket = *((int*)arg);
-    char buffer[1024] = {0};
-    UserController userController;
-
-    // Nhận yêu cầu từ client
-    int bytesReceived = recv(clientSocket, buffer, sizeof(buffer) - 1, 0);
-    if (bytesReceived > 0) {
-        buffer[bytesReceived] = '\0';
-        string request(buffer);
-        stringstream ss(request);
-        string command, data;
-        getline(ss, command, '|');
-        getline(ss, data);
-
-        Server server;
-        server.logMessage("Received: " + request);
-
-        if (command == "REGISTER") {
-            // Tách thông tin đăng ký từ client
-            stringstream dataStream(data);
-            string username, password, role, firstName, lastName;
-            getline(dataStream, username, ',');
-            getline(dataStream, password, ',');
-            getline(dataStream, role, ',');
-            getline(dataStream, firstName, ',');
-            getline(dataStream, lastName);
-
-            User user(username, password, role, firstName, lastName);
-            bool success = userController.registerAccount(user);
-            string response;
-            if (success) {
-                cout << username << " - Viet Nammmmmmmmmmmmmmmmmmmm" << endl;
-                response = "SUCCESS|Tài khoản đã được đăng ký thành công.";
-            } else {
-                response = "FAIL|Lỗi trong quá trình đăng ký.";
-            }
-            send(clientSocket, response.c_str(), response.size(), 0);
-
-        } else if (command == "LOGIN") {
-            // Tách thông tin đăng nhập từ client
-            stringstream dataStream(data);
-            string username, password;
-            getline(dataStream, username, ',');
-            getline(dataStream, password);
-
-            User loggedInUser;
-            bool success = userController.login(username, password, loggedInUser);
-            string response;
-            if (success) {
-                cout << username << " - Viet Nammmmmmmmmmmmmmmmmmmm" << endl;
-                response = "SUCCESS|Đăng nhập thành công.";
-            } else {
-                response = "FAIL|Tên đăng nhập hoặc mật khẩu không chính xác.";
-            }
-            send(clientSocket, response.c_str(), response.size(), 0);
-
-        } else {
-            string response = "FAIL|Lệnh không hợp lệ.";
-            send(clientSocket, response.c_str(), response.size(), 0);
-        }
-    }
-    close(clientSocket);
-    return NULL;
+    // Đóng socket server
+    close(serverSocket);
 }
 
 int main() {
-    Server server;
-
-    // Khởi tạo server
-    server.init();
-
-    // Chạy server
-    server.run();
-
+    startServer();
     return 0;
 }
