@@ -1,21 +1,27 @@
-#include <iostream>
-#include <string>
-#include <thread>
-#include <vector>
-#include <map>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#include "../controllers/UserController.h"
 #include "../Status.h"
+#include "../controllers/UserController.h"
+#include "../models/Response.h"
+#include "../models/User.h"
+#include "../repository/UserRepository.h"
 #include "../utils/MessageUtils.h"
+#include <arpa/inet.h>
 #include <fstream>
-
+#include <iostream>
+#include <map>
+#include <netinet/in.h>
+#include <sstream>
+#include <string>
+#include <sys/socket.h>
+#include <thread>
+#include <unistd.h>
+#include <vector>
 #define PORT 8080
 #define BUFFER_SIZE 1024
 
+using namespace std;
+
 UserController userController;
+UserRepository userRepo;
 
 // Hàm ghi log vào file
 void logToFile(const std::string &message) {
@@ -26,18 +32,42 @@ void logToFile(const std::string &message) {
     }
 }
 
-void processClientRequest(int clientSocket, const std::string &request) {
-    std::string response;
-    std::string command = request.substr(0, request.find('|'));
+vector<string> splitString(const string &str, char delimiter) {
+    vector<string> tokens;
+    string token;
+    stringstream ss(str);
 
-    // Sử dụng switch-case để xử lý yêu cầu từ client
+    // Sử dụng getline để tách chuỗi
+    while (getline(ss, token, delimiter)) {
+        tokens.push_back(token);
+    }
+    return tokens;
+}
+
+void processClientRequest(int clientSocket, const string &request) {
+    string response;
+    cout << request << endl;
+    string command = request.substr(0, request.find('|'));
+    vector<string> result = splitString(request, '|');
+    Response res;
+
     if (command == "REGISTER") {
         response = MessageUtils::createMessage(Status::SUCCESS, "Dang ky thanh cong");
     } else if (command == "LOGIN") {
-        response = MessageUtils::createMessage(Status::SUCCESS, "Dang nhap thanh cong");
+        string username = result[1];
+        string password = result[2];
+        res = userController.login(username, password);
+        if (res.getStatus() == 0) {
+            User user = userRepo.getUserByUsername(username);
+            string message = res.getMessage();
+            message = to_string(user.getId()) + "|" + user.getRole() + "|" + message;
+            res.setMessage(message);
+        }
     } else {
         response = MessageUtils::createMessage(Status::UNKNOWN_ERROR, "Yeu cau khong hop le");
     }
+
+    response = to_string(res.getStatus()) + "|" + res.getMessage();
 
     // Ghi log phản hồi vào file
     logToFile("Server response: " + response);

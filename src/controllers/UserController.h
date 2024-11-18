@@ -1,10 +1,12 @@
 #ifndef USERCONTROLLER_H
 #define USERCONTROLLER_H
 
+#include "../models/Response.h"
 #include "../models/User.h"
 #include "../repository/UserRepository.h"
 #include <cppconn/prepared_statement.h>
 #include <iostream>
+#include <map>
 
 using namespace std;
 
@@ -15,43 +17,21 @@ class UserController {
   public:
     UserController() {}
 
-    User getUserByUsername(const string &username) {
+    Response login(const string &username, const string &password) {
+        Response res;
         User user = userRepository.getUserByUsername(username);
         if (user.getId() == 0) {
-            cout << "Khong co user " << endl;
-            return User();
+            res.setStatus(1);
+            res.setMessage("Tên đăng nhập không chính xác!");
+        } else if (user.getPassword() != password) {
+            res.setStatus(2);
+            res.setMessage("Mật khẩu không chính xác!");
+        } else {
+            res.setStatus(0);
+            res.setMessage("Dang nhap thanh cong");
         }
-        return user;
-    }
 
-    User getUserById(const int &id) {
-        User user = userRepository.getUserById(id);
-        return user;
-    }
-
-    void create(const User &user) { userRepository.create(user); }
-
-    void login() {
-        string username, password;
-        bool loggedIn = false;
-
-        while (!loggedIn) {
-            cout << "Nhập tên đăng nhập: ";
-            getline(cin, username);
-            cout << "Nhập mật khẩu: ";
-            getline(cin, password);
-            cout << "--------------------------------------------" << endl;
-
-            User user = userRepository.getUserByUsername(username);
-            if (user.getId() == 0) {
-                cout << "Tên đăng nhập không chính xác!" << endl;
-            } else if (user.getPassword() != password) {
-                cout << "Mật khẩu không chính xác!" << endl;
-            } else {
-                cout << "Xin chào, " << username << "!!!" << endl;
-                loggedIn = true;
-            }
-        }
+        return res;
     }
 
     void registerAccount() {
