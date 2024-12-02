@@ -49,7 +49,6 @@ vector<string> splitString(const string &str, char delimiter) {
 
 void processClientRequest(int clientSocket, const string &request) {
     string response;
-    cout << request << endl;
     string command = request.substr(0, request.find('|'));
     vector<string> result = splitString(request, '|');
     Response res;
@@ -68,8 +67,11 @@ void processClientRequest(int clientSocket, const string &request) {
         }
     } else if (command == "VIEW_TIME_SLOTS") {
         int teacher_id = stoi(result[1]);
-        cout << result[1] << endl;
         res = responseController.viewTimeslots(teacher_id);
+    } else if (command == "UPDATE_TIME_SLOT") {
+        res = responseController.updateTimeslot(request);
+    } else if (command == "DECLARE_TIME_SLOT") {
+        res = responseController.declareTimeslot(request);
     } else {
         response = MessageUtils::createMessage(Status::UNKNOWN_ERROR, "Yeu cau khong hop le");
     }

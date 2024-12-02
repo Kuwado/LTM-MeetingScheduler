@@ -162,6 +162,10 @@ class TeacherView {
             cin.ignore();
             if (choice > 0 && choice <= editTimeslots.size()) {
                 return editTimeslots[choice];
+            } else if (choice == 0) {
+                Timeslot ts;
+                ts.setId(-1);
+                return ts;
             }
         }
     }
@@ -209,7 +213,6 @@ class TeacherView {
         }
 
         cout << "Nhập thoi gian ket thuc:" << endl;
-        cout << "Nhập thoi gian ket thuc:" << endl;
         while (true) {
             cout << "- Gio: ";
             getline(cin, endH);
@@ -230,7 +233,7 @@ class TeacherView {
         }
 
         while (!typechosen) {
-            int choice = 0;
+            int choice = -1;
             cout << "Loai cuoc hen: 1. Ca nhan; 2. Nhom; 3. Ca hai; 0. Khong doi" << endl;
             cin >> choice;
             cin.ignore();
@@ -260,6 +263,7 @@ class TeacherView {
         string end = endH + ":" + endM + ":00";
         ts.setStart(start);
         ts.setEnd(end);
+        ts.setType(type);
         return ts;
     }
 };
