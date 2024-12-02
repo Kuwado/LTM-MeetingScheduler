@@ -1,6 +1,7 @@
 #include "../Status.h"
 #include "../controllers/ResponseController.h"
 #include "../controllers/UserController.h"
+#include "../controllers/StudentResponseController.h"
 
 #include "../models/Response.h"
 #include "../models/User.h"
@@ -23,6 +24,7 @@
 using namespace std;
 
 ResponseController responseController;
+StudentResponseController studentResponseController;
 UserController userController;
 UserRepository userRepo;
 
@@ -70,7 +72,11 @@ void processClientRequest(int clientSocket, const string &request) {
         int teacher_id = stoi(result[1]);
         cout << result[1] << endl;
         res = responseController.viewTimeslots(teacher_id);
-    } else {
+    } else if (command == "FETCH_ALL_TEACHER") {
+        res = studentResponseController.getAllTeacher();
+    }
+    
+    else {
         response = MessageUtils::createMessage(Status::UNKNOWN_ERROR, "Yeu cau khong hop le");
     }
 
