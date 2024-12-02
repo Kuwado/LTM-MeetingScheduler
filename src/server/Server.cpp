@@ -55,7 +55,29 @@ void processClientRequest(int clientSocket, const string &request) {
     Response res;
 
     if (command == "REGISTER") {
-        response = MessageUtils::createMessage(Status::SUCCESS, "Dang ky thanh cong");
+        string username = result[1];
+        string password = result[2];
+        string role = result[3];
+        string first_name = result[4];
+        string last_name = result[5];
+
+        res = userController.registerA(username);
+        if (res.getStatus() == 0) {
+            User newUser(username, password, role, first_name, last_name);
+            userRepo.create(newUser);
+        }
+        if (res.getStatus() == 0) {
+            string message = res.getMessage();
+            User newUser = userRepo.getUserByUsername(username);
+            message = to_string(newUser.getId()) + "|" 
+                + newUser.getUsername() + "|" 
+                + newUser.getPassword() + "|" 
+                + newUser.getRole() + "|" 
+                + newUser.getFirstName() + "|" 
+                + newUser.getLastName() + "|" + message;
+
+            res.setMessage(message);
+        }
     } else if (command == "LOGIN") {
         string username = result[1];
         string password = result[2];
