@@ -4,6 +4,7 @@
 #include "../../data/Database.h"
 #include "../models/Timeslot.h"
 #include "../models/User.h"
+#include "../utils/Utils.h"
 #include "UserRepository.h"
 #include <cppconn/prepared_statement.h>
 #include <iostream>
@@ -16,9 +17,21 @@ class TimeslotRepository {
   private:
     Database db;
     UserRepository userRepo;
+    Utils utils;
 
   public:
     TimeslotRepository() {}
+
+    bool check(const Timeslot &timeslot) {
+        vector<Timeslot> tsList = getTimeSlotsAtSameDate(timeslot.getTeacherId(), timeslot.getDate());
+        for (const Timeslot &ts : tsList) {
+            if (!(utils.checkTimeGreater(ts.getStart(), timeslot.getEnd()) ||
+                  utils.checkTimeGreater(timeslot.getStart(), ts.getEnd()))) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     void create(const Timeslot &timeslot) {
         if (db.connect()) {
@@ -95,6 +108,7 @@ class TimeslotRepository {
                     ts.setEnd(res->getString("end"));
                     ts.setDate(res->getString("date"));
                     ts.setType(res->getString("type"));
+                    ts.setStatus(res->getString("status"));
                     ts.setTeacherId(res->getInt("teacher_id"));
 
                     string date = ts.getDate();
@@ -117,6 +131,39 @@ class TimeslotRepository {
         }
 
         return timeslotsByDate;
+    }
+
+    vector<Timeslot> getTimeSlotsAtSameDate(const int &teacher_id, const string &date) {
+        vector<Timeslot> tsList;
+        if (db.connect()) {
+            string query = "SELECT * FROM timeslots WHERE teacher_id = ? AND date = ?";
+            try {
+                sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
+                pstmt->setInt(1, teacher_id);
+                pstmt->setString(2, date);
+                sql::ResultSet *res = pstmt->executeQuery();
+
+                while (res->next()) {
+                    Timeslot ts;
+                    ts.setId(res->getInt("id"));
+                    ts.setStart(res->getString("start"));
+                    ts.setEnd(res->getString("end"));
+                    ts.setDate(res->getString("date"));
+                    ts.setType(res->getString("type"));
+                    ts.setStatus(res->getString("status"));
+                    ts.setTeacherId(res->getInt("teacher_id"));
+                    tsList.push_back(ts);
+                }
+
+                delete res;
+                delete pstmt;
+            } catch (sql::SQLException &e) {
+                std::cerr << "Lỗi khi lấy dữ liệu từ timeslots: " << e.what() << std::endl;
+            }
+        } else {
+            cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
+        }
+        return tsList;
     }
 };
 

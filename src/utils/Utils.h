@@ -107,6 +107,28 @@ class Utils {
         int h = stoi(year);
         return h >= 1000 && h <= 2500;
     }
+
+    bool checkTimeGreater(const string &time1, const string &time2) {
+        vector<int> t1 = getTimeVector(time1);
+        vector<int> t2 = getTimeVector(time2);
+        if (t1[0] == t2[0]) {
+            if (t1[1] == t2[1]) {
+                if (t1[2] > t2[2]) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else if (t1[1] > t2[1]) {
+                return true;
+            } else {
+                return false;
+            }
+        } else if (t1[0] > t2[0]) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 };
 
 #endif

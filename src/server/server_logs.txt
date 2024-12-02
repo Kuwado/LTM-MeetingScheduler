@@ -49,3 +49,32 @@ Received: LOGIN|giaovien|123
 Server response: 2|Mật khẩu không chính xác!
 Received: LOGIN|giaovien|123456
 Server response: 0|6|teacher|Dang nhap thanh cong
+Received: LOGIN|hoan|123
+Server response: 1|Tên đăng nhập không chính xác!
+Received: LOGIN|kaka|123
+Server response: 1|Tên đăng nhập không chính xác!
+Received: LOGIN|kuwado|123456
+Server response: 2|Mật khẩu không chính xác!
+Received: LOGIN|kuwado|123
+Server response: 0|5|student|Dang nhap thanh cong
+Received: LOGIN|giaovien|123456
+Server response: 0|6|teacher|Dang nhap thanh cong
+Received: VIEW_TIME_SLOTS|0
+Received: VIEW_TIME_SLOTS|0
+Received: VIEW_TIME_SLOTS|6
+Received: VIEW_TIME_SLOTS|6
+Server response: 0|2024-11-05|[|5|02:00:00|03:00:05|2024-11-05|personal|free|6|3|06:50:00|07:00:00|2024-11-05|both|free|6|6|15:20:00|15:30:00|2024-11-05|personal|free|6|7|15:25:00|15:40:00|2024-11-05|group|free|6|9|15:35:00|15:50:00|2024-11-05|group|free|6|4|15:50:12|16:30:00|2024-11-05|group|free|6|8|16:00:00|16:20:00|2024-11-05|group|free|6|]|2024-11-15|[|1|07:50:00|09:15:00|2024-11-15|both|free|6|]|2024-11-20|[|2|03:30:00|06:00:00|2024-11-20|group|free|6|]|
+Received: VIEW_TIME_SLOTS|6
+Server response: 0|2024-11-05|[|5|02:00:00|03:00:05|2024-11-05|personal|free|6|3|06:50:00|07:00:00|2024-11-05|both|free|6|6|15:20:00|15:30:00|2024-11-05|personal|free|6|7|15:25:00|15:40:00|2024-11-05|group|free|6|9|15:35:00|15:50:00|2024-11-05|group|free|6|4|15:50:12|16:30:00|2024-11-05|group|free|6|8|16:00:00|16:20:00|2024-11-05|group|free|6|]|2024-11-15|[|1|07:50:00|09:15:00|2024-11-15|both|free|6|]|2024-11-20|[|2|03:30:00|06:00:00|2024-11-20|group|free|6|]|
+Received: VIEW_TIME_SLOTS|6
+Server response: 0|2024-11-05|[|5|02:00:00|03:00:05|2024-11-05|personal|free|6|3|06:50:00|07:00:00|2024-11-05|both|free|6|6|15:20:00|15:30:00|2024-11-05|personal|free|6|7|15:25:00|15:40:00|2024-11-05|group|free|6|9|15:35:00|15:50:00|2024-11-05|group|free|6|4|15:50:12|16:30:00|2024-11-05|group|free|6|8|16:00:00|16:20:00|2024-11-05|group|free|6|]|2024-11-15|[|1|07:50:00|09:15:00|2024-11-15|both|free|6|]|2024-11-20|[|2|03:30:00|06:00:00|2024-11-20|group|free|6|]|
+Received: VIEW_TIME_SLOTS|6
+Server response: 0|2024-11-05|[|5|02:00:00|03:00:05|2024-11-05|personal|free|6|3|06:50:00|07:00:00|2024-11-05|both|free|6|6|15:20:00|15:30:00|2024-11-05|personal|free|6|7|15:25:00|15:40:00|2024-11-05|group|free|6|9|15:35:00|15:50:00|2024-11-05|group|free|6|4|15:50:12|16:30:00|2024-11-05|group|free|6|8|16:00:00|16:20:00|2024-11-05|group|free|6|]|2024-11-15|[|1|07:50:00|09:15:00|2024-11-15|both|free|6|]|2024-11-20|[|2|03:30:00|06:00:00|2024-11-20|group|free|6|]|
+Received: VIEW_TIME_SLOTS|6
+Server response: 0|2024-11-05|[|5|02:00:00|03:00:05|2024-11-05|personal|free|6|3|06:50:00|07:00:00|2024-11-05|both|free|6|6|15:20:00|15:30:00|2024-11-05|personal|free|6|7|15:25:00|15:40:00|2024-11-05|group|free|6|9|15:35:00|15:50:00|2024-11-05|group|free|6|4|15:50:12|16:30:00|2024-11-05|group|free|6|8|16:00:00|16:20:00|2024-11-05|group|free|6|]|2024-11-15|[|1|07:50:00|09:15:00|2024-11-15|both|free|6|]|2024-11-20|[|2|03:30:00|06:00:00|2024-11-20|group|free|6|]|
+Received: LOGIN|haha|123
+Server response: 0|1|student|Dang nhap thanh cong
+Received: LOGIN|hahahaha|123
+Server response: 1|Tên đăng nhập không chính xác!
+Received: VIEW_TIME_SLOTS|6
+Server response: 0|2024-11-05|[|5|02:00:00|03:00:05|2024-11-05|personal|free|6|3|06:50:00|07:00:00|2024-11-05|both|free|6|6|15:20:00|15:30:00|2024-11-05|personal|free|6|7|15:25:00|15:40:00|2024-11-05|group|free|6|9|15:35:00|15:50:00|2024-11-05|group|free|6|4|15:50:12|16:30:00|2024-11-05|group|free|6|8|16:00:00|16:20:00|2024-11-05|group|free|6|]|2024-11-15|[|1|07:50:00|09:15:00|2024-11-15|both|free|6|]|2024-11-20|[|2|03:30:00|06:00:00|2024-11-20|group|free|6|]|

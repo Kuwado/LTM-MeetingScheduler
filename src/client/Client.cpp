@@ -1,6 +1,12 @@
+#include "../controllers/ClientController.h"
+#include "../controllers/ResponseController.h"
+#include "../controllers/TeacherController.h"
 #include "../controllers/UserController.h"
+
 #include "../utils/MessageUtils.h"
+#include "../views/TeacherView.h"
 #include "../views/UserView.h"
+
 #include <arpa/inet.h>
 #include <iostream>
 #include <map>
@@ -18,8 +24,12 @@ using namespace std;
 
 int clientSocket;
 struct sockaddr_in serverAddr;
+TeacherView teacherView;
 UserController userController;
-int user_id = 0;
+ClientController clientController;
+ResponseController responseController;
+TeacherController teacherController;
+int user_id = 6;
 string role = "none";
 
 void connectToServer() {
@@ -54,7 +64,7 @@ vector<string> splitString(const string &str, char delimiter) {
     return tokens;
 }
 
-void sendRequestToServer(const string &command) {
+string sendRequestToServer(const string &command) {
     send(clientSocket, command.c_str(), command.size(), 0);
 
     // Nhận phản hồi từ server
@@ -62,21 +72,10 @@ void sendRequestToServer(const string &command) {
     int bytesReceived = recv(clientSocket, buffer, BUFFER_SIZE, 0);
     if (bytesReceived > 0) {
         string response(buffer, bytesReceived);
-        string cmd = command.substr(0, command.find('|'));
-        if (cmd == "LOGIN") {
-            vector<string> result = splitString(response, '|');
-            if (result[0] == "0") {
-                user_id = stoi(result[1]);
-                role = result[2];
-                cout << user_id << " - " << role << endl;
-                response = result[0] + "|" + result[3];
-            } else {
-                user_id = 0;
-                role = "none";
-            }
-        }
         cout << "Server response: " << response << endl;
+        return response;
     }
+    return "100";
 }
 
 void registerView() {
@@ -132,7 +131,17 @@ void handleUserCommand() {
             UserView uv;
             map<string, string> info = uv.showLogin();
             string loginCommand = "LOGIN|" + info["username"] + "|" + info["password"];
-            sendRequestToServer(loginCommand);
+            string response = sendRequestToServer(loginCommand);
+            vector<string> result = splitString(response, '|');
+            if (result[0] == "0") {
+                user_id = stoi(result[1]);
+                role = result[2];
+                cout << user_id << " - " << role << endl;
+                response = result[0] + "|" + result[3];
+            } else {
+                user_id = 0;
+                role = "none";
+            }
             if (role == "teacher") {
                 cout << "Xin chao giao vien" << endl;
             } else if (role == "student") {
@@ -147,11 +156,30 @@ void handleUserCommand() {
     }
 }
 
+void handleTeacherCommand(const string &cmd) {
+    cout << cmd << endl;
+    if (cmd == "VIEW_TIME_SLOTS") {
+        string request = cmd + "|" + to_string(user_id);
+        cout << request << endl;
+        string response = sendRequestToServer(request);
+        string status = response.substr(0, response.find('|'));
+        cout << status << endl;
+        if (status == "0") {
+            map<string, vector<Timeslot>> timeslots = clientController.viewTimeslots(response);
+            Timeslot ts = teacherView.showTimeslots(timeslots);
+        } else if (status == "8") {
+
+        } else if (status == "9") {
+        }
+    }
+}
+
 void closeConnection() { close(clientSocket); }
 
 int main() {
     connectToServer();
-    handleUserCommand();
+    // handleUserCommand();
+    handleTeacherCommand("VIEW_TIME_SLOTS");
     closeConnection();
     return 0;
 }
