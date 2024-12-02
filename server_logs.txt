@@ -1,2 +1,4 @@
 Received: REGISTER
 Server response: 0|Dang ky thanh cong
+Received: LOGIN|hoanngu|12
+Server response: 0|9|student|Dang nhap thanh cong

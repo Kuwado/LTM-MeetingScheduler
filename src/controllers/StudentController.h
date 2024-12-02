@@ -3,6 +3,7 @@
 
 #include<iostream>
 #include "../models/Meeting.h"
+#include "../models/Response.h"
 #include "../models/Timeslot.h"
 #include "../repository/MeetingRepository.h"
 #include "../repository/TimeslotRepository.h"
@@ -19,6 +20,22 @@ class StudentController {
     public:
         StudentController(){}
 
+        Response timeslot(const int &teacher_id) {
+            Response res;
+            map<string, vector<Timeslot>> ts = timeslotRepository.getTimeslotsByTeacherId(teacher_id);
+            if (user.getId() == 0) {
+                res.setStatus(1);
+                res.setMessage("Tên đăng nhập không chính xác!");
+            } else if (user.getPassword() != password) {
+                res.setStatus(2);
+                res.setMessage("Mật khẩu không chính xác!");
+            } else {
+                res.setStatus(0);
+                res.setMessage("Dang nhap thanh cong");
+            }
+
+            return res;
+        }
         void viewTeacherTimeslots(const int &teacher_id) {
         map<string, vector<Timeslot>> timeslots = timeslotRepository.getTimeslotsByTeacherId(teacher_id);
 
