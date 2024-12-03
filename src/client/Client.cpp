@@ -78,42 +78,7 @@ string sendRequestToServer(const string &command) {
     return "100";
 }
 
-void registerView() {
-    int choice;
-    std::string role, username, password, first_name, last_name;
 
-    // Chọn vai trò
-    std::cout << "1. Hoc sinh\n2. Giao vien\nBan la ai (1 hoac 2): ";
-    std::cin >> choice;
-    std::cin.ignore();
-
-    switch (choice) {
-    case 1:
-        role = "student";
-        break;
-    case 2:
-        role = "teacher";
-        break;
-    default:
-        std::cout << "Lua chon khong phu hop!" << std::endl;
-        return;
-    }
-
-    // Nhập thông tin đăng ký
-    std::cout << "Nhập tên đăng nhập: ";
-    std::getline(std::cin, username);
-    std::cout << "Nhập mật khẩu: ";
-    std::getline(std::cin, password);
-    std::cout << "Nhập ho: ";
-    std::getline(std::cin, first_name);
-    std::cout << "Nhập ten: ";
-    std::getline(std::cin, last_name);
-
-    // Tạo message register và gửi đến server
-    std::string registerCommand =
-        "REGISTER|" + username + "|" + password + "|" + role + "|" + first_name + "|" + last_name;
-    sendRequestToServer(registerCommand);
-}
 
 void handleUserCommand() {
     std::string command;
@@ -126,7 +91,20 @@ void handleUserCommand() {
         }
 
         if (command == "REGISTER") {
-            registerView();
+            UserView uv;
+            map<string, string> info = uv.showRegisterA();  // Lấy thông tin đăng ký
+            string registerCommand = "REGISTER|" + info["username"] + "|" + info["password"] + "|" + info["role"] + "|" + info["first_name"] + "|" + info["last_name"];
+            
+            // Gửi lệnh đăng ký tới server
+            string response = sendRequestToServer(registerCommand);
+            
+            // Phân tích phản hồi từ server
+            vector<string> result = splitString(response, '|');
+            if (result[0] == "0") {
+                cout << "Đăng ký thành công!" << endl;
+            } else {
+                cout << "Đăng ký thất bại, vui lòng thử lại." << endl;
+            }
         } else if (command == "LOGIN") {
             UserView uv;
             map<string, string> info = uv.showLogin();
@@ -147,8 +125,6 @@ void handleUserCommand() {
             } else if (role == "student") {
                 cout << "Xin chao hoc sinh" << endl;
             }
-
-        } else if (command == "VIEW") {
 
         } else {
             std::cout << "Lenh khong hop le. Vui long nhap lai!" << std::endl;
@@ -233,7 +209,7 @@ void closeConnection() { close(clientSocket); }
 
 int main() {
     connectToServer();
-    // handleUserCommand();
+    handleUserCommand();
     handleTeacherMenu();
     closeConnection();
     return 0;
