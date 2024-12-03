@@ -1,6 +1,7 @@
 #include "../Status.h"
 #include "../controllers/ResponseController.h"
 #include "../controllers/UserController.h"
+#include "../controllers/StudentResponseController.h"
 
 #include "../models/Response.h"
 #include "../models/User.h"
@@ -23,6 +24,7 @@
 using namespace std;
 
 ResponseController responseController;
+StudentResponseController studentResponseController;
 UserController userController;
 UserRepository userRepo;
 
@@ -90,6 +92,8 @@ void processClientRequest(int clientSocket, const string &request) {
     } else if (command == "VIEW_TIME_SLOTS") {
         int teacher_id = stoi(result[1]);
         res = responseController.viewTimeslots(teacher_id);
+    } else if (command == "FETCH_ALL_TEACHER") {
+        res = studentResponseController.getAllTeacher();
     } else if (command == "UPDATE_TIME_SLOT") {
         res = responseController.updateTimeslot(request);
     } else if (command == "DECLARE_TIME_SLOT") {

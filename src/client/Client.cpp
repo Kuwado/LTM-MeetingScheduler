@@ -6,6 +6,7 @@
 #include "../utils/MessageUtils.h"
 #include "../views/TeacherView.h"
 #include "../views/UserView.h"
+#include "../views/StudentView.h"
 
 #include <arpa/inet.h>
 #include <iostream>
@@ -25,6 +26,7 @@ using namespace std;
 int clientSocket;
 struct sockaddr_in serverAddr;
 TeacherView teacherView;
+StudentView studentView;
 UserController userController;
 ClientController clientController;
 ResponseController responseController;
@@ -202,6 +204,28 @@ void handleTeacherMenu() {
 
     default:
         break;
+    }
+}
+
+void handleStudentCommand(const string &cmd) {
+    cout << cmd << endl;
+    if (cmd == "VIEW_TIME_SLOTS") {
+        string requestTeacher = "FETCH_ALL_TEACHER|";
+        string responseTeacher = sendRequestToServer(requestTeacher);
+        string statusTeacher = responseTeacher.substr(0, responseTeacher.find("|"));
+        if (statusTeacher == "0"){
+            vector<User> teachers = clientController.parseTeachersFromResponse(responseTeacher);
+            int teacherId = studentView.selectTeacher(teachers);
+            string request = cmd + "|" + to_string(teacherId);
+            cout << request << endl;
+            string response = sendRequestToServer(request);
+            string status = response.substr(0, response.find('|'));
+            cout << status << endl;
+            if (status == "0") {
+                map<string, vector<Timeslot>> timeslots = clientController.viewTimeslots(response);
+                Timeslot ts = studentView.showAvailableSlots(timeslots);
+            }
+        }
     }
 }
 

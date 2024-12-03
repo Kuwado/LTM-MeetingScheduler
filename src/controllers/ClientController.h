@@ -68,6 +68,41 @@ class ClientController {
         return timeslots;
     }
 
+    vector<User> parseTeachersFromResponse(const string &message) {
+        vector<User> teachers;
+
+        vector<string> tokens = splitString(message, '|');
+        int i = 0;
+
+        while (i < tokens.size()) {
+            User user;
+
+            if (tokens[i].find("ID: ") != string::npos) {
+                user.setId(stoi(tokens[i].substr(4))); 
+                i++;
+            }
+            if (i < tokens.size() && tokens[i].find("Ho ten: ") != string::npos) {
+                string fullName = tokens[i].substr(8); 
+                size_t spaceIndex = fullName.find_last_of(' ');
+                if (spaceIndex != string::npos) {
+                    user.setFirstName(fullName.substr(0, spaceIndex));
+                    user.setLastName(fullName.substr(spaceIndex + 1));
+                }
+                i++;
+            }
+            if (i < tokens.size() && tokens[i].find("Vai tro: ") != string::npos) {
+                user.setRole(tokens[i].substr(9)); 
+                i++;
+            }
+
+            
+            teachers.push_back(user);
+        }
+
+        return teachers;
+    }
+
+
     void registerAccount() {
         bool choiceChoosen = false, usernameExist = true;
         int choice;
