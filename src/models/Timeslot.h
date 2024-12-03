@@ -46,7 +46,9 @@ class Timeslot {
                to_string(teacher_id);
     }
 
-    string toStringInList() { return to_string(id) + "|" + start + "|" + end + "|" + type + "|" + status; }
+    string toStringUpdate() { return to_string(id) + "|" + start + "|" + end + "|" + type; }
+
+    string toStringDeclare() { return start + "|" + end + "|" + date + "|" + type + "|" + to_string(teacher_id); }
 
     void show() {
         cout << "TimeSlot, Id: " << id << " ,start: " << start << " ,end: " << end << " ,date: " << date

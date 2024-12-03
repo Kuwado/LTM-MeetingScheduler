@@ -72,7 +72,7 @@ string sendRequestToServer(const string &command) {
     int bytesReceived = recv(clientSocket, buffer, BUFFER_SIZE, 0);
     if (bytesReceived > 0) {
         string response(buffer, bytesReceived);
-        cout << "Server response: " << response << endl;
+        // cout << "Server response: " << response << endl;
         return response;
     }
     return "100";
@@ -132,21 +132,76 @@ void handleUserCommand() {
     }
 }
 
-void handleTeacherCommand(const string &cmd) {
-    cout << cmd << endl;
-    if (cmd == "VIEW_TIME_SLOTS") {
-        string request = cmd + "|" + to_string(user_id);
-        cout << request << endl;
-        string response = sendRequestToServer(request);
-        string status = response.substr(0, response.find('|'));
-        cout << status << endl;
-        if (status == "0") {
-            map<string, vector<Timeslot>> timeslots = clientController.viewTimeslots(response);
-            Timeslot ts = teacherView.showTimeslots(timeslots);
-        } else if (status == "8") {
+// Teacher
+void handleDeclareTimeSlot() {
+    Timeslot ts = teacherView.showDeclareTimeSlots(user_id);
+    string request = "DECLARE_TIME_SLOT|" + ts.toStringDeclare();
+    cout << request << endl;
+    string response = sendRequestToServer(request);
+    string status = response.substr(0, response.find('|'));
+    if (status == "0") {
+        vector<string> tokens = splitString(response, '|');
+        cout << tokens[1] << endl;
+    }
+}
 
-        } else if (status == "9") {
+void handleUpdateTimeslot(const Timeslot &timeslot) {
+    Timeslot tsUpdate = teacherView.showUpdateTimeslot(timeslot);
+    string request = "UPDATE_TIME_SLOT|" + tsUpdate.toStringUpdate();
+    string response = sendRequestToServer(request);
+    string status = response.substr(0, response.find('|'));
+    if (status == "0") {
+        vector<string> tokens = splitString(response, '|');
+        cout << tokens[1] << endl;
+    }
+}
+
+void handleViewTimeslots() {
+    string request = "VIEW_TIME_SLOTS|" + to_string(user_id);
+    string response = sendRequestToServer(request);
+    string status = response.substr(0, response.find('|'));
+    if (status == "0") {
+        map<string, vector<Timeslot>> timeslots = clientController.viewTimeslots(response);
+        Timeslot ts = teacherView.showTimeslots(timeslots);
+        if (ts.getId() == -1) {
+            return;
         }
+        // Detail Timeslot
+        int choice = teacherView.showTimeslot(ts);
+        if (choice == 0) {
+            handleViewTimeslots();
+        } else {
+            handleUpdateTimeslot(ts);
+            handleViewTimeslots();
+        }
+
+    } else if (status == "8") {
+        vector<string> tokens = splitString(response, '|');
+        cout << tokens[1] << endl;
+    } else if (status == "9") {
+        vector<string> tokens = splitString(response, '|');
+        cout << tokens[1] << endl;
+    }
+}
+
+void handleTeacherMenu() {
+    int choice = teacherView.showMenu();
+    switch (choice) {
+    case 1:
+        handleDeclareTimeSlot();
+        handleTeacherMenu();
+        break;
+    case 2:
+        handleViewTimeslots();
+        handleTeacherMenu();
+        break;
+    case 3:
+        break;
+    case 4:
+        break;
+
+    default:
+        break;
     }
 }
 
@@ -155,7 +210,7 @@ void closeConnection() { close(clientSocket); }
 int main() {
     connectToServer();
     handleUserCommand();
-    // handleTeacherCommand("VIEW_TIME_SLOTS");
+    handleTeacherMenu();
     closeConnection();
     return 0;
 }
