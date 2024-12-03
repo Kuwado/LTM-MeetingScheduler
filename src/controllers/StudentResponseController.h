@@ -23,10 +23,8 @@ class StudentResponseController {
             res.setMessage("Khong co giao vien nao trong he thong");
         } else {
             string message = "";
-            for (const auto &teacher : teachers) {
-                message += "ID: " + to_string(teacher.getId()) + ", ";
-                message += "Ho ten: " + teacher.getFirstName() + " " + teacher.getLastName() + ", ";
-                message += "Vai tro: " + teacher.getRole() + "|";
+            for (int i = 0; i < teachers.size(); i++) {
+                message += teachers[i].toStringProfile() + "|";
             }
             res.setStatus(0); 
             res.setMessage(message);

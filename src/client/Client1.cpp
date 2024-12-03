@@ -81,62 +81,21 @@ void sendRequestToServer(const string &command) {
     }
 }
 
-void registerView() {
-    int choice;
-    std::string role, username, password, first_name, last_name;
-
-    // Chọn vai trò
-    std::cout << "1. Hoc sinh\n2. Giao vien\nBan la ai (1 hoac 2): ";
-    std::cin >> choice;
-    std::cin.ignore();
-
-    switch (choice) {
-    case 1:
-        role = "student";
-        break;
-    case 2:
-        role = "teacher";
-        break;
-    default:
-        std::cout << "Lua chon khong phu hop!" << std::endl;
-        return;
-    }
-
-    // Nhập thông tin đăng ký
-    std::cout << "Nhập tên đăng nhập: ";
-    std::getline(std::cin, username);
-    std::cout << "Nhập mật khẩu: ";
-    std::getline(std::cin, password);
-    std::cout << "Nhập ho: ";
-    std::getline(std::cin, first_name);
-    std::cout << "Nhập ten: ";
-    std::getline(std::cin, last_name);
-
-    // Tạo message register và gửi đến server
-    std::string registerCommand =
-        "REGISTER|" + username + "|" + password + "|" + role + "|" + first_name + "|" + last_name;
-    sendRequestToServer(registerCommand);
-}
-
 void handleUserCommand() {
-    std::string command;
+    LoginView loginView([]() {
+        RegisterView registerView([]() {
             LoginView loginView([]() {
-                handleUserCommand(); // Quay lại màn hình đăng nhập khi nhấn nút Đăng nhập
+                RegisterView registerView([]() {
+                    LoginView loginView([]() {});
+                    loginView.showLoginWindow();
+                });
+                registerView.showRegisterWindow();
             });
-            loginView.showLoginWindow();  // Hiển thị giao diện đăng nhập
-            // Lấy username và password từ giao diện
-            string username = loginView.getUsername();
-            string password = loginView.getPassword();
-            
-            // Gửi yêu cầu đăng nhập tới server
-            string loginCommand = "LOGIN|" + username + "|" + password;
-            sendRequestToServer(loginCommand);
-
-            if (role == "teacher") {
-                cout << "Xin chao giao vien" << endl;
-            } else if (role == "student") {
-                cout << "Xin chao hoc sinh" << endl;
-            }
+            loginView.showLoginWindow();
+        });
+        registerView.showRegisterWindow();
+    });
+    loginView.showLoginWindow();
 }
 
 void closeConnection() { close(clientSocket); }

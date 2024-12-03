@@ -73,3 +73,75 @@ Received: REGISTER|caothuhoan|123|teacher|Cao|Ha
 Server response: 1|Tên đăng nhập da ton tai!
 Received: REGISTER|caothuhoan|123|teacher|Cao|Hoan
 Server response: 1|Tên đăng nhập da ton tai!
+Received: REGISTER|caothuhoan|123|teacher|cao|hoan
+Server response: 3|Tên đăng nhập da ton tai!
+Received: LOGIN|caothuhoan|123
+Server response: 0|12|teacher|Dang nhap thanh cong
+Received: LOGIN|caothuha|123
+Server response: 0|11|teacher|Dang nhap thanh cong
+Received: LOGIN||
+Server response: 1|Tên đăng nhập không chính xác!
+Received: LOGIN|kuwado|123
+Server response: 0|5|student|Dang nhap thanh cong
+Received: LOGIN|kuwado|123
+Server response: 0|5|student|Dang nhap thanh cong
+Received: REGISTER|vuminhquan|123|student|Vu|Quan
+Server response: 0|13|vuminhquan|123|student|Vu|Quan|Dang ky thanh cong
+Received: FETCH_ALL_TEACHER|
+Server response: 0|ID: 6, Ho ten: Giao Vien, Vai tro: teacher|ID: 7, Ho ten: Nam Ha, Vai tro: teacher|ID: 8, Ho ten: Nam Ha, Vai tro: teacher|ID: 11, Ho ten: Cao Ha, Vai tro: teacher|ID: 12, Ho ten: Cao Hoan, Vai tro: teacher|
+Received: FETCH_ALL_TEACHER|
+Server response: 0|ID: 6, Ho ten: Giao Vien, Vai tro: teacher|ID: 7, Ho ten: Nam Ha, Vai tro: teacher|ID: 8, Ho ten: Nam Ha, Vai tro: teacher|ID: 11, Ho ten: Cao Ha, Vai tro: teacher|ID: 12, Ho ten: Cao Hoan, Vai tro: teacher|
+Received: FETCH_ALL_TEACHER|
+Server response: 0|6|Giao|Vien7|Nam|Ha8|Nam|Ha11|Cao|Ha12|Cao|Hoan
+Received: FETCH_ALL_TEACHER|
+Server response: 0|6|Giao|Vien7|Nam|Ha8|Nam|Ha11|Cao|Ha12|Cao|Hoan
+Received: FETCH_ALL_TEACHER|
+Server response: 0|6|Giao|Vien|7|Nam|Ha|8|Nam|Ha|11|Cao|Ha|12|Cao|Hoan|
+Received: FETCH_ALL_TEACHER|
+Server response: 0|6|Giao|Vien|7|Nam|Ha|8|Nam|Ha|11|Cao|Ha|12|Cao|Hoan|
+Received: FETCH_ALL_TEACHER|
+Server response: 0|6|Giao|Vien|7|Nam|Ha|8|Nam|Ha|11|Cao|Ha|12|Cao|Hoan|
+Received: FETCH_ALL_TEACHER|
+Server response: 0|6|Giao|Vien|7|Nam|Ha|8|Nam|Ha|11|Cao|Ha|12|Cao|Hoan|
+Received: FETCH_ALL_TEACHER|
+Server response: 0|6|Giao|Vien|7|Nam|Ha|8|Nam|Ha|11|Cao|Ha|12|Cao|Hoan|
+Received: FETCH_ALL_TEACHER|
+Server response: 0|6|Giao|Vien|7|Nam|Ha|8|Nam|Ha|11|Cao|Ha|12|Cao|Hoan|
+Received: FETCH_ALL_TEACHER|
+Server response: 0|6|Giao|Vien|7|Nam|Ha|8|Nam|Ha|11|Cao|Ha|12|Cao|Hoan|
+Received: FETCH_ALL_TEACHER|
+Server response: 0|6|Giao|Vien|7|Nam|Ha|8|Nam|Ha|11|Cao|Ha|12|Cao|Hoan|
+Received: FETCH_ALL_TEACHER|
+Server response: 0|6|Giao|Vien|7|Nam|Ha|8|Nam|Ha|11|Cao|Ha|12|Cao|Hoan|
+Received: FETCH_ALL_TEACHER|
+Server response: 0|6|Giao|Vien|7|Nam|Ha|8|Nam|Ha|11|Cao|Ha|12|Cao|Hoan|
+Received: FETCH_ALL_TEACHER|
+Server response: 0|6|Giao|Vien|7|jadbnjad|Ha|8|Nam|Ha|11|Cao|Ha|12|Cao|Hoan|
+Received: FETCH_ALL_TEACHER|
+Server response: 0|6|Giao|Vien|7|jadbnjad|Ha|8|Nam|Ha|11|Cao|Ha|12|Cao|Hoan|
+Received: FETCH_ALL_TEACHER|
+Server response: 0|6|Giao|Vien|7|jadbnjad|Ha|8|Nam|Ha|11|Cao|Ha|12|Cao|Hoan|
+Received: FETCH_ALL_TEACHER|
+Server response: 0|6|Giao|Vien|7|jadbnjad|Ha|8|Nam|Ha|11|Cao|Ha|12|Cao|Hoan|
+Received: FETCH_ALL_TEACHER|
+Server response: 0|6|Giao|Vien|7|jadbnjad|Ha|8|Nam|Ha|11|Cao|Ha|12|Cao|Hoan|
+Received: FETCH_ALL_TEACHER|
+Server response: 0|6|Giao|Vien|7|jadbnjad|Ha|8|Nam|Ha|11|Cao|Ha|12|Cao|Hoan|
+Received: VIEW_TIME_SLOTS|6
+Server response: 9|Giao vien khong co lich ranh
+Received: FETCH_ALL_TEACHER|
+Server response: 0|6|Giao|Vien|7|jadbnjad|Ha|8|Nam|Ha|11|Cao|Ha|12|Cao|Hoan|
+Received: FETCH_ALL_TEACHER|
+Server response: 0|6|Giao|Vien|7|jadbnjad|Ha|8|Nam|Ha|11|Cao|Ha|12|Cao|Hoan|
+Received: FETCH_ALL_TEACHER|
+Server response: 0|6|Giao|Vien|7|jadbnjad|Ha|8|Nam|Ha|11|Cao|Ha|12|Cao|Hoan|
+Received: VIEW_TIME_SLOTS|6
+Server response: 9|Giao vien khong co lich ranh
+Received: FETCH_ALL_TEACHER|
+Server response: 0|6|Giao|Vien|7|jadbnjad|Ha|8|Nam|Ha|11|Cao|Ha|12|Cao|Hoan|
+Received: VIEW_TIME_SLOTS|7
+Server response: 9|Giao vien khong co lich ranh
+Received: FETCH_ALL_TEACHER|
+Server response: 0|6|Giao|Vien|7|jadbnjad|Ha|8|Nam|Ha|11|Cao|Ha|12|Cao|Hoan|
+Received: VIEW_TIME_SLOTS|6
+Server response: 0|2024-11-15|[|1|05:00:00|06:00:00|2024-11-15|group|free|6|]|2024-11-20|[|2|03:30:00|06:00:00|2024-11-20|group|free|6|]|2024-12-05|[|3|05:12:00|08:23:00|2024-12-05|both|free|6|]|
