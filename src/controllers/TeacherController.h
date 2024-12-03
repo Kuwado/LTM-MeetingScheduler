@@ -24,7 +24,8 @@ class TeacherController {
 
     Response decalreTimeSlot(const Timeslot &timeslot) {
         Response res;
-        bool same = timeslotRepository.check(timeslot);
+        bool same = timeslotRepository.check(timeslot.getStart(), timeslot.getEnd(), timeslot.getDate(),
+                                             timeslot.getTeacherId());
 
         if (same) {
             res.setStatus(6);

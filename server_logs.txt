@@ -1,2 +1,75 @@
 Received: REGISTER
 Server response: 0|Dang ky thanh cong
+Received: LOGIN|kuwado646|123
+Server response: 1|Tên đăng nhập không chính xác!
+Received: LOGIN|kuwado|123
+Server response: 0|5|student|Dang nhap thanh cong
+Received: LOGIN|kuwado|123
+Server response: 0|5|student|Dang nhap thanh cong
+Received: LOGIN|kuwado|123
+Server response: 0|5|student|Dang nhap thanh cong
+Received: LOGIN||
+Server response: 1|Tên đăng nhập không chính xác!
+Received: LOGIN||
+Received: LOGIN|kuwado|123
+Server response: 0|5|student|Dang nhap thanh cong
+Received: LOGIN||
+Received: LOGIN|kuwado|123
+Server response: 0|5|student|Dang nhap thanh cong
+Received: LOGIN||
+Received: LOGIN|kuwado|123
+Server response: 0|5|student|Dang nhap thanh cong
+Received: LOGIN||
+Received: LOGIN|kuwado|123
+Server response: 0|5|student|Dang nhap thanh cong
+Received: LOGIN|kuwado|123
+Server response: 0|5|student|Dang nhap thanh cong
+Received: LOGIN||
+Received: LOGIN||
+Received: LOGIN||
+Received: LOGIN|kuwado|123
+Server response: 0|5|student|Dang nhap thanh cong
+Received: LOGIN||
+Server response: 1|Tên đăng nhập không chính xác!
+Received: LOGIN|kuwado|123
+Server response: 0|5|student|Dang nhap thanh cong
+Received: LOGIN||
+Received: LOGIN|kuwado|123
+Server response: 0|5|student|Dang nhap thanh cong
+Received: LOGIN||
+Received: LOGIN|kuwado|123
+Server response: 0|5|student|Dang nhap thanh cong
+Received: LOGIN|kuwado|123
+Server response: 0|5|student|Dang nhap thanh cong
+Received: LOGIN|kuwado|123
+Server response: 0|5|student|Dang nhap thanh cong
+Received: LOGIN|kuwado|123
+Server response: 0|5|student|Dang nhap thanh cong
+Received: LOGIN||
+Received: LOGIN|kuwado|123
+Server response: 0|5|student|Dang nhap thanh cong
+Received: LOGIN||
+Server response: 1|Tên đăng nhập không chính xác!
+Received: LOGIN|kuwado|123
+Server response: 0|5|student|Dang nhap thanh cong
+Received: LOGIN|kuwado|123
+Server response: 0|5|student|Dang nhap thanh cong
+Received: LOGIN||
+Server response: 1|Tên đăng nhập không chính xác!
+Received: LOGIN||
+Server response: 1|Tên đăng nhập không chính xác!
+Received: LOGIN|kuwado|123
+Server response: 0|5|student|Dang nhap thanh cong
+Received: LOGIN||
+Received: VIEW_TIME_SLOTS|6
+Server response: 0|
+Received: LOGIN|kuwado|123
+Server response: 0|5|student|Dang nhap thanh cong
+Received: REGISTER|caothuha|123|teacher|Cao|Ha
+Server response: 0|0|caothuha|123|teacher|Cao|Ha|Dang ky thanh cong
+Received: REGISTER|caothuhoan|123|teacher|Cao|Hoan
+Server response: 0|12|caothuhoan|123|teacher|Cao|Hoan|Dang ky thanh cong
+Received: REGISTER|caothuhoan|123|teacher|Cao|Ha
+Server response: 1|Tên đăng nhập da ton tai!
+Received: REGISTER|caothuhoan|123|teacher|Cao|Hoan
+Server response: 1|Tên đăng nhập da ton tai!

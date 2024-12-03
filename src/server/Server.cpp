@@ -51,13 +51,34 @@ vector<string> splitString(const string &str, char delimiter) {
 
 void processClientRequest(int clientSocket, const string &request) {
     string response;
-    cout << request << endl;
     string command = request.substr(0, request.find('|'));
     vector<string> result = splitString(request, '|');
     Response res;
 
     if (command == "REGISTER") {
-        response = MessageUtils::createMessage(Status::SUCCESS, "Dang ky thanh cong");
+        string username = result[1];
+        string password = result[2];
+        string role = result[3];
+        string first_name = result[4];
+        string last_name = result[5];
+
+        res = userController.registerA(username);
+        if (res.getStatus() == 0) {
+            User newUser(username, password, role, first_name, last_name);
+            userRepo.create(newUser);
+        }
+        if (res.getStatus() == 0) {
+            string message = res.getMessage();
+            User newUser = userRepo.getUserByUsername(username);
+            message = to_string(newUser.getId()) + "|" 
+                + newUser.getUsername() + "|" 
+                + newUser.getPassword() + "|" 
+                + newUser.getRole() + "|" 
+                + newUser.getFirstName() + "|" 
+                + newUser.getLastName() + "|" + message;
+
+            res.setMessage(message);
+        }
     } else if (command == "LOGIN") {
         string username = result[1];
         string password = result[2];
@@ -70,13 +91,14 @@ void processClientRequest(int clientSocket, const string &request) {
         }
     } else if (command == "VIEW_TIME_SLOTS") {
         int teacher_id = stoi(result[1]);
-        cout << result[1] << endl;
         res = responseController.viewTimeslots(teacher_id);
     } else if (command == "FETCH_ALL_TEACHER") {
         res = studentResponseController.getAllTeacher();
-    }
-    
-    else {
+    } else if (command == "UPDATE_TIME_SLOT") {
+        res = responseController.updateTimeslot(request);
+    } else if (command == "DECLARE_TIME_SLOT") {
+        res = responseController.declareTimeslot(request);
+    } else {
         response = MessageUtils::createMessage(Status::UNKNOWN_ERROR, "Yeu cau khong hop le");
     }
 

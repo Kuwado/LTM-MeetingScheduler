@@ -20,6 +20,19 @@ class ResponseController {
   public:
     ResponseController() {}
 
+    vector<string> splitString(const string &str, char delimiter) {
+        vector<string> tokens;
+        string token;
+        stringstream ss(str);
+
+        // Sử dụng getline để tách chuỗi
+        while (getline(ss, token, delimiter)) {
+            tokens.push_back(token);
+        }
+        return tokens;
+    }
+
+    // Teacher
     Response viewTimeslots(const int &teacher_id) {
         Response res;
         User user = userRepository.getUserById(teacher_id);
@@ -44,6 +57,51 @@ class ResponseController {
                 res.setStatus(0);
                 res.setMessage(message);
             }
+        }
+
+        return res;
+    }
+
+    Response updateTimeslot(const string message) {
+        Response res;
+        vector<string> tokens = splitString(message, '|');
+        int id = stoi(tokens[1]);
+        string start = tokens[2];
+        string end = tokens[3];
+        string type = tokens[4];
+        Timeslot ts = timeslotRepo.getTimeslotById(id);
+        if (ts.getId() == 0) {
+            res.setStatus(14);
+            res.setMessage("Khong tim thay khe thoi gian");
+        } else if (timeslotRepo.check2(start, end, ts.getDate(), ts.getTeacherId(), id)) {
+            res.setStatus(13);
+            res.setMessage("Thoi gian khong hop le");
+        } else {
+            timeslotRepo.updateTimeAndType(id, start, end, type);
+            res.setStatus(0);
+            res.setMessage("Sua doi thoi gian ranh thanh cong");
+        }
+
+        return res;
+    }
+
+    Response declareTimeslot(const string message) {
+        Response res;
+        vector<string> tokens = splitString(message, '|');
+        cout << message << endl;
+        string start = tokens[1];
+        string end = tokens[2];
+        string date = tokens[3];
+        string type = tokens[4];
+        int teacher_id = stoi(tokens[5]);
+        Timeslot ts(start, end, date, type, teacher_id);
+        if (timeslotRepo.check(start, end, date, teacher_id)) {
+            res.setStatus(13);
+            res.setMessage("Thoi gian khong hop le");
+        } else {
+            timeslotRepo.create(ts);
+            res.setStatus(0);
+            res.setMessage("Khai bao thoi gian ranh thanh cong");
         }
 
         return res;

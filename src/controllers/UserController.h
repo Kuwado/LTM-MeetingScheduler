@@ -34,6 +34,20 @@ class UserController {
         return res;
     }
 
+    Response registerA(const string &username) {
+        Response res;
+        User user = userRepository.getUserByUsername(username);
+        if (user.getId() != 0) {
+            res.setStatus(3);
+            res.setMessage("Tên đăng nhập da ton tai!");
+        } else {
+            res.setStatus(0);
+            res.setMessage("Dang ky thanh cong");
+        }
+
+        return res;
+    }
+
     void registerAccount() {
         bool choiceChoosen = false, usernameExist = true;
         int choice;

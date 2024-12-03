@@ -27,6 +27,46 @@ class UserView {
         cout << "--------------------------------------------" << endl;
         return info;
     }
+
+    map<string, string> showRegisterA() {
+        map<string, string> info;
+        cout << "-----------------Dang ky-------------------" << endl;
+
+        // Nhập tên đăng ký
+        cout << "Nhập tên đăng ký: ";
+        string username;
+        getline(cin, username);
+        info["username"] = username;
+
+        // Nhập mật khẩu
+        cout << "Nhập mật khẩu: ";
+        string password;
+        getline(cin, password);
+        info["password"] = password;
+
+        // Nhập vai trò
+        cout << "Nhập vai trò (student/teacher): ";
+        string role;
+        getline(cin, role);
+        info["role"] = role;
+
+        // Nhập first name
+        cout << "Nhập họ: ";
+        string firstName;
+        getline(cin, firstName);
+        info["first_name"] = firstName;
+
+        // Nhập last name
+        cout << "Nhập tên: ";
+        string lastName;
+        getline(cin, lastName);
+        info["last_name"] = lastName;
+
+        cout << "--------------------------------------------" << endl;
+
+        return info;
+  }
+
 };
 
 #endif
