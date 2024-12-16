@@ -416,6 +416,35 @@ class TeacherView {
         }
         return report;
     }
+
+    string showUpdateStatus() {
+        int choice;
+        cout << "-------------Sua doi trang thai cuoc hen-----------------" << endl;
+        cout << "1. Cho phe duyet (pending)" << endl;
+        cout << "2. Chap nhan (confirmed)" << endl;
+        cout << "3. Dang dien ra (doing)" << endl;
+        cout << "4. Hoan thanh (completed)" << endl;
+        cout << "5. Huy (canceled)" << endl;
+        while (true) {
+            cout << "Ban muon chon trang thai nao" << endl;
+            cin >> choice;
+            cin.ignore();
+            switch (choice) {
+            case 1:
+                return "pending";
+            case 2:
+                return "confirmed";
+            case 3:
+                return "doing";
+            case 4:
+                return "completed";
+            case 5:
+                return "canceled";
+            default:
+                break;
+            }
+        }
+    }
 };
 
 #endif
