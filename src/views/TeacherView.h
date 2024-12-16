@@ -270,7 +270,67 @@ class TeacherView {
         return ts;
     }
 
-    Meeting showMeetings(const map<string, vector<Meeting>> &meetings) {}
+    Meeting showMeetings(const map<string, vector<Meeting>> &meetings) {
+        if (meetings.empty()) {
+            Meeting meeting;
+            cout << "Ban chua co cuoc hen nao" << endl;
+            return meeting;
+        }
+
+        map<int, Meeting> editMeetings;
+        int index = 0, choice = 0;
+        cout << "------------------Lich hen cua ban-------------------" << endl;
+        for (const auto &meeting : meetings) {
+            cout << "--Ngay: " << meeting.first << endl;
+            vector<Meeting> currentMeetings = meeting.second;
+            for (int i = 0; i < currentMeetings.size(); i++) {
+                index++;
+                editMeetings[index] = currentMeetings[i];
+                cout << index << ". Tu: " << currentMeetings[i].getStart() << " - Den: " << currentMeetings[i].getEnd()
+                     << "( " << currentMeetings[i].getType() << " - " << currentMeetings[i].getStatus() << " )" << endl;
+            }
+        }
+
+        cout << "-----------" << endl;
+        while (true) {
+            cout << "Ban co muon xem chi tiet hoac sua doi? Nhap so dong can sua: ";
+            cin >> choice;
+            cin.ignore();
+            if (choice > 0 && choice <= editMeetings.size()) {
+                return editMeetings[choice];
+            } else if (choice == 0) {
+                Meeting meeting;
+                meeting.setId(-1);
+                return meeting;
+            }
+        }
+    }
+
+    int showMeeting(const Meeting &meeting, const vector<User> &students) {
+        int choice;
+        cout << "-------------Thong tin lich hen-----------------" << endl;
+        cout << "Ngay: " << meeting.getDate() << endl;
+        cout << "Tu: " << meeting.getStart() << endl;
+        cout << "Den: " << meeting.getEnd() << endl;
+        cout << "Loai: " << meeting.getType() << endl;
+        cout << "Trang thai: " << meeting.getStatus() << endl;
+        cout << "Nguoi hen: " << meeting.getStatus() << endl;
+        cout << "Van ban cuoc hop: " << meeting.getReport() << endl;
+        cout << "Nguoi hen: " << endl;
+        for (const auto &student : students) {
+            cout << " - " << student.getFirstName() << " " << student.getLastName() << endl;
+        }
+        cout << "------------------" << endl;
+        while (true) {
+            cout << "Ban co muon chinh sua gi khong(1 de sua van ban cuoc hop, 2 de sua trang thai, 0 de quai lai)"
+                 << endl;
+            cin >> choice;
+            cin.ignore();
+            if (choice == 0 || choice == 1 || choice == 2) {
+                return choice;
+            }
+        }
+    }
 };
 
 #endif

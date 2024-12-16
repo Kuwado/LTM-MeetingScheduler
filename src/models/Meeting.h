@@ -45,6 +45,11 @@ class Meeting {
     void setEnd(const string &newEnd) { end = newEnd; }
     void setDate(const string &newDate) { date = newDate; }
 
+    string toString() {
+        return to_string(id) + "|" + to_string(teacher_id) + "|" + status + "|" + type + "|" + report + "|" + start +
+               "|" + end + "|" + date;
+    }
+
     void show() {
         cout << "Meeting, Id: " << id << " ,teacher_id: " << teacher_id << " ,status: " << status << " ,type: " << type
              << " ,start: " << start << " ,end: " << end << " ,date: " << date << endl;

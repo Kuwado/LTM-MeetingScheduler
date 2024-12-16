@@ -1,6 +1,8 @@
 #include "../Status.h"
 #include "../controllers/ResponseController.h"
 #include "../controllers/StudentResponseController.h"
+#include "../controllers/TeacherResponseController.h"
+
 #include "../controllers/UserController.h"
 
 #include "../models/Response.h"
@@ -25,6 +27,7 @@ using namespace std;
 
 ResponseController responseController;
 StudentResponseController studentResponseController;
+TeacherResponseController teacherResponseController;
 UserController userController;
 UserRepository userRepo;
 
@@ -92,6 +95,12 @@ void processClientRequest(int clientSocket, const string &request) {
         res = responseController.updateTimeslot(request);
     } else if (command == "DECLARE_TIME_SLOT") {
         res = responseController.declareTimeslot(request);
+    } else if (command == "VIEW_MEETINGS") {
+        int teacher_id = stoi(result[1]);
+        res = teacherResponseController.viewMeetings(teacher_id);
+    } else if (command == "VIEW_MEETING") {
+        int meeting_id = stoi(result[1]);
+        res = teacherResponseController.viewMeeting(meeting_id);
     } else {
         response = MessageUtils::createMessage(Status::UNKNOWN_ERROR, "Yeu cau khong hop le");
     }

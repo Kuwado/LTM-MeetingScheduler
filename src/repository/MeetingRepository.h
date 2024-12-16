@@ -94,6 +94,37 @@ class MeetingRepository {
 
         return timeslots;
     }
+
+    Meeting getMeetingById(const int &id) {
+        Meeting meeting;
+        if (db.connect()) {
+            string query = "SELECT * FROM meetings WHERE id  = ?";
+            try {
+                sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
+                pstmt->setInt(1, id);
+                sql::ResultSet *res = pstmt->executeQuery();
+
+                if (res->next()) {
+                    meeting.setId(res->getInt("id"));
+                    meeting.setStart(res->getString("start"));
+                    meeting.setEnd(res->getString("end"));
+                    meeting.setDate(res->getString("date"));
+                    meeting.setType(res->getString("type"));
+                    meeting.setStatus(res->getString("status"));
+                    meeting.setTeacherId(res->getInt("teacher_id"));
+                    meeting.setReport(res->getString("report"));
+                }
+
+                delete res;
+                delete pstmt;
+            } catch (sql::SQLException &e) {
+                std::cerr << "Lỗi khi lấy dữ liệu từ timeslots: " << e.what() << std::endl;
+            }
+        } else {
+            cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
+        }
+        return meeting;
+    }
 };
 
 #endif

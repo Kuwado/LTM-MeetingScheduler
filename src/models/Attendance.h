@@ -21,8 +21,8 @@ class Attendance {
 
     // Setter
     void setId(const int &newId) { id = newId; }
-    void setTeacherId(const int &newMeetingId) { meeting_id = newMeetingId; }
-    void setTeacherId(const int &newStudentId) { student_id = newStudentId; }
+    void setMeetingId(const int &newMeetingId) { meeting_id = newMeetingId; }
+    void setStudentId(const int &newStudentId) { student_id = newStudentId; }
 
     void show() {
         cout << "Attendance, Id: " << id << " ,meeting_id: " << meeting_id << " ,student_id: " << student_id << endl;
