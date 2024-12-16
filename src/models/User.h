@@ -34,6 +34,10 @@ class User {
     void setFirstName(const string &fname) { first_name = fname; }
     void setLastName(const string &lname) { last_name = lname; }
 
+    string toStringProfile() {
+      return to_string(id) + "|" + first_name + "|" + last_name;
+    }
+
     void show() {
         cout << "User: " << username << " ,pass: " << password << " ,role: " << role << " , ho: " << first_name
              << ", ten: " << last_name << endl;

@@ -38,15 +38,7 @@ class StudentView {
         }
     }
 
-    int selectTeacher(const vector<User> &users) {
-        vector<User> teachers;
-
-        for (const auto &user : users) {
-            if (user.getRole() == "teacher") {
-                teachers.push_back(user);
-            }
-        }
-
+    int selectTeacher(const vector<User> &teachers) {
         if (teachers.empty()) {
             cout << "Không có giáo viên nào để chọn." << endl;
             return -1;
