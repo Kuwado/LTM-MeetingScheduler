@@ -54,11 +54,53 @@ class MeetingRepository {
         }
     }
 
-    map<string, vector<Meeting>> getMeetingsByTeacherId(const int &teacher_id) {
+    map<string, vector<Meeting>> getWaitingMeetingsByTeacherId(const int &teacher_id) {
         map<string, vector<Meeting>> timeslots;
 
         if (db.connect()) {
-            string query = "SELECT * FROM meetings WHERE teacher_id = ?";
+            string query = "SELECT * FROM meetings WHERE teacher_id = ? AND (status = 'pending' OR status = "
+                           "'confirmed' OR status = 'doing')";
+            try {
+                sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
+                pstmt->setInt(1, teacher_id);
+                sql::ResultSet *res = pstmt->executeQuery();
+
+                while (res->next()) {
+                    Meeting meeting;
+                    meeting.setId(res->getInt("id"));
+                    meeting.setTeacherId(res->getInt("teacher_id"));
+                    meeting.setStatus(res->getString("status"));
+                    meeting.setType(res->getString("type"));
+                    meeting.setReport(res->getString("report"));
+                    meeting.setStart(res->getString("start"));
+                    meeting.setEnd(res->getString("end"));
+                    meeting.setDate(res->getString("date"));
+                    string date = meeting.getDate();
+                    timeslots[date].push_back(meeting);
+                }
+                delete res;
+                delete pstmt;
+            } catch (sql::SQLException &e) {
+                std::cerr << "Lỗi khi lấy dữ liệu từ meetings: " << e.what() << std::endl;
+            }
+        } else {
+            cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
+        }
+
+        // Sắp xếp lại Timeslots trong mỗi ngày theo giờ tăng dần
+        for (auto &entry : timeslots) {
+            sort(entry.second.begin(), entry.second.end(),
+                 [](const Meeting &a, const Meeting &b) { return a.getStart() < b.getStart(); });
+        }
+
+        return timeslots;
+    }
+
+    map<string, vector<Meeting>> getDoneMeetingsByTeacherId(const int &teacher_id) {
+        map<string, vector<Meeting>> timeslots;
+
+        if (db.connect()) {
+            string query = "SELECT * FROM meetings WHERE teacher_id = ? AND status = 'completed' ";
             try {
                 sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
                 pstmt->setInt(1, teacher_id);
@@ -124,6 +166,29 @@ class MeetingRepository {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
         return meeting;
+    }
+
+    void updateReport(const int &id, const string &report) {
+        if (db.connect()) {
+            string query = "UPDATE meetings SET report = ? WHERE id = ?";
+            try {
+                sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
+                pstmt->setString(1, report);
+                pstmt->setInt(2, id);
+
+                int rowsUpdated = pstmt->executeUpdate();
+                if (rowsUpdated > 0) {
+                    cout << "Cập nhật thành công meeting với id: " << id << endl;
+                } else {
+                    cout << "Không tìm thấy meeting với id: " << id << endl;
+                }
+                delete pstmt;
+            } catch (sql::SQLException &e) {
+                cerr << "Lỗi khi cập nhật meeting: " << e.what() << endl;
+            }
+        } else {
+            cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
+        }
     }
 };
 
