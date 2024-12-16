@@ -163,24 +163,21 @@ void handleTeacherMenu() {
 }
 
 // Student
-void handleStudentCommand(const string &cmd) {
-    cout << cmd << endl;
-    if (cmd == "FETCH_ALL_TEACHER") {
-        string requestTeacher = "FETCH_ALL_TEACHER|";
-        string responseTeacher = sendRequestToServer(requestTeacher);
-        string statusTeacher = responseTeacher.substr(0, responseTeacher.find("|"));
-        if (statusTeacher == "0") {
-            vector<User> teachers = clientController.parseTeachersFromResponse(responseTeacher);
-            int teacherId = studentView.selectTeacher(teachers);
-            string request = cmd + "|" + to_string(teacherId);
-            cout << request << endl;
-            string response = sendRequestToServer(request);
-            string status = response.substr(0, response.find('|'));
-            cout << status << endl;
-            if (status == "0") {
-                map<string, vector<Timeslot>> timeslots = clientController.viewTimeslots(response);
-                Timeslot ts = studentView.showAvailableSlots(timeslots);
-            }
+void handleStudentCommand() {
+    string requestTeacher = "FETCH_ALL_TEACHER|";
+    string responseTeacher = sendRequestToServer(requestTeacher);
+    string statusTeacher = responseTeacher.substr(0, responseTeacher.find("|"));
+    if (statusTeacher == "0") {
+        vector<User> teachers = clientController.parseTeachersFromResponse(responseTeacher);
+        int teacherId = studentView.selectTeacher(teachers);
+        string request = "VIEW_TIME_SLOTS|" + to_string(teacherId);
+        cout << request << endl;
+        string response = sendRequestToServer(request);
+        string status = response.substr(0, response.find('|'));
+        cout << status << endl;
+        if (status == "0") {
+            map<string, vector<Timeslot>> timeslots = clientController.viewTimeslots(response);
+            Timeslot ts = studentView.showAvailableSlots(timeslots);
         }
     }
 }
@@ -192,7 +189,7 @@ void handleStudentMenu() {
         logout();
         break;
     case 1:
-        handleStudentCommand("FETCH_ALL_TEACHER");
+        handleStudentCommand();
         handleStudentMenu();
         break;
     case 2:
