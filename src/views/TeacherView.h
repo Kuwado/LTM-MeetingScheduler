@@ -1,5 +1,6 @@
 #ifndef TEACHERVIEW_H
 #define TEACHERVIEW_H
+#include "../models/Meeting.h"
 #include "../models/Timeslot.h"
 #include "../utils/Utils.h"
 #include <iostream>
@@ -268,6 +269,8 @@ class TeacherView {
         ts.setType(type);
         return ts;
     }
+
+    Meeting showMeetings(const map<string, vector<Meeting>> &meetings) {}
 };
 
 #endif

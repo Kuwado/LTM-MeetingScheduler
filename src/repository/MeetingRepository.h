@@ -7,6 +7,7 @@
 #include "UserRepository.h"
 #include <cppconn/prepared_statement.h>
 #include <iostream>
+#include <map>
 #include <vector>
 
 using namespace std;
@@ -53,8 +54,8 @@ class MeetingRepository {
         }
     }
 
-    vector<Meeting> getMeetingsByTeacherId(const int &teacher_id) {
-        vector<Meeting> timeslots;
+    map<string, vector<Meeting>> getMeetingsByTeacherId(const int &teacher_id) {
+        map<string, vector<Meeting>> timeslots;
 
         if (db.connect()) {
             string query = "SELECT * FROM meetings WHERE teacher_id = ?";
@@ -73,7 +74,8 @@ class MeetingRepository {
                     meeting.setStart(res->getString("start"));
                     meeting.setEnd(res->getString("end"));
                     meeting.setDate(res->getString("date"));
-                    timeslots.push_back(meeting);
+                    string date = meeting.getDate();
+                    timeslots[date].push_back(meeting);
                 }
                 delete res;
                 delete pstmt;
@@ -82,6 +84,12 @@ class MeetingRepository {
             }
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
+        }
+
+        // Sắp xếp lại Timeslots trong mỗi ngày theo giờ tăng dần
+        for (auto &entry : timeslots) {
+            sort(entry.second.begin(), entry.second.end(),
+                 [](const Meeting &a, const Meeting &b) { return a.getStart() < b.getStart(); });
         }
 
         return timeslots;
