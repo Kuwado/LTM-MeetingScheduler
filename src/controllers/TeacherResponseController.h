@@ -94,7 +94,6 @@ class TeacherResponseController {
     Response declareTimeslot(const string message) {
         Response res;
         vector<string> tokens = splitString(message, '|');
-        cout << message << endl;
         string start = tokens[1];
         string end = tokens[2];
         string date = tokens[3];

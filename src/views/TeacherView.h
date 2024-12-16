@@ -335,7 +335,7 @@ class TeacherView {
     string showEditReport(const Meeting &meeting) {
         string report = "";
         cout << "-------------Van ban cuoc hop-----------------" << endl;
-    }
+        }
 };
 
 #endif

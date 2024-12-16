@@ -8,6 +8,7 @@
 #include "../views/TeacherView.h"
 #include "../views/UserView.h"
 
+#include <algorithm>
 #include <arpa/inet.h>
 #include <iostream>
 #include <map>
@@ -68,19 +69,56 @@ vector<string> splitString(const string &str, char delimiter) {
     return tokens;
 }
 
+bool endsWith(const string &str, const string &suffix) {
+    if (str.size() >= suffix.size()) {
+        return str.substr(str.size() - suffix.size()) == suffix;
+    }
+    return false;
+}
+
 string sendRequestToServer(const string &command) {
-    send(clientSocket, command.c_str(), command.size(), 0);
+    // send(clientSocket, command.c_str(), command.size(), 0);
+    int totalSize = command.size();
+    int offset = 0;
+
+    // Gửi chuỗi theo từng phần nhỏ
+    while (offset < totalSize) {
+        // Tính toán độ dài của phần gửi
+        int partSize = min(BUFFER_SIZE, totalSize - offset);
+
+        // Gửi phần chuỗi
+        int bytesSent = send(clientSocket, command.c_str() + offset, partSize, 0);
+
+        if (bytesSent < 0) {
+            cerr << "Lỗi khi gửi dữ liệu!" << endl;
+            break;
+        }
+
+        // Cập nhật offset để gửi phần tiếp theo
+        offset += bytesSent;
+    }
 
     // Nhận phản hồi từ server
     char buffer[BUFFER_SIZE];
-    int bytesReceived = recv(clientSocket, buffer, BUFFER_SIZE, 0);
-    if (bytesReceived > 0) {
-        string response(buffer, bytesReceived);
+    string response;
+    while (true) {
+        int bytesReceived = recv(clientSocket, buffer, BUFFER_SIZE, 0);
+        if (bytesReceived <= 0) {
+            break; // Kết thúc khi không nhận thêm dữ liệu hoặc có lỗi
+        }
+        // Chuyển buffer thành string
+        string partResponse(buffer, bytesReceived);
 
-        // cout << "Server response: " << response << endl;
-        return response;
+        // Thêm phần phản hồi vào response
+        response += partResponse;
+
+        if (endsWith(partResponse, "|<END>")) {
+            response = response.substr(0, response.length() - 6);
+            break;
+        }
     }
-    return "100";
+
+    return response.empty() ? "100" : response;
 }
 
 void logout() {
@@ -91,7 +129,7 @@ void logout() {
 // Teacher
 void handleDeclareTimeSlot() {
     Timeslot ts = teacherView.showDeclareTimeSlots(user_id);
-    string request = "DECLARE_TIME_SLOT|" + ts.toStringDeclare() + "|";
+    string request = "DECLARE_TIME_SLOT|" + ts.toStringDeclare() + "|<END>";
     cout << request << endl;
     string response = sendRequestToServer(request);
     string status = response.substr(0, response.find('|'));
@@ -103,7 +141,7 @@ void handleDeclareTimeSlot() {
 
 void handleUpdateTimeslot(const Timeslot &timeslot) {
     Timeslot tsUpdate = teacherView.showUpdateTimeslot(timeslot);
-    string request = "UPDATE_TIME_SLOT|" + tsUpdate.toStringUpdate() + "|";
+    string request = "UPDATE_TIME_SLOT|" + tsUpdate.toStringUpdate() + "|<END>";
     string response = sendRequestToServer(request);
     string status = response.substr(0, response.find('|'));
     if (status == "0") {
@@ -113,7 +151,7 @@ void handleUpdateTimeslot(const Timeslot &timeslot) {
 }
 
 void handleViewTimeslots() {
-    string request = "VIEW_TIME_SLOTS|" + to_string(user_id) + "|";
+    string request = "VIEW_TIME_SLOTS|" + to_string(user_id) + "|<END>";
     string response = sendRequestToServer(request);
     string status = response.substr(0, response.find('|'));
     if (status == "0") {
@@ -140,8 +178,13 @@ void handleViewTimeslots() {
     }
 }
 
+char randomChar() {
+    // Tạo ký tự ngẫu nhiên từ các ký tự chữ cái và số
+    char chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    return chars[rand() % (sizeof(chars) - 1)];
+}
 void handleTeacherViewMeeting(const int &meeting_id) {
-    string request = "VIEW_MEETING|" + to_string(meeting_id) + "|";
+    string request = "VIEW_MEETING|" + to_string(meeting_id) + "|<END>";
     string response = sendRequestToServer(request);
     string status = response.substr(0, response.find('|'));
     if (status == "0") {
@@ -150,15 +193,23 @@ void handleTeacherViewMeeting(const int &meeting_id) {
         if (choice == 0) {
             return;
         } else if (choice == 1) {
-            // handleUpdateTimeslot(meeting);
-            // handleViewTimeslots();
+            string randomString;
+
+            // Tạo chuỗi dài 3000 ký tự ngẫu nhiên
+            for (int i = 0; i < 3000; ++i) {
+                randomString += randomChar();
+            }
+            string request = "TEST|" + randomString + "|<END>";
+            string response = sendRequestToServer(request);
+            string status = response.substr(0, response.find('|'));
+            cout << response << endl;
         } else if (choice == 2) {
         }
     }
 }
 
 void handleTeacherViewMeetings() {
-    string request = "VIEW_MEETINGS|" + to_string(user_id) + "|";
+    string request = "VIEW_MEETINGS|" + to_string(user_id) + "|<END>";
     string response = sendRequestToServer(request);
     string status = response.substr(0, response.find('|'));
     if (status == "0") {
@@ -251,7 +302,7 @@ void handleStudentMenu() {
 
 void handleLogin() {
     map<string, string> info = userView.showLogin();
-    string loginCommand = "LOGIN|" + info["username"] + "|" + info["password"];
+    string loginCommand = "LOGIN|" + info["username"] + "|" + info["password"] + "|<END>";
     string response = sendRequestToServer(loginCommand);
     vector<string> result = splitString(response, '|');
     if (result[0] == "0") {
@@ -276,7 +327,7 @@ void handleLogin() {
 void handleRegister() {
     map<string, string> info = userView.showRegisterA(); // Lấy thông tin đăng ký
     string registerCommand = "REGISTER|" + info["username"] + "|" + info["password"] + "|" + info["role"] + "|" +
-                             info["first_name"] + "|" + info["last_name"];
+                             info["first_name"] + "|" + info["last_name"] + "|<END>";
 
     // Gửi lệnh đăng ký tới server
     string response = sendRequestToServer(registerCommand);
