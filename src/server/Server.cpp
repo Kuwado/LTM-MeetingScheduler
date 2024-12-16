@@ -92,6 +92,11 @@ void processClientRequest(int clientSocket, const string &request) {
     } else if (command == "VIEW_MEETING") {
         int meeting_id = stoi(result[1]);
         res = teacherResponseController.viewMeeting(meeting_id);
+    } else if (command == "VIEW_HISTORY") {
+        int teacher_id = stoi(result[1]);
+        res = teacherResponseController.viewHistory(teacher_id);
+    } else if (command == "ENTER_MEETING_REPORT") {
+        res = teacherResponseController.updateReport(request);
     } else if (command == "TEST") {
         cout << request << endl;
         string randomString = "";
