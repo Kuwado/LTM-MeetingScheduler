@@ -15,6 +15,7 @@
 #include <string>
 #include <sys/socket.h>
 #include <unistd.h>
+#include <utility>
 #include <vector>
 
 #define SERVER_IP "127.0.0.1"
@@ -138,6 +139,42 @@ void handleViewTimeslots() {
     }
 }
 
+void handleTeacherViewMeeting(const int &meeting_id) {
+    string request = "VIEW_MEETING|" + to_string(meeting_id);
+    string response = sendRequestToServer(request);
+    string status = response.substr(0, response.find('|'));
+    if (status == "0") {
+        pair<Meeting, vector<User>> meetingDetail = teacherController.getMeetingFromResponse(response);
+        int choice = teacherView.showMeeting(meetingDetail.first, meetingDetail.second);
+        if (choice == 0) {
+            return;
+        } else if (choice == 1) {
+            // handleUpdateTimeslot(meeting);
+            // handleViewTimeslots();
+        } else if (choice == 2) {
+        }
+    }
+}
+
+void handleTeacherViewMeetings() {
+    string request = "VIEW_MEETINGS|" + to_string(user_id);
+    string response = sendRequestToServer(request);
+    string status = response.substr(0, response.find('|'));
+    if (status == "0") {
+        map<string, vector<Meeting>> meetings = teacherController.getMeetingsFromResponse(response);
+        Meeting meeting = teacherView.showMeetings(meetings);
+        if (meeting.getId() == -1) {
+            return;
+        }
+        // Detail Meeting
+        handleTeacherViewMeeting(meeting.getId());
+        handleTeacherViewMeetings();
+    } else if (status == "16") {
+        vector<string> tokens = splitString(response, '|');
+        cout << tokens[1] << endl;
+    }
+}
+
 void handleTeacherMenu() {
     int choice = teacherView.showMenu();
     switch (choice) {
@@ -153,6 +190,8 @@ void handleTeacherMenu() {
         handleTeacherMenu();
         break;
     case 3:
+        handleTeacherViewMeetings();
+        handleTeacherMenu();
         break;
     case 4:
         break;
