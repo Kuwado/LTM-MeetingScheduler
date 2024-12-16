@@ -101,6 +101,12 @@ void processClientRequest(int clientSocket, const string &request) {
         }
         res.setStatus(123);
         res.setMessage(randomString + "|");
+    } else if (command == "BOOK_MEETING") {
+        res = studentResponseController.bookMeeting(request);
+    } else if (command == "FETCH_STUDENT_MEETINGS"){
+        res = studentResponseController.getMeetingsByStudent(request);
+    } else if (command == "CANCEL_MEETING"){
+        res = studentResponseController.cancelMeeting(request);
     } else {
         response = MessageUtils::createMessage(Status::UNKNOWN_ERROR, "Yeu cau khong hop le");
     }

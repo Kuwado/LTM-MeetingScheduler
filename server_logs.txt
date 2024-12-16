@@ -73,3 +73,45 @@ Received: REGISTER|caothuhoan|123|teacher|Cao|Ha
 Server response: 1|Tên đăng nhập da ton tai!
 Received: REGISTER|caothuhoan|123|teacher|Cao|Hoan
 Server response: 1|Tên đăng nhập da ton tai!
+Received: LOGIN|haha|123|<END>
+Server response: 0|1|student|Dang nhap thanh cong|<END>
+Received: FETCH_ALL_TEACHER||<END>
+Server response: 0|6|Giao|Vien|7|Giao|Vien2|8|giao|vien|9|le|le|10|ll|ss|11|giao|vien|<END>
+Received: VIEW_TIME_SLOTS|6|<END>
+Server response: 0|2024-11-05|[|5|06:20:00|06:45:00|2024-11-05|both|free|6|3|06:32:00|07:10:00|2024-11-05|both|free|6|6|15:20:00|15:30:00|2024-11-05|personal|free|6|7|15:25:00|15:40:00|2024-11-05|group|free|6|9|15:35:00|15:50:00|2024-11-05|group|free|6|4|15:50:12|16:30:00|2024-11-05|group|free|6|8|16:00:00|16:20:00|2024-11-05|group|free|6|]|2024-11-15|[|1|07:50:00|09:15:00|2024-11-15|both|free|6|]|2024-11-20|[|2|03:30:00|06:00:00|2024-11-20|group|free|6|]|2024-12-03|[|10|05:12:00|06:13:00|2024-12-03|personal|free|6|11|09:10:00|10:00:00|2024-12-03|personal|free|6|]|<END>
+Received: BOOK_MEETING|15:20:00|15:30:00|2024-11-05|personal|6|6|<END>
+Server response: 0|Đặt lịch họp thành công.<END>
+Received: LOGIN|haha|123|<END>
+Server response: 0|1|student|Dang nhap thanh cong|<END>
+Received: FETCH_ALL_TEACHER||<END>
+Server response: 0|6|Giao|Vien|7|Giao|Vien2|8|giao|vien|9|le|le|10|ll|ss|11|giao|vien|<END>
+Received: VIEW_TIME_SLOTS|6|<END>
+Server response: 0|2024-11-05|[|5|06:20:00|06:45:00|2024-11-05|both|free|6|3|06:32:00|07:10:00|2024-11-05|both|free|6|6|15:20:00|15:30:00|2024-11-05|personal|free|6|7|15:25:00|15:40:00|2024-11-05|group|free|6|9|15:35:00|15:50:00|2024-11-05|group|free|6|4|15:50:12|16:30:00|2024-11-05|group|free|6|8|16:00:00|16:20:00|2024-11-05|group|free|6|]|2024-11-15|[|1|07:50:00|09:15:00|2024-11-15|both|free|6|]|2024-11-20|[|2|03:30:00|06:00:00|2024-11-20|group|free|6|]|2024-12-03|[|10|05:12:00|06:13:00|2024-12-03|personal|free|6|11|09:10:00|10:00:00|2024-12-03|personal|free|6|]|<END>
+Received: BOOK_MEETING|15:20:00|15:30:00|2024-11-05|personal|6|6|<END>
+Server response: 0|Đặt lịch họp thành công.<END>
+Received: LOGIN|haha|123|<END>
+Server response: 0|1|student|Dang nhap thanh cong|<END>
+Received: FETCH_ALL_TEACHER||<END>
+Server response: 0|6|Giao|Vien|7|Giao|Vien2|8|giao|vien|9|le|le|10|ll|ss|11|giao|vien|<END>
+Received: VIEW_TIME_SLOTS|6|<END>
+Server response: 0|2024-11-05|[|5|06:20:00|06:45:00|2024-11-05|both|free|6|3|06:32:00|07:10:00|2024-11-05|both|free|6|6|15:20:00|15:30:00|2024-11-05|personal|busy|6|7|15:25:00|15:40:00|2024-11-05|group|free|6|9|15:35:00|15:50:00|2024-11-05|group|free|6|4|15:50:12|16:30:00|2024-11-05|group|free|6|8|16:00:00|16:20:00|2024-11-05|group|free|6|]|2024-11-15|[|1|07:50:00|09:15:00|2024-11-15|both|free|6|]|2024-11-20|[|2|03:30:00|06:00:00|2024-11-20|group|free|6|]|2024-12-03|[|10|05:12:00|06:13:00|2024-12-03|personal|free|6|11|09:10:00|10:00:00|2024-12-03|personal|free|6|]|<END>
+Received: LOGIN|haha|123|<END>
+Server response: 0|1|student|Dang nhap thanh cong|<END>
+Received: FETCH_ALL_TEACHER||<END>
+Server response: 0|6|Giao|Vien|7|Giao|Vien2|8|giao|vien|9|le|le|10|ll|ss|11|giao|vien|<END>
+Received: VIEW_TIME_SLOTS|6|<END>
+Server response: 0|2024-11-05|[|5|06:20:00|06:45:00|2024-11-05|both|free|6|3|06:32:00|07:10:00|2024-11-05|both|free|6|6|15:20:00|15:30:00|2024-11-05|personal|busy|6|7|15:25:00|15:40:00|2024-11-05|group|free|6|9|15:35:00|15:50:00|2024-11-05|group|free|6|4|15:50:12|16:30:00|2024-11-05|group|free|6|8|16:00:00|16:20:00|2024-11-05|group|free|6|]|2024-11-15|[|1|07:50:00|09:15:00|2024-11-15|both|free|6|]|2024-11-20|[|2|03:30:00|06:00:00|2024-11-20|group|free|6|]|2024-12-03|[|10|05:12:00|06:13:00|2024-12-03|personal|free|6|11|09:10:00|10:00:00|2024-12-03|personal|free|6|]|<END>
+Received: BOOK_MEETING|05:12:00|06:13:00|2024-12-03|personal|6|10|<END>
+Server response: 0|Dat lich hop thanh cong |<END>
+Received: FETCH_ALL_TEACHER||<END>
+Server response: 0|6|Giao|Vien|7|Giao|Vien2|8|giao|vien|9|le|le|10|ll|ss|11|giao|vien|<END>
+Received: VIEW_TIME_SLOTS|6|<END>
+Server response: 0|2024-11-05|[|5|06:20:00|06:45:00|2024-11-05|both|free|6|3|06:32:00|07:10:00|2024-11-05|both|free|6|6|15:20:00|15:30:00|2024-11-05|personal|busy|6|7|15:25:00|15:40:00|2024-11-05|group|free|6|9|15:35:00|15:50:00|2024-11-05|group|free|6|4|15:50:12|16:30:00|2024-11-05|group|free|6|8|16:00:00|16:20:00|2024-11-05|group|free|6|]|2024-11-15|[|1|07:50:00|09:15:00|2024-11-15|both|free|6|]|2024-11-20|[|2|03:30:00|06:00:00|2024-11-20|group|free|6|]|2024-12-03|[|10|05:12:00|06:13:00|2024-12-03|personal|busy|6|11|09:10:00|10:00:00|2024-12-03|personal|free|6|]|<END>
+Received: LOGIN|kuwado|123|<END>
+Server response: 0|5|student|Dang nhap thanh cong|<END>
+Received: FETCH_ALL_TEACHER||<END>
+Server response: 0|6|Giao|Vien|7|Giao|Vien2|8|giao|vien|9|le|le|10|ll|ss|11|giao|vien|<END>
+Received: VIEW_TIME_SLOTS|6|<END>
+Server response: 0|2024-11-05|[|5|06:20:00|06:45:00|2024-11-05|both|free|6|3|06:32:00|07:10:00|2024-11-05|both|free|6|6|15:20:00|15:30:00|2024-11-05|personal|free|6|7|15:25:00|15:40:00|2024-11-05|group|free|6|9|15:35:00|15:50:00|2024-11-05|group|free|6|4|15:50:12|16:30:00|2024-11-05|group|free|6|8|16:00:00|16:20:00|2024-11-05|group|free|6|]|2024-11-15|[|1|07:50:00|09:15:00|2024-11-15|both|free|6|]|2024-11-20|[|2|03:30:00|06:00:00|2024-11-20|group|free|6|]|2024-12-03|[|10|05:12:00|06:13:00|2024-12-03|personal|free|6|11|09:10:00|10:00:00|2024-12-03|personal|free|6|]|<END>
+Received: BOOK_MEETING|15:20:00|15:30:00|2024-11-05|personal|6|6|5|<END>
+Server response: 0|Dat lich hop thanh cong |<END>
