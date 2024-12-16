@@ -52,6 +52,19 @@ vector<string> splitString(const string &str, char delimiter) {
     return tokens;
 }
 
+bool endsWith(const string &str, const string &suffix) {
+    if (str.size() >= suffix.size()) {
+        return str.substr(str.size() - suffix.size()) == suffix;
+    }
+    return false;
+}
+
+char randomChar() {
+    // Tạo ký tự ngẫu nhiên từ các ký tự chữ cái và số
+    char chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    return chars[rand() % (sizeof(chars) - 1)];
+}
+
 void processClientRequest(int clientSocket, const string &request) {
     string response;
     string command = request.substr(0, request.find('|'));
@@ -59,48 +72,35 @@ void processClientRequest(int clientSocket, const string &request) {
     Response res;
 
     if (command == "REGISTER") {
-        string username = result[1];
-        string password = result[2];
-        string role = result[3];
-        string first_name = result[4];
-        string last_name = result[5];
-
-        res = userController.registerA(username);
-        if (res.getStatus() == 0) {
-            User newUser(username, password, role, first_name, last_name);
-            userRepo.create(newUser);
-        }
-        if (res.getStatus() == 0) {
-            string message = res.getMessage();
-            User newUser = userRepo.getUserByUsername(username);
-            message += "|" + to_string(newUser.getId()) + "|" + newUser.getRole();
-            res.setMessage(message);
-        }
+        res = userController.registerAccount(request);
     } else if (command == "LOGIN") {
         string username = result[1];
         string password = result[2];
         res = userController.login(username, password);
-        if (res.getStatus() == 0) {
-            User user = userRepo.getUserByUsername(username);
-            string message = res.getMessage();
-            message = to_string(user.getId()) + "|" + user.getRole() + "|" + message;
-            res.setMessage(message);
-        }
     } else if (command == "VIEW_TIME_SLOTS") {
         int teacher_id = stoi(result[1]);
-        res = responseController.viewTimeslots(teacher_id);
+        res = teacherResponseController.viewTimeslots(teacher_id);
     } else if (command == "FETCH_ALL_TEACHER") {
         res = studentResponseController.getAllTeacher();
     } else if (command == "UPDATE_TIME_SLOT") {
-        res = responseController.updateTimeslot(request);
+        res = teacherResponseController.updateTimeslot(request);
     } else if (command == "DECLARE_TIME_SLOT") {
-        res = responseController.declareTimeslot(request);
+        res = teacherResponseController.declareTimeslot(request);
     } else if (command == "VIEW_MEETINGS") {
         int teacher_id = stoi(result[1]);
         res = teacherResponseController.viewMeetings(teacher_id);
     } else if (command == "VIEW_MEETING") {
         int meeting_id = stoi(result[1]);
         res = teacherResponseController.viewMeeting(meeting_id);
+    } else if (command == "TEST") {
+        cout << request << endl;
+        string randomString = "";
+        // Tạo chuỗi dài 3000 ký tự ngẫu nhiên
+        for (int i = 0; i < 3000; ++i) {
+            randomString += randomChar();
+        }
+        res.setStatus(123);
+        res.setMessage(randomString + "|");
     } else {
         response = MessageUtils::createMessage(Status::UNKNOWN_ERROR, "Yeu cau khong hop le");
     }
@@ -108,14 +108,34 @@ void processClientRequest(int clientSocket, const string &request) {
     response = to_string(res.getStatus()) + "|" + res.getMessage();
 
     // Ghi log phản hồi vào file
-    logToFile("Server response: " + response);
 
     // Gửi phản hồi về client
-    send(clientSocket, response.c_str(), response.size(), 0);
+    // send(clientSocket, response.c_str(), response.size(), 0);
+    int totalSize = response.size();
+    int offset = 0;
+    // Gửi chuỗi theo từng phần nhỏ
+    while (offset < totalSize) {
+        // Tính toán độ dài của phần gửi
+        int partSize = min(BUFFER_SIZE, totalSize - offset);
+
+        // Gửi phần chuỗi
+        int bytesSent = send(clientSocket, response.c_str() + offset, partSize, 0);
+        string sentResponse(response.c_str() + offset, bytesSent);
+        logToFile("Server response: " + sentResponse);
+
+        if (bytesSent < 0) {
+            cerr << "Lỗi khi gửi dữ liệu!" << endl;
+            break;
+        }
+
+        // Cập nhật offset để gửi phần tiếp theo
+        offset += bytesSent;
+    }
 }
 
 void handleClient(int clientSocket) {
     char buffer[BUFFER_SIZE];
+    string partialMessage;
     while (true) {
         // Nhận message từ client
         int bytesReceived = recv(clientSocket, buffer, BUFFER_SIZE, 0);
@@ -123,14 +143,21 @@ void handleClient(int clientSocket) {
             break; // Ngắt kết nối
         }
 
-        std::string request(buffer, bytesReceived);
-        std::cout << "Received: " << request << std::endl;
+        string request(buffer, bytesReceived);
+        cout << "Received: " << request << endl;
 
         // Ghi log request vào file
         logToFile("Received: " + request);
 
         // Xử lý yêu cầu từ client
-        processClientRequest(clientSocket, request);
+        if (endsWith(request, "|<END>")) {
+            partialMessage += request;
+            partialMessage = partialMessage.substr(0, partialMessage.length() - 6);
+            processClientRequest(clientSocket, partialMessage); // Process the full message
+            partialMessage.clear();                             // Clear buffer for next message
+        } else {
+            partialMessage += request; // Append to the existing buffer
+        }
     }
 
     // Đóng kết nối khi xử lý xong
