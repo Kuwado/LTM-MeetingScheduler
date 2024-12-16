@@ -186,6 +186,14 @@ void handleEditReport(const int &meeting_id, const string &report) {
     cout << tokens[1] << endl;
 }
 
+void handleUpdateStatus(const int &meeting_id, const string &mstatus) {
+    string request = "UPDATE_MEETING_STATUS|" + to_string(meeting_id) + "|" + mstatus + "|<END>";
+    string response = sendRequestToServer(request);
+    string status = response.substr(0, response.find('|'));
+    vector<string> tokens = splitString(response, '|');
+    cout << tokens[1] << endl;
+}
+
 void handleTeacherViewMeeting(const int &meeting_id) {
     string request = "VIEW_MEETING|" + to_string(meeting_id) + "|<END>";
     string response = sendRequestToServer(request);
@@ -200,6 +208,9 @@ void handleTeacherViewMeeting(const int &meeting_id) {
             handleEditReport(meeting_id, report);
             handleTeacherViewMeeting(meeting_id);
         } else if (choice == 2) {
+            string status = teacherView.showUpdateStatus();
+            handleUpdateStatus(meeting_id, status);
+            handleTeacherViewMeeting(meeting_id);
         }
     }
 }

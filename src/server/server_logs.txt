@@ -433,3 +433,43 @@ qua
 ban
 cuoc hop
 nay hay qua|14:00:00|15:30:00|2024-12-13|]|<END>
+Received: LOGIN|giaovien|123456|<END>
+Server response: 0|6|teacher|Dang nhap thanh cong|<END>
+Received: VIEW_MEETINGS|6|<END>
+Server response: 0|2024-12-15|[|2|6|pending|group||15:30:00|16:30:00|2024-12-15|]|2024-12-16|[|1|6|pending|personal||07:00:00|09:00:00|2024-12-16|]|2024-12-17|[|3|6|confirmed|personal||05:10:00|10:00:00|2024-12-17|]|2024-12-18|[|4|6|doing|personal||05:00:00|06:00:00|2024-12-18|]|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|pending|group||15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: UPDATE_MEETING_STATUS|2|doing|<END>
+Server response: 0|Sua doi trang thai cuoc hop thanh cong|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|doing|group||15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: UPDATE_MEETING_STATUS|2|canceled|<END>
+Server response: 0|Sua doi trang thai cuoc hop thanh cong|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|canceled|group||15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: UPDATE_MEETING_STATUS|2|pending|<END>
+Server response: 0|Sua doi trang thai cuoc hop thanh cong|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|pending|group||15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: UPDATE_MEETING_STATUS|2|confirmed|<END>
+Server response: 0|Sua doi trang thai cuoc hop thanh cong|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|confirmed|group||15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: ENTER_MEETING_REPORT|2|0|<END>
+Server response: 0|Sua doi van ban cuoc hop thanh cong|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|confirmed|group|0|15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: UPDATE_MEETING_STATUS|2|completed|<END>
+Server response: 0|Sua doi trang thai cuoc hop thanh cong|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|completed|group|0|15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: VIEW_MEETINGS|6|<END>
+Server response: 0|2024-12-16|[|1|6|pending|personal||07:00:00|09:00:00|2024-12-16|]|2024-12-17|[|3|6|confirmed|personal||05:10:00|10:00:00|2024-12-17|]|2024-12-18|[|4|6|doing|personal||05:00:00|06:00:00|2024-12-18|]|<END>
+Received: VIEW_HISTORY|6|<END>
+Server response: 0|2024-12-10|[|5|6|completed|group|hoan
+hao
+qua
+|10:00:00|12:00:00|2024-12-10|]|2024-12-13|[|6|6|completed|personal|van
+ban
+cuoc hop
+nay hay qua|14:00:00|15:30:00|2024-12-13|]|2024-12-15|[|2|6|completed|group|0|15:30:00|16:30:00|2024-12-15|]|<END>

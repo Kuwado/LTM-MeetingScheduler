@@ -190,6 +190,29 @@ class MeetingRepository {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
     }
+
+    void updateStatus(const int &id, const string &status) {
+        if (db.connect()) {
+            string query = "UPDATE meetings SET status = ? WHERE id = ?";
+            try {
+                sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
+                pstmt->setString(1, status);
+                pstmt->setInt(2, id);
+
+                int rowsUpdated = pstmt->executeUpdate();
+                if (rowsUpdated > 0) {
+                    cout << "Cập nhật thành công meeting với id: " << id << endl;
+                } else {
+                    cout << "Không tìm thấy meeting với id: " << id << endl;
+                }
+                delete pstmt;
+            } catch (sql::SQLException &e) {
+                cerr << "Lỗi khi cập nhật meeting: " << e.what() << endl;
+            }
+        } else {
+            cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
+        }
+    }
 };
 
 #endif

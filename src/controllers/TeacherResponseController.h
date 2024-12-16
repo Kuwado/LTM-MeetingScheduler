@@ -192,7 +192,6 @@ class TeacherResponseController {
         vector<string> tokens = splitString(message, '|');
         int meeting_id = stoi(tokens[1]);
         string report = tokens[2];
-        cout << report << endl;
         Meeting meeting = meetingRepo.getMeetingById(meeting_id);
         if (meeting.getId() == 0) {
             res.setStatus(12);
@@ -201,6 +200,23 @@ class TeacherResponseController {
             meetingRepo.updateReport(meeting_id, report);
             res.setStatus(0);
             res.setMessage("Sua doi van ban cuoc hop thanh cong|");
+        }
+        return res;
+    }
+
+    Response updateStatus(const string &message) {
+        Response res;
+        vector<string> tokens = splitString(message, '|');
+        int meeting_id = stoi(tokens[1]);
+        string status = tokens[2];
+        Meeting meeting = meetingRepo.getMeetingById(meeting_id);
+        if (meeting.getId() == 0) {
+            res.setStatus(12);
+            res.setMessage("Khong tim thay cuoc hen|");
+        } else {
+            meetingRepo.updateStatus(meeting_id, status);
+            res.setStatus(0);
+            res.setMessage("Sua doi trang thai cuoc hop thanh cong|");
         }
         return res;
     }

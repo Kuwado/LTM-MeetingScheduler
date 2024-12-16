@@ -97,6 +97,8 @@ void processClientRequest(int clientSocket, const string &request) {
         res = teacherResponseController.viewHistory(teacher_id);
     } else if (command == "ENTER_MEETING_REPORT") {
         res = teacherResponseController.updateReport(request);
+    } else if (command == "UPDATE_MEETING_STATUS") {
+        res = teacherResponseController.updateStatus(request);
     } else if (command == "TEST") {
         cout << request << endl;
         string randomString = "";
