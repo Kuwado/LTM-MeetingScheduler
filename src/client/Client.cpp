@@ -76,6 +76,7 @@ string sendRequestToServer(const string &command) {
     int bytesReceived = recv(clientSocket, buffer, BUFFER_SIZE, 0);
     if (bytesReceived > 0) {
         string response(buffer, bytesReceived);
+
         // cout << "Server response: " << response << endl;
         return response;
     }
@@ -90,7 +91,7 @@ void logout() {
 // Teacher
 void handleDeclareTimeSlot() {
     Timeslot ts = teacherView.showDeclareTimeSlots(user_id);
-    string request = "DECLARE_TIME_SLOT|" + ts.toStringDeclare();
+    string request = "DECLARE_TIME_SLOT|" + ts.toStringDeclare() + "|";
     cout << request << endl;
     string response = sendRequestToServer(request);
     string status = response.substr(0, response.find('|'));
@@ -102,7 +103,7 @@ void handleDeclareTimeSlot() {
 
 void handleUpdateTimeslot(const Timeslot &timeslot) {
     Timeslot tsUpdate = teacherView.showUpdateTimeslot(timeslot);
-    string request = "UPDATE_TIME_SLOT|" + tsUpdate.toStringUpdate();
+    string request = "UPDATE_TIME_SLOT|" + tsUpdate.toStringUpdate() + "|";
     string response = sendRequestToServer(request);
     string status = response.substr(0, response.find('|'));
     if (status == "0") {
@@ -112,7 +113,7 @@ void handleUpdateTimeslot(const Timeslot &timeslot) {
 }
 
 void handleViewTimeslots() {
-    string request = "VIEW_TIME_SLOTS|" + to_string(user_id);
+    string request = "VIEW_TIME_SLOTS|" + to_string(user_id) + "|";
     string response = sendRequestToServer(request);
     string status = response.substr(0, response.find('|'));
     if (status == "0") {
@@ -140,7 +141,7 @@ void handleViewTimeslots() {
 }
 
 void handleTeacherViewMeeting(const int &meeting_id) {
-    string request = "VIEW_MEETING|" + to_string(meeting_id);
+    string request = "VIEW_MEETING|" + to_string(meeting_id) + "|";
     string response = sendRequestToServer(request);
     string status = response.substr(0, response.find('|'));
     if (status == "0") {
@@ -157,7 +158,7 @@ void handleTeacherViewMeeting(const int &meeting_id) {
 }
 
 void handleTeacherViewMeetings() {
-    string request = "VIEW_MEETINGS|" + to_string(user_id);
+    string request = "VIEW_MEETINGS|" + to_string(user_id) + "|";
     string response = sendRequestToServer(request);
     string status = response.substr(0, response.find('|'));
     if (status == "0") {

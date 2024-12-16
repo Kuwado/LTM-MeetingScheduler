@@ -44,12 +44,12 @@ class TeacherResponseController {
         User user = userRepository.getUserById(teacher_id);
         if (user.getId() == 0) {
             res.setStatus(8);
-            res.setMessage("Giao vien khong ton tai");
+            res.setMessage("Giao vien khong ton tai|");
         } else {
             map<string, vector<Timeslot>> timeslots = timeslotRepo.getTimeslotsByTeacherId(teacher_id);
             if (timeslots.empty()) {
                 res.setStatus(9);
-                res.setMessage("Giao vien khong co lich ranh");
+                res.setMessage("Giao vien khong co lich ranh|");
             } else {
                 string message = "";
                 for (const auto &ts : timeslots) {
@@ -78,14 +78,14 @@ class TeacherResponseController {
         Timeslot ts = timeslotRepo.getTimeslotById(id);
         if (ts.getId() == 0) {
             res.setStatus(14);
-            res.setMessage("Khong tim thay khe thoi gian");
+            res.setMessage("Khong tim thay khe thoi gian|");
         } else if (timeslotRepo.check2(start, end, ts.getDate(), ts.getTeacherId(), id)) {
             res.setStatus(13);
-            res.setMessage("Thoi gian khong hop le");
+            res.setMessage("Thoi gian khong hop le|");
         } else {
             timeslotRepo.updateTimeAndType(id, start, end, type);
             res.setStatus(0);
-            res.setMessage("Sua doi thoi gian ranh thanh cong");
+            res.setMessage("Sua doi thoi gian ranh thanh cong|");
         }
 
         return res;
@@ -103,11 +103,11 @@ class TeacherResponseController {
         Timeslot ts(start, end, date, type, teacher_id);
         if (timeslotRepo.check(start, end, date, teacher_id)) {
             res.setStatus(13);
-            res.setMessage("Thoi gian khong hop le");
+            res.setMessage("Thoi gian khong hop le|");
         } else {
             timeslotRepo.create(ts);
             res.setStatus(0);
-            res.setMessage("Khai bao thoi gian ranh thanh cong");
+            res.setMessage("Khai bao thoi gian ranh thanh cong|");
         }
 
         return res;

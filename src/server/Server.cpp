@@ -116,6 +116,7 @@ void processClientRequest(int clientSocket, const string &request) {
 
 void handleClient(int clientSocket) {
     char buffer[BUFFER_SIZE];
+    string partialMessage;
     while (true) {
         // Nhận message từ client
         int bytesReceived = recv(clientSocket, buffer, BUFFER_SIZE, 0);
@@ -130,7 +131,13 @@ void handleClient(int clientSocket) {
         logToFile("Received: " + request);
 
         // Xử lý yêu cầu từ client
-        processClientRequest(clientSocket, request);
+        if (request.back() == '|') {
+            partialMessage += request;
+            processClientRequest(clientSocket, partialMessage); // Process the full message
+            partialMessage.clear();                             // Clear buffer for next message
+        } else {
+            partialMessage += request; // Append to the existing buffer
+        }
     }
 
     // Đóng kết nối khi xử lý xong
