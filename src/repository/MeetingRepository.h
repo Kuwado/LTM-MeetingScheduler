@@ -30,17 +30,18 @@ class MeetingRepository {
                 return;
             }
 
-            string query =
-                "INSERT INTO meetings (teacher_id, status, type, start, end, date ) VALUES (?, ?, ?, ?, ?, ?)";
+            string query = "INSERT INTO meetings (teacher_id, status, type, report, start, end, date ) VALUES (?, ?, "
+                           "?, ?, ?, ?, ?)";
 
             try {
                 sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
                 pstmt->setInt(1, meeting.getTeacherId());
                 pstmt->setString(2, meeting.getStatus());
                 pstmt->setString(3, meeting.getType());
-                pstmt->setString(4, meeting.getStart());
-                pstmt->setString(5, meeting.getEnd());
-                pstmt->setString(6, meeting.getDate());
+                pstmt->setString(4, meeting.getReport());
+                pstmt->setString(5, meeting.getStart());
+                pstmt->setString(6, meeting.getEnd());
+                pstmt->setString(7, meeting.getDate());
                 pstmt->executeUpdate();
                 meeting.show();
                 delete pstmt;
@@ -68,6 +69,7 @@ class MeetingRepository {
                     meeting.setTeacherId(res->getInt("teacher_id"));
                     meeting.setStatus(res->getString("status"));
                     meeting.setType(res->getString("type"));
+                    meeting.setReport(res->getString("report"));
                     meeting.setStart(res->getString("start"));
                     meeting.setEnd(res->getString("end"));
                     meeting.setDate(res->getString("date"));
