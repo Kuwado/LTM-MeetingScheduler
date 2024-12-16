@@ -1,7 +1,7 @@
 #include "../Status.h"
 #include "../controllers/ResponseController.h"
-#include "../controllers/UserController.h"
 #include "../controllers/StudentResponseController.h"
+#include "../controllers/UserController.h"
 
 #include "../models/Response.h"
 #include "../models/User.h"
@@ -70,13 +70,7 @@ void processClientRequest(int clientSocket, const string &request) {
         if (res.getStatus() == 0) {
             string message = res.getMessage();
             User newUser = userRepo.getUserByUsername(username);
-            message = to_string(newUser.getId()) + "|" 
-                + newUser.getUsername() + "|" 
-                + newUser.getPassword() + "|" 
-                + newUser.getRole() + "|" 
-                + newUser.getFirstName() + "|" 
-                + newUser.getLastName() + "|" + message;
-
+            message += "|" + to_string(newUser.getId()) + "|" + newUser.getRole();
             res.setMessage(message);
         }
     } else if (command == "LOGIN") {
