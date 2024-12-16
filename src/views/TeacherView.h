@@ -23,10 +23,12 @@ class TeacherView {
             cout << "2. Kiem tra thoi gian ranh" << endl;
             cout << "3. Xem lich hen voi sinh vien" << endl;
             cout << "4. Xem lich su cuoc hen" << endl;
+            cout << "0. Dang xuat" << endl;
             cout << "Ban muon thuc hien chuc nang nao?" << endl;
             cin >> choice;
             cin.ignore();
             switch (choice) {
+            case 0:
             case 1:
             case 2:
             case 3:

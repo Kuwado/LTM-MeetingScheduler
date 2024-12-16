@@ -4,9 +4,9 @@
 #include "../controllers/UserController.h"
 
 #include "../utils/MessageUtils.h"
+#include "../views/StudentView.h"
 #include "../views/TeacherView.h"
 #include "../views/UserView.h"
-#include "../views/StudentView.h"
 
 #include <arpa/inet.h>
 #include <iostream>
@@ -27,11 +27,12 @@ int clientSocket;
 struct sockaddr_in serverAddr;
 TeacherView teacherView;
 StudentView studentView;
+UserView userView;
 UserController userController;
 ClientController clientController;
 ResponseController responseController;
 TeacherController teacherController;
-int user_id = 6;
+int user_id = 0;
 string role = "none";
 
 void connectToServer() {
@@ -80,58 +81,9 @@ string sendRequestToServer(const string &command) {
     return "100";
 }
 
-
-
-void handleUserCommand() {
-    std::string command;
-    while (true) {
-        std::cout << "Nhap lenh (REGISTER, LOGIN, EXIT): ";
-        std::getline(std::cin, command);
-
-        if (command == "EXIT") {
-            break;
-        }
-
-        if (command == "REGISTER") {
-            UserView uv;
-            map<string, string> info = uv.showRegisterA();  // Lấy thông tin đăng ký
-            string registerCommand = "REGISTER|" + info["username"] + "|" + info["password"] + "|" + info["role"] + "|" + info["first_name"] + "|" + info["last_name"];
-            
-            // Gửi lệnh đăng ký tới server
-            string response = sendRequestToServer(registerCommand);
-            
-            // Phân tích phản hồi từ server
-            vector<string> result = splitString(response, '|');
-            if (result[0] == "0") {
-                cout << "Đăng ký thành công!" << endl;
-            } else {
-                cout << "Đăng ký thất bại, vui lòng thử lại." << endl;
-            }
-        } else if (command == "LOGIN") {
-            UserView uv;
-            map<string, string> info = uv.showLogin();
-            string loginCommand = "LOGIN|" + info["username"] + "|" + info["password"];
-            string response = sendRequestToServer(loginCommand);
-            vector<string> result = splitString(response, '|');
-            if (result[0] == "0") {
-                user_id = stoi(result[1]);
-                role = result[2];
-                cout << user_id << " - " << role << endl;
-                response = result[0] + "|" + result[3];
-            } else {
-                user_id = 0;
-                role = "none";
-            }
-            if (role == "teacher") {
-                cout << "Xin chao giao vien" << endl;
-            } else if (role == "student") {
-                cout << "Xin chao hoc sinh" << endl;
-            }
-
-        } else {
-            std::cout << "Lenh khong hop le. Vui long nhap lai!" << std::endl;
-        }
-    }
+void logout() {
+    user_id = 0;
+    role = "none";
 }
 
 // Teacher
@@ -189,6 +141,9 @@ void handleViewTimeslots() {
 void handleTeacherMenu() {
     int choice = teacherView.showMenu();
     switch (choice) {
+    case 0:
+        logout();
+        break;
     case 1:
         handleDeclareTimeSlot();
         handleTeacherMenu();
@@ -207,13 +162,14 @@ void handleTeacherMenu() {
     }
 }
 
+// Student
 void handleStudentCommand(const string &cmd) {
     cout << cmd << endl;
-    if (cmd == "VIEW_TIME_SLOTS") {
+    if (cmd == "FETCH_ALL_TEACHER") {
         string requestTeacher = "FETCH_ALL_TEACHER|";
         string responseTeacher = sendRequestToServer(requestTeacher);
         string statusTeacher = responseTeacher.substr(0, responseTeacher.find("|"));
-        if (statusTeacher == "0"){
+        if (statusTeacher == "0") {
             vector<User> teachers = clientController.parseTeachersFromResponse(responseTeacher);
             int teacherId = studentView.selectTeacher(teachers);
             string request = cmd + "|" + to_string(teacherId);
@@ -229,12 +185,101 @@ void handleStudentCommand(const string &cmd) {
     }
 }
 
+void handleStudentMenu() {
+    int choice = studentView.showMenu();
+    switch (choice) {
+    case 0:
+        logout();
+        break;
+    case 1:
+        handleStudentCommand("FETCH_ALL_TEACHER");
+        handleStudentMenu();
+        break;
+    case 2:
+        // handleViewTimeslots();
+        // handleTeacherMenu();
+        break;
+    case 3:
+        break;
+    case 4:
+        break;
+
+    default:
+        break;
+    }
+}
+
+void handleLogin() {
+    map<string, string> info = userView.showLogin();
+    string loginCommand = "LOGIN|" + info["username"] + "|" + info["password"];
+    string response = sendRequestToServer(loginCommand);
+    vector<string> result = splitString(response, '|');
+    if (result[0] == "0") {
+        user_id = stoi(result[1]);
+        role = result[2];
+        cout << user_id << " - " << role << endl;
+        response = result[0] + "|" + result[3];
+    } else if (result[0] == "1" || result[0] == "2") {
+        vector<string> tokens = splitString(response, '|');
+        cout << tokens[1] << endl;
+        handleLogin();
+    } else {
+        logout();
+    }
+    if (role == "teacher" && user_id != 0) {
+        handleTeacherMenu();
+    } else if (role == "student" && user_id != 0) {
+        handleStudentMenu();
+    }
+}
+
+void handleRegister() {
+    map<string, string> info = userView.showRegisterA(); // Lấy thông tin đăng ký
+    string registerCommand = "REGISTER|" + info["username"] + "|" + info["password"] + "|" + info["role"] + "|" +
+                             info["first_name"] + "|" + info["last_name"];
+
+    // Gửi lệnh đăng ký tới server
+    string response = sendRequestToServer(registerCommand);
+
+    // Phân tích phản hồi từ server
+    vector<string> result = splitString(response, '|');
+    if (result[0] == "0") {
+        vector<string> tokens = splitString(response, '|');
+        cout << tokens[1] << endl;
+        user_id = stoi(tokens[2]);
+        role = tokens[3];
+        if (role == "teacher" && user_id != 0) {
+            handleTeacherMenu();
+        } else if (role == "student" && user_id != 0) {
+            handleStudentMenu();
+        }
+    } else if (result[0] == "3") {
+        vector<string> tokens = splitString(response, '|');
+        cout << tokens[1] << endl;
+    }
+}
+
+void handleUserMenu() {
+    int choice = userView.showMenu();
+    switch (choice) {
+    case 1:
+        handleLogin();
+        handleUserMenu();
+        break;
+    case 2:
+        handleRegister();
+        handleUserMenu();
+        break;
+    default:
+        break;
+    }
+}
+
 void closeConnection() { close(clientSocket); }
 
 int main() {
     connectToServer();
-    handleUserCommand();
-    handleTeacherMenu();
+    handleUserMenu();
     closeConnection();
     return 0;
 }

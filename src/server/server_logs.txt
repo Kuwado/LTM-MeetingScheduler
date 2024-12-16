@@ -155,3 +155,51 @@ Received: UPDATE_TIME_SLOT|4|15:55:00|16:15:00|personal
 Server response: 13|Thoi gian khong hop le
 Received: VIEW_TIME_SLOTS|6
 Server response: 0|2024-11-05|[|5|06:20:00|06:45:00|2024-11-05|both|free|6|3|06:32:00|07:10:00|2024-11-05|both|free|6|6|15:20:00|15:30:00|2024-11-05|personal|free|6|7|15:25:00|15:40:00|2024-11-05|group|free|6|9|15:35:00|15:50:00|2024-11-05|group|free|6|4|15:50:12|16:30:00|2024-11-05|group|free|6|8|16:00:00|16:20:00|2024-11-05|group|free|6|]|2024-11-15|[|1|07:50:00|09:15:00|2024-11-15|both|free|6|]|2024-11-20|[|2|03:30:00|06:00:00|2024-11-20|group|free|6|]|2024-12-03|[|10|05:12:00|06:13:00|2024-12-03|personal|free|6|]|
+Received: LOGIN|haha|123
+Server response: 0|1|student|Dang nhap thanh cong
+Received: LOGIN|giaovien|123
+Server response: 2|Mật khẩu không chính xác!
+Received: LOGIN|giaovien|123456
+Server response: 0|6|teacher|Dang nhap thanh cong
+Received: DECLARE_TIME_SLOT|10:10:00|10:15:00|2024-12-03|group|6
+Server response: 0|Khai bao thoi gian ranh thanh cong
+Received: VIEW_TIME_SLOTS|6
+Server response: 0|2024-11-05|[|5|06:20:00|06:45:00|2024-11-05|both|free|6|3|06:32:00|07:10:00|2024-11-05|both|free|6|6|15:20:00|15:30:00|2024-11-05|personal|free|6|7|15:25:00|15:40:00|2024-11-05|group|free|6|9|15:35:00|15:50:00|2024-11-05|group|free|6|4|15:50:12|16:30:00|2024-11-05|group|free|6|8|16:00:00|16:20:00|2024-11-05|group|free|6|]|2024-11-15|[|1|07:50:00|09:15:00|2024-11-15|both|free|6|]|2024-11-20|[|2|03:30:00|06:00:00|2024-11-20|group|free|6|]|2024-12-03|[|10|05:12:00|06:13:00|2024-12-03|personal|free|6|11|10:10:00|10:15:00|2024-12-03|group|free|6|]|
+Received: UPDATE_TIME_SLOT|11|09:10:00|10:00:00|personal
+Server response: 0|Sua doi thoi gian ranh thanh cong
+Received: VIEW_TIME_SLOTS|6
+Server response: 0|2024-11-05|[|5|06:20:00|06:45:00|2024-11-05|both|free|6|3|06:32:00|07:10:00|2024-11-05|both|free|6|6|15:20:00|15:30:00|2024-11-05|personal|free|6|7|15:25:00|15:40:00|2024-11-05|group|free|6|9|15:35:00|15:50:00|2024-11-05|group|free|6|4|15:50:12|16:30:00|2024-11-05|group|free|6|8|16:00:00|16:20:00|2024-11-05|group|free|6|]|2024-11-15|[|1|07:50:00|09:15:00|2024-11-15|both|free|6|]|2024-11-20|[|2|03:30:00|06:00:00|2024-11-20|group|free|6|]|2024-12-03|[|10|05:12:00|06:13:00|2024-12-03|personal|free|6|11|09:10:00|10:00:00|2024-12-03|personal|free|6|]|
+Received: REGISTER|giaovienmoi|123|teacher|giao|vien
+Server response: 0|8|giaovienmoi|123|teacher|giao|vien|Dang ky thanh cong
+Received: REGISTER|giaovien|123|teacher|ff|dd
+Server response: 3|Tên đăng nhập da ton tai!
+Received: REGISTER|giaovien22|123|teacher|le|le
+Server response: 0|9|giaovien22|123|teacher|le|le|Dang ky thanh cong
+Received: REGISTER|giaovien123|123|teacher|ll|ss
+Server response: 0|Dang ky thanh cong|10|teacher
+Received: LOGIN|haha|123
+Server response: 0|1|student|Dang nhap thanh cong
+Received: FETCH_ALL_TEACHER|
+Server response: 0|ID: 6, Ho ten: Giao Vien, Vai tro: teacher|ID: 7, Ho ten: Giao Vien2, Vai tro: teacher|ID: 8, Ho ten: giao vien, Vai tro: teacher|ID: 9, Ho ten: le le, Vai tro: teacher|ID: 10, Ho ten: ll ss, Vai tro: teacher|
+Received: REGISTER|giaovien1234|123|teacher|giao|vien
+Server response: 0|Dang ky thanh cong|11|teacher
+Received: DECLARE_TIME_SLOT|06:10:00|06:30:00|2024-12-03|both|11
+Server response: 0|Khai bao thoi gian ranh thanh cong
+Received: VIEW_TIME_SLOTS|11
+Server response: 0|2024-12-03|[|12|06:10:00|06:30:00|2024-12-03|both|free|11|]|
+Received: UPDATE_TIME_SLOT|12|05:10:00|07:20:00|group
+Server response: 0|Sua doi thoi gian ranh thanh cong
+Received: VIEW_TIME_SLOTS|11
+Server response: 0|2024-12-03|[|12|05:10:00|07:20:00|2024-12-03|group|free|11|]|
+Received: LOGIN|haha|123
+Server response: 0|1|student|Dang nhap thanh cong
+Received: LOGIN|giaovien1234|123
+Server response: 0|11|teacher|Dang nhap thanh cong
+Received: DECLARE_TIME_SLOT|10:10:00|11:11:00|2024-12-10|personal|11
+Server response: 0|Khai bao thoi gian ranh thanh cong
+Received: VIEW_TIME_SLOTS|11
+Server response: 0|2024-12-03|[|12|05:10:00|07:20:00|2024-12-03|group|free|11|]|2024-12-10|[|13|10:10:00|11:11:00|2024-12-10|personal|free|11|]|
+Received: LOGIN|haha|123
+Server response: 0|1|student|Dang nhap thanh cong
+Received: FETCH_ALL_TEACHER|
+Server response: 0|ID: 6, Ho ten: Giao Vien, Vai tro: teacher|ID: 7, Ho ten: Giao Vien2, Vai tro: teacher|ID: 8, Ho ten: giao vien, Vai tro: teacher|ID: 9, Ho ten: le le, Vai tro: teacher|ID: 10, Ho ten: ll ss, Vai tro: teacher|ID: 11, Ho ten: giao vien, Vai tro: teacher|
