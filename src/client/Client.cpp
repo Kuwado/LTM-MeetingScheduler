@@ -178,11 +178,22 @@ void handleViewTimeslots() {
     }
 }
 
-char randomChar() {
-    // Tạo ký tự ngẫu nhiên từ các ký tự chữ cái và số
-    char chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    return chars[rand() % (sizeof(chars) - 1)];
+void handleEditReport(const int &meeting_id, const string &report) {
+    string request = "ENTER_MEETING_REPORT|" + to_string(meeting_id) + "|" + report + "|<END>";
+    string response = sendRequestToServer(request);
+    string status = response.substr(0, response.find('|'));
+    vector<string> tokens = splitString(response, '|');
+    cout << tokens[1] << endl;
 }
+
+void handleUpdateStatus(const int &meeting_id, const string &mstatus) {
+    string request = "UPDATE_MEETING_STATUS|" + to_string(meeting_id) + "|" + mstatus + "|<END>";
+    string response = sendRequestToServer(request);
+    string status = response.substr(0, response.find('|'));
+    vector<string> tokens = splitString(response, '|');
+    cout << tokens[1] << endl;
+}
+
 void handleTeacherViewMeeting(const int &meeting_id) {
     string request = "VIEW_MEETING|" + to_string(meeting_id) + "|<END>";
     string response = sendRequestToServer(request);
@@ -193,17 +204,13 @@ void handleTeacherViewMeeting(const int &meeting_id) {
         if (choice == 0) {
             return;
         } else if (choice == 1) {
-            string randomString;
-
-            // Tạo chuỗi dài 3000 ký tự ngẫu nhiên
-            for (int i = 0; i < 3000; ++i) {
-                randomString += randomChar();
-            }
-            string request = "TEST|" + randomString + "|<END>";
-            string response = sendRequestToServer(request);
-            string status = response.substr(0, response.find('|'));
-            cout << response << endl;
+            string report = teacherView.showEditReport();
+            handleEditReport(meeting_id, report);
+            handleTeacherViewMeeting(meeting_id);
         } else if (choice == 2) {
+            string status = teacherView.showUpdateStatus();
+            handleUpdateStatus(meeting_id, status);
+            handleTeacherViewMeeting(meeting_id);
         }
     }
 }
@@ -222,6 +229,42 @@ void handleTeacherViewMeetings() {
         handleTeacherViewMeeting(meeting.getId());
         handleTeacherViewMeetings();
     } else if (status == "16") {
+        vector<string> tokens = splitString(response, '|');
+        cout << tokens[1] << endl;
+    }
+}
+
+void handleTeacherViewHistoryMeeting(const int &meeting_id) {
+    string request = "VIEW_MEETING|" + to_string(meeting_id) + "|<END>";
+    string response = sendRequestToServer(request);
+    string status = response.substr(0, response.find('|'));
+    if (status == "0") {
+        pair<Meeting, vector<User>> meetingDetail = teacherController.getMeetingFromResponse(response);
+        int choice = teacherView.showMeetingHistory(meetingDetail.first, meetingDetail.second);
+        if (choice == 0) {
+            return;
+        } else if (choice == 1) {
+            string report = teacherView.showEditReport();
+            handleEditReport(meeting_id, report);
+            handleTeacherViewHistoryMeeting(meeting_id);
+        }
+    }
+}
+
+void handleTeacherViewHistory() {
+    string request = "VIEW_HISTORY|" + to_string(user_id) + "|<END>";
+    string response = sendRequestToServer(request);
+    string status = response.substr(0, response.find('|'));
+    if (status == "0") {
+        map<string, vector<Meeting>> meetings = teacherController.getMeetingsFromResponse(response);
+        Meeting meeting = teacherView.showHistory(meetings);
+        if (meeting.getId() == -1) {
+            return;
+        }
+        // Detail Meeting
+        handleTeacherViewHistoryMeeting(meeting.getId());
+        handleTeacherViewHistory();
+    } else if (status == "18") {
         vector<string> tokens = splitString(response, '|');
         cout << tokens[1] << endl;
     }
@@ -246,6 +289,8 @@ void handleTeacherMenu() {
         handleTeacherMenu();
         break;
     case 4:
+        handleTeacherViewHistory();
+        handleTeacherMenu();
         break;
 
     default:

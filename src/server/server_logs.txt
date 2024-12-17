@@ -302,3 +302,174 @@ Server response: KdzibKiVv43ftIFWxyYp8mBR5vPDXIaikNEBYmUHfNmOVqiIc6vahwsaf5d3E1Z
 Server response: VLBVpUUJYahGwN2LIekqNqXoHFxAjh44t3NWOhfm5BqrMi0UBaAOFX0KalK9JE306EMKkpufoaL179J8aKKdfAn4lv3s0viuzs4ZWo3AEC1BBB7bJH2mFdgpPYXDJ4x6krW6TN7VPwXQvSq4aiffABKPXgSgYFd8ux5D80YNmtbYCHQaov5mvE1IiHn6ME24zx7xnTAOBZkDf0dHkWtVYkb4rC01Gtv5eqqG7oS8E29jsaqSxZlJ7BEmD2dIjMBE2sIzUawYSv58MjP760E3zIf1967iI8k8osy9GiVYTRVdykYvYdmOjGFiCCFJ8pHnW3kab3xtKIM7slsGCSUlYXIZXNiW0n7Khfl6YYphg2eObKSdcnC18KOWVuqMXnU2G5zeReBxUd9tnSKG3N5zXHLt1z3MaNFgJ29YUAMncJWFZhJQuCGFHPw8FpJd1OA8E9WY7i9ZqWdD1kUjlYosnZrqEyK5CI3EHQaCwaaaw3elbwKCKwvvLaaOOiHOq9QvPqv9GLY0C2beojgwWPhfn7tzd1BJyR2B8oAExW50OUU04ykOCItpDbfhQeoEwfFuHDw4arumACb41BI3HzgJO9oeeQiQvl80puvDcdpcgEUVGaOLNsUcs86KPda8CYzrIisiBW8haQ0eqEq2vAUb7QlKr9IuX7ZddIAfe6A4L1Zz3DroDBF8QoI7nRr8MFcqNaJrUJjfA6V29CeBEk9SOIP0X5yhAOLNoU29cZcaWxSVyxU2VUKhaXXvSMQQacbDuTAMrcnDQ5WCqr2B9AjXX4GoGW4fyUijlitSAWVOQsQ6XI6UIdreXvIeHA94Uhb6DKODhiQvOgrlnl5tEkNcVV4aU1UoYviZ4xcbVqKjLzIybBhfjv52EzSYqnBCWjbQW2ppizMrnSfERBj0udsyS9L9kMB6tbLETytzm4hPMATcB0StT9gm8rji1ick|<END>
 Received: VIEW_MEETINGS|6|<END>
 Server response: 0|2024-12-15|[|2|6|pending|group||15:30:00|16:30:00|2024-12-15|]|2024-12-16|[|1|6|pending|personal||07:00:00|09:00:00|2024-12-16|]|<END>
+Received: VIEW_MEETING|1|<END>
+Server response: 0|1|6|pending|personal||07:00:00|09:00:00|2024-12-16|[|5|Tanashi|Kuwado|]|<END>
+Received: VIEW_MEETINGS|6|<END>
+Server response: 0|2024-12-15|[|2|6|pending|group||15:30:00|16:30:00|2024-12-15|]|2024-12-16|[|1|6|pending|personal||07:00:00|09:00:00|2024-12-16|]|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|pending|group||15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: LOGIN|giaovien|123456|<END>
+Server response: 0|6|teacher|Dang nhap thanh cong|<END>
+Received: VIEW_MEETINGS|6|<END>
+Server response: 0|2024-12-15|[|2|6|pending|group||15:30:00|16:30:00|2024-12-15|]|2024-12-16|[|1|6|pending|personal||07:00:00|09:00:00|2024-12-16|]|2024-12-17|[|3|6|confirmed|personal||05:10:00|10:00:00|2024-12-17|]|2024-12-18|[|4|6|doing|personal||05:00:00|06:00:00|2024-12-18|]|<END>
+Received: VIEW_HISTORY|6|<END>
+Server response: 0|2024-12-10|[|5|6|completed|group||10:00:00|12:00:00|2024-12-10|]|2024-12-13|[|6|6|completed|personal||14:00:00|15:30:00|2024-12-13|]|<END>
+Received: VIEW_MEETING|5|<END>
+Server response: 0|5|6|completed|group||10:00:00|12:00:00|2024-12-10|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: VIEW_HISTORY|6|<END>
+Server response: 0|2024-12-10|[|5|6|completed|group||10:00:00|12:00:00|2024-12-10|]|2024-12-13|[|6|6|completed|personal||14:00:00|15:30:00|2024-12-13|]|<END>
+Received: VIEW_MEETINGS|6|<END>
+Server response: 0|2024-12-15|[|2|6|pending|group||15:30:00|16:30:00|2024-12-15|]|2024-12-16|[|1|6|pending|personal||07:00:00|09:00:00|2024-12-16|]|2024-12-17|[|3|6|confirmed|personal||05:10:00|10:00:00|2024-12-17|]|2024-12-18|[|4|6|doing|personal||05:00:00|06:00:00|2024-12-18|]|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|pending|group||15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: LOGIN|giaovien|123456|<END>
+Server response: 0|6|teacher|Dang nhap thanh cong|<END>
+Received: VIEW_HISTORY|6|<END>
+Server response: 0|2024-12-10|[|5|6|completed|group||10:00:00|12:00:00|2024-12-10|]|2024-12-13|[|6|6|completed|personal||14:00:00|15:30:00|2024-12-13|]|<END>
+Received: VIEW_MEETING|5|<END>
+Server response: 0|5|6|completed|group||10:00:00|12:00:00|2024-12-10|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: VIEW_MEETING|5|toi la hoan
+toi thich xem phim
+hehehe
+viet gif duoc GG GHD mJ
+|<END>
+Server response: 0|5|6|completed|group||10:00:00|12:00:00|2024-12-10|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: VIEW_MEETING|5|<END>
+Server response: 0|5|6|completed|group||10:00:00|12:00:00|2024-12-10|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: LOGIN|giaovien|123456|<END>
+Server response: 0|6|teacher|Dang nhap thanh cong|<END>
+Received: VIEW_HISTORY|6|<END>
+Server response: 0|2024-12-10|[|5|6|completed|group||10:00:00|12:00:00|2024-12-10|]|2024-12-13|[|6|6|completed|personal||14:00:00|15:30:00|2024-12-13|]|<END>
+Received: VIEW_MEETING|5|<END>
+Server response: 0|5|6|completed|group||10:00:00|12:00:00|2024-12-10|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: VIEW_MEETING|5|hoan
+|<END>
+Server response: 0|5|6|completed|group||10:00:00|12:00:00|2024-12-10|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: VIEW_MEETING|5|<END>
+Server response: 0|5|6|completed|group||10:00:00|12:00:00|2024-12-10|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: LOGIN|giaovien|123456|<END>
+Server response: 0|6|teacher|Dang nhap thanh cong|<END>
+Received: VIEW_HISTORY|6|<END>
+Server response: 0|2024-12-10|[|5|6|completed|group||10:00:00|12:00:00|2024-12-10|]|2024-12-13|[|6|6|completed|personal||14:00:00|15:30:00|2024-12-13|]|<END>
+Received: VIEW_MEETING|5|<END>
+Server response: 0|5|6|completed|group||10:00:00|12:00:00|2024-12-10|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: VIEW_HISTORY|6|<END>
+Server response: 0|2024-12-10|[|5|6|completed|group||10:00:00|12:00:00|2024-12-10|]|2024-12-13|[|6|6|completed|personal||14:00:00|15:30:00|2024-12-13|]|<END>
+Received: LOGIN|giaovien|123456|<END>
+Server response: 0|6|teacher|Dang nhap thanh cong|<END>
+Received: VIEW_HISTORY|6|<END>
+Server response: 0|2024-12-10|[|5|6|completed|group||10:00:00|12:00:00|2024-12-10|]|2024-12-13|[|6|6|completed|personal||14:00:00|15:30:00|2024-12-13|]|<END>
+Received: VIEW_MEETING|5|<END>
+Server response: 0|5|6|completed|group||10:00:00|12:00:00|2024-12-10|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: VIEW_MEETING|5|hoan*hao*|<END>
+Server response: 0|5|6|completed|group||10:00:00|12:00:00|2024-12-10|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: VIEW_MEETING|5|<END>
+Server response: 0|5|6|completed|group||10:00:00|12:00:00|2024-12-10|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: LOGIN|giaovien|123456|<END>
+Server response: 0|6|teacher|Dang nhap thanh cong|<END>
+Received: VIEW_HISTORY|6|<END>
+Server response: 0|2024-12-10|[|5|6|completed|group||10:00:00|12:00:00|2024-12-10|]|2024-12-13|[|6|6|completed|personal||14:00:00|15:30:00|2024-12-13|]|<END>
+Received: VIEW_MEETING|5|<END>
+Server response: 0|5|6|completed|group||10:00:00|12:00:00|2024-12-10|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: ENTER_MEETING_REPORT|5|hoan*hao*|<END>
+Server response: 0|Sua doi van ban cuoc hop thanh cong|<END>
+Received: VIEW_MEETING|5|<END>
+Server response: 0|5|6|completed|group|hoan*hao*|10:00:00|12:00:00|2024-12-10|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: LOGIN|giaovien|123456|<END>
+Server response: 0|6|teacher|Dang nhap thanh cong|<END>
+Received: VIEW_HISTORY|6|<END>
+Server response: 0|2024-12-10|[|5|6|completed|group|hoan*hao*|10:00:00|12:00:00|2024-12-10|]|2024-12-13|[|6|6|completed|personal||14:00:00|15:30:00|2024-12-13|]|<END>
+Received: VIEW_MEETING|5|<END>
+Server response: 0|5|6|completed|group|hoan*hao*|10:00:00|12:00:00|2024-12-10|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: ENTER_MEETING_REPORT|5|hoan
+hao
+qua
+|<END>
+Server response: 0|Sua doi van ban cuoc hop thanh cong|<END>
+Received: VIEW_MEETING|5|<END>
+Server response: 0|5|6|completed|group|hoan
+hao
+qua
+|10:00:00|12:00:00|2024-12-10|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: LOGIN|giao vien'|4|<END>
+Server response: 1|Tên đăng nhập không chính xác!|<END>
+Received: LOGIN|giaovien|123456|<END>
+Server response: 0|6|teacher|Dang nhap thanh cong|<END>
+Received: VIEW_HISTORY|6|<END>
+Server response: 0|2024-12-10|[|5|6|completed|group|hoan
+hao
+qua
+|10:00:00|12:00:00|2024-12-10|]|2024-12-13|[|6|6|completed|personal||14:00:00|15:30:00|2024-12-13|]|<END>
+Received: VIEW_MEETING|6|<END>
+Server response: 0|6|6|completed|personal||14:00:00|15:30:00|2024-12-13|[|1|Viet|Hoan|]|<END>
+Received: ENTER_MEETING_REPORT|6|nay hay qua|<END>
+Server response: 0|Sua doi van ban cuoc hop thanh cong|<END>
+Received: VIEW_MEETING|6|<END>
+Server response: 0|6|6|completed|personal|nay hay qua|14:00:00|15:30:00|2024-12-13|[|1|Viet|Hoan|]|<END>
+Received: LOGIN|giaovien|123456|<END>
+Server response: 0|6|teacher|Dang nhap thanh cong|<END>
+Received: VIEW_HISTORY|6|<END>
+Server response: 0|2024-12-10|[|5|6|completed|group|hoan
+hao
+qua
+|10:00:00|12:00:00|2024-12-10|]|2024-12-13|[|6|6|completed|personal|nay hay qua|14:00:00|15:30:00|2024-12-13|]|<END>
+Received: VIEW_MEETING|6|<END>
+Server response: 0|6|6|completed|personal|nay hay qua|14:00:00|15:30:00|2024-12-13|[|1|Viet|Hoan|]|<END>
+Received: ENTER_MEETING_REPORT|6|van
+ban
+cuoc hop
+nay hay qua|<END>
+Server response: 0|Sua doi van ban cuoc hop thanh cong|<END>
+Received: VIEW_MEETING|6|<END>
+Server response: 0|6|6|completed|personal|van
+ban
+cuoc hop
+nay hay qua|14:00:00|15:30:00|2024-12-13|[|1|Viet|Hoan|]|<END>
+Received: VIEW_HISTORY|6|<END>
+Server response: 0|2024-12-10|[|5|6|completed|group|hoan
+hao
+qua
+|10:00:00|12:00:00|2024-12-10|]|2024-12-13|[|6|6|completed|personal|van
+ban
+cuoc hop
+nay hay qua|14:00:00|15:30:00|2024-12-13|]|<END>
+Received: LOGIN|giaovien|123456|<END>
+Server response: 0|6|teacher|Dang nhap thanh cong|<END>
+Received: VIEW_MEETINGS|6|<END>
+Server response: 0|2024-12-15|[|2|6|pending|group||15:30:00|16:30:00|2024-12-15|]|2024-12-16|[|1|6|pending|personal||07:00:00|09:00:00|2024-12-16|]|2024-12-17|[|3|6|confirmed|personal||05:10:00|10:00:00|2024-12-17|]|2024-12-18|[|4|6|doing|personal||05:00:00|06:00:00|2024-12-18|]|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|pending|group||15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: UPDATE_MEETING_STATUS|2|doing|<END>
+Server response: 0|Sua doi trang thai cuoc hop thanh cong|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|doing|group||15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: UPDATE_MEETING_STATUS|2|canceled|<END>
+Server response: 0|Sua doi trang thai cuoc hop thanh cong|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|canceled|group||15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: UPDATE_MEETING_STATUS|2|pending|<END>
+Server response: 0|Sua doi trang thai cuoc hop thanh cong|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|pending|group||15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: UPDATE_MEETING_STATUS|2|confirmed|<END>
+Server response: 0|Sua doi trang thai cuoc hop thanh cong|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|confirmed|group||15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: ENTER_MEETING_REPORT|2|0|<END>
+Server response: 0|Sua doi van ban cuoc hop thanh cong|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|confirmed|group|0|15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: UPDATE_MEETING_STATUS|2|completed|<END>
+Server response: 0|Sua doi trang thai cuoc hop thanh cong|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|completed|group|0|15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: VIEW_MEETINGS|6|<END>
+Server response: 0|2024-12-16|[|1|6|pending|personal||07:00:00|09:00:00|2024-12-16|]|2024-12-17|[|3|6|confirmed|personal||05:10:00|10:00:00|2024-12-17|]|2024-12-18|[|4|6|doing|personal||05:00:00|06:00:00|2024-12-18|]|<END>
+Received: VIEW_HISTORY|6|<END>
+Server response: 0|2024-12-10|[|5|6|completed|group|hoan
+hao
+qua
+|10:00:00|12:00:00|2024-12-10|]|2024-12-13|[|6|6|completed|personal|van
+ban
+cuoc hop
+nay hay qua|14:00:00|15:30:00|2024-12-13|]|2024-12-15|[|2|6|completed|group|0|15:30:00|16:30:00|2024-12-15|]|<END>

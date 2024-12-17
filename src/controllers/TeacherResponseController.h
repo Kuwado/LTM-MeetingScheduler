@@ -68,7 +68,7 @@ class TeacherResponseController {
         return res;
     }
 
-    Response updateTimeslot(const string message) {
+    Response updateTimeslot(const string &message) {
         Response res;
         vector<string> tokens = splitString(message, '|');
         int id = stoi(tokens[1]);
@@ -91,7 +91,7 @@ class TeacherResponseController {
         return res;
     }
 
-    Response declareTimeslot(const string message) {
+    Response declareTimeslot(const string &message) {
         Response res;
         vector<string> tokens = splitString(message, '|');
         string start = tokens[1];
@@ -117,12 +117,12 @@ class TeacherResponseController {
         User user = userRepository.getUserById(teacher_id);
         if (user.getId() == 0) {
             res.setStatus(8);
-            res.setMessage("Giao vien khong ton tai");
+            res.setMessage("Giao vien khong ton tai|");
         } else {
-            map<string, vector<Meeting>> meetings = meetingRepo.getMeetingsByTeacherId(teacher_id);
+            map<string, vector<Meeting>> meetings = meetingRepo.getWaitingMeetingsByTeacherId(teacher_id);
             if (meetings.empty()) {
                 res.setStatus(16);
-                res.setMessage("Giao vien khong co lich hen");
+                res.setMessage("Giao vien khong co lich hen|");
             } else {
                 string message = "";
                 for (const auto &ts : meetings) {
@@ -155,6 +155,69 @@ class TeacherResponseController {
         res.setStatus(0);
         res.setMessage(message);
 
+        return res;
+    }
+
+    Response viewHistory(const int &teacher_id) {
+        Response res;
+        User user = userRepository.getUserById(teacher_id);
+        if (user.getId() == 0) {
+            res.setStatus(8);
+            res.setMessage("Giao vien khong ton tai|");
+        } else {
+            map<string, vector<Meeting>> meetings = meetingRepo.getDoneMeetingsByTeacherId(teacher_id);
+            if (meetings.empty()) {
+                res.setStatus(18);
+                res.setMessage("Khong co lich su cuoc hop|");
+            } else {
+                string message = "";
+                for (const auto &ts : meetings) {
+                    message += ts.first + "|[";
+                    vector<Meeting> tss = ts.second;
+                    for (int i = 0; i < tss.size(); i++) {
+                        message += "|" + tss[i].toString();
+                    }
+                    message += "|]|";
+                }
+                res.setStatus(0);
+                res.setMessage(message);
+            }
+        }
+
+        return res;
+    }
+
+    Response updateReport(const string &message) {
+        Response res;
+        vector<string> tokens = splitString(message, '|');
+        int meeting_id = stoi(tokens[1]);
+        string report = tokens[2];
+        Meeting meeting = meetingRepo.getMeetingById(meeting_id);
+        if (meeting.getId() == 0) {
+            res.setStatus(12);
+            res.setMessage("Khong tim thay cuoc hen|");
+        } else {
+            meetingRepo.updateReport(meeting_id, report);
+            res.setStatus(0);
+            res.setMessage("Sua doi van ban cuoc hop thanh cong|");
+        }
+        return res;
+    }
+
+    Response updateStatus(const string &message) {
+        Response res;
+        vector<string> tokens = splitString(message, '|');
+        int meeting_id = stoi(tokens[1]);
+        string status = tokens[2];
+        Meeting meeting = meetingRepo.getMeetingById(meeting_id);
+        if (meeting.getId() == 0) {
+            res.setStatus(12);
+            res.setMessage("Khong tim thay cuoc hen|");
+        } else {
+            meetingRepo.updateStatus(meeting_id, status);
+            res.setStatus(0);
+            res.setMessage("Sua doi trang thai cuoc hop thanh cong|");
+        }
         return res;
     }
 };
