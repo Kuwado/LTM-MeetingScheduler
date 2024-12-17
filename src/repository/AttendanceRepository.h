@@ -6,6 +6,7 @@
 #include "../models/Meeting.h"
 #include "../models/User.h"
 #include "UserRepository.h"
+#include "./MeetingRepository.h"
 #include <cppconn/prepared_statement.h>
 #include <iostream>
 #include <map>
@@ -17,7 +18,7 @@ class AttendanceRepository {
   private:
     Database db;
     UserRepository userRepo;
-
+    MeetingRepository mr;
   public:
     AttendanceRepository() {}
 
@@ -69,6 +70,47 @@ class AttendanceRepository {
         }
 
         return students;
+    }
+
+    vector<Meeting> getMeetingsByStudentId(const int &student_id) {
+        vector<Meeting> meetings;
+
+        if (db.connect()) {
+            string query = "SELECT meeting_id FROM attendances WHERE student_id = ?";
+            try {
+                sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
+                pstmt->setInt(1, student_id);
+                sql::ResultSet *res = pstmt->executeQuery();
+
+                while (res->next()){
+                    Meeting meeting = mr.getMeetingById(res->getInt("meeting_id"));
+                    meetings.push_back(meeting);
+                }
+
+            } catch (sql::SQLException &e){
+                std::cerr << "Lỗi khi lấy dữ liệu từ attendance: " << e.what() << std::endl;
+            }
+        } else {
+            cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
+        }
+
+        return meetings;
+    }
+
+    void deleteAttendanceByMeetingAndStudent(const int &meeting_id, const int &student_id) {
+        if (db.connect()) {
+            string query = "DELETE FROM attendances WHERE meeting_id = ? AND student_id = ?";
+            try {
+                sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
+                pstmt->setInt(1, meeting_id);
+                pstmt->setInt(2, student_id);
+                pstmt->executeQuery();
+            } catch (sql::SQLException &e){
+                std::cerr << "Lỗi khi xoa du lieu: " << e.what() << std::endl;
+            }
+        } else {
+            cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
+        }
     }
 };
 

@@ -4,6 +4,8 @@
 #include "../../data/Database.h"
 #include "../models/Meeting.h"
 #include "../models/User.h"
+#include "../models/Attendance.h"
+#include "./AttendanceRepository.h"
 #include "UserRepository.h"
 #include <cppconn/prepared_statement.h>
 #include <iostream>
@@ -20,7 +22,7 @@ class MeetingRepository {
   public:
     MeetingRepository() {}
 
-    void create(Meeting meeting) {
+    void create(Meeting meeting, const int studentId) {
         if (db.connect()) {
             User user = userRepo.getUserById(meeting.getTeacherId());
             if (user.getId() == 0) {
@@ -44,8 +46,18 @@ class MeetingRepository {
                 pstmt->setString(6, meeting.getEnd());
                 pstmt->setString(7, meeting.getDate());
                 pstmt->executeUpdate();
-                meeting.show();
                 delete pstmt;
+                int meetingId = 0;
+                sql::Statement *stmt = db.getConnection()->createStatement();
+                sql::ResultSet *res = stmt->executeQuery("SELECT LAST_INSERT_ID()");
+                if (res->next()) {
+                    meetingId = res->getInt(1); 
+                }
+                delete res;
+                delete stmt;
+                AttendanceRepository attendanceRepo;
+                Attendance attendance(meetingId, studentId);
+                attendanceRepo.create(attendance);
             } catch (sql::SQLException &e) {
                 cerr << "Loi them cuoc hen: " << e.what() << endl;
             }
@@ -167,6 +179,21 @@ class MeetingRepository {
         }
         return meeting;
     }
+
+    void deleteMeeting (const int &id){
+        if (db.connect()){
+            string query = "DELETE FROM meetings WHERE id = ?";
+            try
+            {
+                sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
+                pstmt->setInt(1, id);
+                sql::ResultSet *res = pstmt->executeQuery();
+            }
+            catch (sql::SQLException &e) 
+            {
+                std::cerr << "Lỗi khi xoa meeting: " << e.what() << std::endl;
+            }
+        }else {
 
     void updateReport(const int &id, const string &report) {
         if (db.connect()) {

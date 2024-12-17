@@ -299,22 +299,49 @@ void handleTeacherMenu() {
 }
 
 // Student
-void handleStudentCommand() {
-    string requestTeacher = "FETCH_ALL_TEACHER|";
+void handleViewAndBookTeacherSlots() {
+    string requestTeacher = "FETCH_ALL_TEACHER||<END>";
     string responseTeacher = sendRequestToServer(requestTeacher);
     string statusTeacher = responseTeacher.substr(0, responseTeacher.find("|"));
     if (statusTeacher == "0") {
         vector<User> teachers = clientController.parseTeachersFromResponse(responseTeacher);
         int teacherId = studentView.selectTeacher(teachers);
-        string request = "VIEW_TIME_SLOTS|" + to_string(teacherId);
+        string request = "VIEW_TIME_SLOTS|" + to_string(teacherId) + "|<END>";
         cout << request << endl;
         string response = sendRequestToServer(request);
         string status = response.substr(0, response.find('|'));
-        cout << status << endl;
         if (status == "0") {
             map<string, vector<Timeslot>> timeslots = clientController.viewTimeslots(response);
-            Timeslot ts = studentView.showAvailableSlots(timeslots);
+            map<string, vector<Timeslot>> filteredTimeslots;
+            for (const auto &entry : timeslots) {
+                string date = entry.first;               
+                vector<Timeslot> slots = entry.second;   
+                vector<Timeslot> freeSlots;
+                for (const Timeslot &slot : slots) {
+                    if (slot.getStatus() == "free") {    
+                        freeSlots.push_back(slot);
+                    }
+                }
+                if (!freeSlots.empty()) {
+                    filteredTimeslots[date] = freeSlots;
+                }
+            }
+            Timeslot ts = studentView.showAvailableSlots(filteredTimeslots);
+            string bookingRequest = "BOOK_MEETING|" + ts.toStringBookMeeting() + "|" + to_string(user_id) + "|<END>";
+            string bookingResponse = sendRequestToServer(bookingRequest);
         }
+    }
+}
+
+void handleCancelMeeting() {
+    string requestMeeting = "FETCH_STUDENT_METTINGS|" + to_string(user_id) + "|<END>";
+    string responseMeeting = sendRequestToServer(requestMeeting);
+    string statusMeeting = responseMeeting.substr(0, responseMeeting.find('|'));
+    if (statusMeeting == "0"){
+        vector<Meeting> meetings = clientController.parseMeetingsFromResponse(responseMeeting);
+        int meetingId = studentView.selectMeeting(meetings);
+        string cancelRequest = "CANCEL_MEETING|" + to_string(meetingId) + "|" + to_string(user_id) + "|<END>";
+        string cancelResponse = sendRequestToServer(cancelRequest);
     }
 }
 
@@ -325,7 +352,7 @@ void handleStudentMenu() {
         logout();
         break;
     case 1:
-        handleStudentCommand();
+        handleViewAndBookTeacherSlots();
         handleStudentMenu();
         break;
     case 2:

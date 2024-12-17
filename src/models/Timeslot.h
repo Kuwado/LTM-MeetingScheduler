@@ -50,6 +50,8 @@ class Timeslot {
 
     string toStringDeclare() { return start + "|" + end + "|" + date + "|" + type + "|" + to_string(teacher_id); }
 
+    string toStringBookMeeting() { return start + "|" + end + "|" + date + "|" + type + "|" + to_string(teacher_id) + "|" + to_string(id); }
+
     void show() {
         cout << "TimeSlot, Id: " << id << " ,start: " << start << " ,end: " << end << " ,date: " << date
              << " ,teacher_id: " << teacher_id << endl;
