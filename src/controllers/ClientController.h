@@ -78,12 +78,35 @@ class ClientController {
             User user;
             user.setId(stoi(tokens[i]));
             user.setFirstName(tokens[i+1]);
-            user.setLastName(tokens[i+2]);
+            user.setLastName(tokens[i+2]);            
             teachers.push_back(user);
             i = i + 3;
         }
 
         return teachers;
+    }
+
+    vector<Meeting> parseMeetingsFromResponse(const string &message) {
+        vector<Meeting> meetings;
+
+        vector<string> tokens = splitString(message, '|');
+        int i = 1;
+
+        while (i < tokens.size()) {
+            Meeting meeting;
+            meeting.setId(stoi(tokens[i]));
+            meeting.setTeacherId(stoi(tokens[i+1]));
+            meeting.setStatus(tokens[i+2]);
+            meeting.setType(tokens[i+3]);
+            meeting.setReport(tokens[i+4]);
+            meeting.setStart(tokens[i+5]);
+            meeting.setEnd(tokens[i+6]);
+            meeting.setDate(tokens[i+7]);
+            meetings.push_back(meeting);
+            i = i + 8;
+        }
+
+        return meetings;
     }
 
 

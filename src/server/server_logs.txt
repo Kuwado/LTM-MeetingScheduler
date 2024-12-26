@@ -155,3 +155,321 @@ Received: UPDATE_TIME_SLOT|4|15:55:00|16:15:00|personal
 Server response: 13|Thoi gian khong hop le
 Received: VIEW_TIME_SLOTS|6
 Server response: 0|2024-11-05|[|5|06:20:00|06:45:00|2024-11-05|both|free|6|3|06:32:00|07:10:00|2024-11-05|both|free|6|6|15:20:00|15:30:00|2024-11-05|personal|free|6|7|15:25:00|15:40:00|2024-11-05|group|free|6|9|15:35:00|15:50:00|2024-11-05|group|free|6|4|15:50:12|16:30:00|2024-11-05|group|free|6|8|16:00:00|16:20:00|2024-11-05|group|free|6|]|2024-11-15|[|1|07:50:00|09:15:00|2024-11-15|both|free|6|]|2024-11-20|[|2|03:30:00|06:00:00|2024-11-20|group|free|6|]|2024-12-03|[|10|05:12:00|06:13:00|2024-12-03|personal|free|6|]|
+Received: LOGIN|haha|123
+Server response: 0|1|student|Dang nhap thanh cong
+Received: LOGIN|giaovien|123
+Server response: 2|Mật khẩu không chính xác!
+Received: LOGIN|giaovien|123456
+Server response: 0|6|teacher|Dang nhap thanh cong
+Received: DECLARE_TIME_SLOT|10:10:00|10:15:00|2024-12-03|group|6
+Server response: 0|Khai bao thoi gian ranh thanh cong
+Received: VIEW_TIME_SLOTS|6
+Server response: 0|2024-11-05|[|5|06:20:00|06:45:00|2024-11-05|both|free|6|3|06:32:00|07:10:00|2024-11-05|both|free|6|6|15:20:00|15:30:00|2024-11-05|personal|free|6|7|15:25:00|15:40:00|2024-11-05|group|free|6|9|15:35:00|15:50:00|2024-11-05|group|free|6|4|15:50:12|16:30:00|2024-11-05|group|free|6|8|16:00:00|16:20:00|2024-11-05|group|free|6|]|2024-11-15|[|1|07:50:00|09:15:00|2024-11-15|both|free|6|]|2024-11-20|[|2|03:30:00|06:00:00|2024-11-20|group|free|6|]|2024-12-03|[|10|05:12:00|06:13:00|2024-12-03|personal|free|6|11|10:10:00|10:15:00|2024-12-03|group|free|6|]|
+Received: UPDATE_TIME_SLOT|11|09:10:00|10:00:00|personal
+Server response: 0|Sua doi thoi gian ranh thanh cong
+Received: VIEW_TIME_SLOTS|6
+Server response: 0|2024-11-05|[|5|06:20:00|06:45:00|2024-11-05|both|free|6|3|06:32:00|07:10:00|2024-11-05|both|free|6|6|15:20:00|15:30:00|2024-11-05|personal|free|6|7|15:25:00|15:40:00|2024-11-05|group|free|6|9|15:35:00|15:50:00|2024-11-05|group|free|6|4|15:50:12|16:30:00|2024-11-05|group|free|6|8|16:00:00|16:20:00|2024-11-05|group|free|6|]|2024-11-15|[|1|07:50:00|09:15:00|2024-11-15|both|free|6|]|2024-11-20|[|2|03:30:00|06:00:00|2024-11-20|group|free|6|]|2024-12-03|[|10|05:12:00|06:13:00|2024-12-03|personal|free|6|11|09:10:00|10:00:00|2024-12-03|personal|free|6|]|
+Received: REGISTER|giaovienmoi|123|teacher|giao|vien
+Server response: 0|8|giaovienmoi|123|teacher|giao|vien|Dang ky thanh cong
+Received: REGISTER|giaovien|123|teacher|ff|dd
+Server response: 3|Tên đăng nhập da ton tai!
+Received: REGISTER|giaovien22|123|teacher|le|le
+Server response: 0|9|giaovien22|123|teacher|le|le|Dang ky thanh cong
+Received: REGISTER|giaovien123|123|teacher|ll|ss
+Server response: 0|Dang ky thanh cong|10|teacher
+Received: LOGIN|haha|123
+Server response: 0|1|student|Dang nhap thanh cong
+Received: FETCH_ALL_TEACHER|
+Server response: 0|ID: 6, Ho ten: Giao Vien, Vai tro: teacher|ID: 7, Ho ten: Giao Vien2, Vai tro: teacher|ID: 8, Ho ten: giao vien, Vai tro: teacher|ID: 9, Ho ten: le le, Vai tro: teacher|ID: 10, Ho ten: ll ss, Vai tro: teacher|
+Received: REGISTER|giaovien1234|123|teacher|giao|vien
+Server response: 0|Dang ky thanh cong|11|teacher
+Received: DECLARE_TIME_SLOT|06:10:00|06:30:00|2024-12-03|both|11
+Server response: 0|Khai bao thoi gian ranh thanh cong
+Received: VIEW_TIME_SLOTS|11
+Server response: 0|2024-12-03|[|12|06:10:00|06:30:00|2024-12-03|both|free|11|]|
+Received: UPDATE_TIME_SLOT|12|05:10:00|07:20:00|group
+Server response: 0|Sua doi thoi gian ranh thanh cong
+Received: VIEW_TIME_SLOTS|11
+Server response: 0|2024-12-03|[|12|05:10:00|07:20:00|2024-12-03|group|free|11|]|
+Received: LOGIN|haha|123
+Server response: 0|1|student|Dang nhap thanh cong
+Received: LOGIN|giaovien1234|123
+Server response: 0|11|teacher|Dang nhap thanh cong
+Received: DECLARE_TIME_SLOT|10:10:00|11:11:00|2024-12-10|personal|11
+Server response: 0|Khai bao thoi gian ranh thanh cong
+Received: VIEW_TIME_SLOTS|11
+Server response: 0|2024-12-03|[|12|05:10:00|07:20:00|2024-12-03|group|free|11|]|2024-12-10|[|13|10:10:00|11:11:00|2024-12-10|personal|free|11|]|
+Received: LOGIN|haha|123
+Server response: 0|1|student|Dang nhap thanh cong
+Received: FETCH_ALL_TEACHER|
+Server response: 0|ID: 6, Ho ten: Giao Vien, Vai tro: teacher|ID: 7, Ho ten: Giao Vien2, Vai tro: teacher|ID: 8, Ho ten: giao vien, Vai tro: teacher|ID: 9, Ho ten: le le, Vai tro: teacher|ID: 10, Ho ten: ll ss, Vai tro: teacher|ID: 11, Ho ten: giao vien, Vai tro: teacher|
+Received: LOGIN|giavien|123
+Server response: 1|Tên đăng nhập không chính xác!
+Received: LOGIN|giaovien|123456
+Server response: 0|6|teacher|Dang nhap thanh cong
+Received: VIEW_MEETINGS|6
+Server response: 0|2024-12-15|[|2|6|pending|personal||15:30:00|16:30:00|2024-12-15|]|2024-12-16|[|1|6|pending|personal||07:00:00|09:00:00|2024-12-16|]|
+Received: VIEW_MEETING|2
+Server response: 0|2|6|pending|personal||15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|
+Received: VIEW_MEETINGS|6
+Server response: 0|2024-12-15|[|2|6|pending|personal||15:30:00|16:30:00|2024-12-15|]|2024-12-16|[|1|6|pending|personal||07:00:00|09:00:00|2024-12-16|]|
+Received: VIEW_MEETING|1
+Server response: 0|1|6|pending|personal||07:00:00|09:00:00|2024-12-16|[|5|Tanashi|Kuwado|]|
+Received: LOGIN|giaovien|123456
+Received: LOGIN|giaovien|123456|<END>
+Server response: 0|6|teacher|Dang nhap thanh cong<END>|<END>
+Received: LOGIN|giaovie|123|<END>
+Server response: 1|Tên đăng nhập không chính xác!<END>
+Received: LOGIN|giaovie|123|<END>
+Server response: 1|Tên đăng nhập không chính xác!|<END>
+Received: LOGIN|giaovien|123|<END>
+Server response: 2|Mật khẩu không chính xác!|<END>
+Received: LOGIN|giaovien|123456|<END>
+Server response: 0|6|teacher|Dang nhap thanh cong|<END>
+Received: DECLARE_TIME_SLOT|05:15:00|07:12:00|2024-12-16|group|6|<END>
+Server response: 0|Khai bao thoi gian ranh thanh cong<END>
+Received: REGISTER|giaovien|123|teacher|dd|ff|<END>
+Server response: 3|Tên đăng nhập da ton tai!|<END>
+Received: REGISTER|vhvh|123|student|ll|vv|<END>
+Server response: 0|Dang ky thanh cong|0|student|<END>
+Received: LOGIN|giaovien|123456|<END>
+Server response: 0|6|teacher|Dang nhap thanh cong|<END>
+Received: DECLARE_TIME_SLOT|10:30:00|11:20:00|2024-12-18|personal|6|<END>
+Server response: 0|Khai bao thoi gian ranh thanh cong|<END>
+Received: VIEW_TIME_SLOTS|6|<END>
+Server response: 0|2024-11-05|[|5|06:20:00|06:45:00|2024-11-05|both|free|6|3|06:32:00|07:10:00|2024-11-05|both|free|6|6|15:20:00|15:30:00|2024-11-05|personal|free|6|7|15:25:00|15:40:00|2024-11-05|group|free|6|9|15:35:00|15:50:00|2024-11-05|group|free|6|4|15:50:12|16:30:00|2024-11-05|group|free|6|8|16:00:00|16:20:00|2024-11-05|group|free|6|]|2024-11-15|[|1|07:50:00|09:15:00|2024-11-15|both|free|6|]|2024-11-20|[|2|03:30:00|06:00:00|2024-11-20|group|free|6|]|2024-12-03|[|10|05:12:00|06:13:00|2024-12-03|personal|free|6|11|09:10:00|10:00:00|2024-12-03|personal|free|6|]|2024-12-16|[|14|05:15:00|07:12:00|2024-12-16|group|free|6|]|2024-12-18|[|15|10:30:00|11:20:00|2024-12-18|personal|free|6|]|<END>
+Received: UPDATE_TIME_SLOT|15|08:20:00|10:10:00|personal|<END>
+Server response: 0|Sua doi thoi gian ranh thanh cong|<END>
+Received: VIEW_TIME_SLOTS|6|<END>
+Server response: 0|2024-11-05|[|5|06:20:00|06:45:00|2024-11-05|both|free|6|3|06:32:00|07:10:00|2024-11-05|both|free|6|6|15:20:00|15:30:00|2024-11-05|personal|free|6|7|15:25:00|15:40:00|2024-11-05|group|free|6|9|15:35:00|15:50:00|2024-11-05|group|free|6|4|15:50:12|16:30:00|2024-11-05|group|free|6|8|16:00:00|16:20:00|2024-11-05|group|free|6|]|2024-11-15|[|1|07:50:00|09:15:00|2024-11-15|both|free|6|]|2024-11-20|[|2|03:30:00|06:00:00|2024-11-20|group|free|6|]|2024-12-03|[|10|05:12:00|06:13:00|2024-12-03|personal|free|6|11|09:10:00|10:00:00|2024-12-03|personal|free|6|]|2024-12-16|[|14|05:15:00|07:12:00|2024-12-16|group|free|6|]|2024-12-18|[|15|08:20:00|10:10:00|2024-12-18|personal|free|6|]|<END>
+Received: VIEW_MEETINGS|6|<END>
+Server response: 0|2024-12-15|[|2|6|pending|group||15:30:00|16:30:00|2024-12-15|]|2024-12-16|[|1|6|pending|personal||07:00:00|09:00:00|2024-12-16|]|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|pending|group||15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: LOGIN|giaovien|123456|<END>
+Server response: 0|6|teacher|Dang nhap thanh cong|<END>
+Received: VIEW_MEETINGS|6|<END>
+Server response: 0|2024-12-15|[|2|6|pending|group||15:30:00|16:30:00|2024-12-15|]|2024-12-16|[|1|6|pending|personal||07:00:00|09:00:00|2024-12-16|]|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|pending|group||15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: test|pkDHTxmMR18N2l9k88EmLgN7cCCTt9rWksb1fEBw397vi5Ug1YHC3UAVUAoB9VYjCxYhzZSrWPc5IuZAHeCAyATJA7KAQghSS6yHTEyqRPja76aCbaANbTUbOdZf97vP1hVIlHw3UVRSQrSrFT4gmP61qTUnOD3FlOMKV8DoUS6i7OPDfHjIUd7AxPoBShF3tRCCPFqhYkFVxSWSa4YsXTtIiVI10NsjcujpyONKwQdhh005uMnFgUOCpW3fhkC9UkoGyzQiEsGli4eQGHVkchnF3elYElXZLAd7xug1cka8e4OkAhJaFwf6QETVqoszoLva3PPTzqRTid1g9A6Cua6BePUI4C8gLt6D8MWv0mEWD33C4xEmN9nsO50I5wpHdjKZteKjGM4IGxK8iNkwMMcaHQhDDKIgrQ6buEAzR47XpFTOS38cDa1LqYMrgUMNkGoSKnHbfEwLKFXa7T3AtuJXGVFmnPxNVcgfDl5iqrryvEOqXFoEzyc3HffvuT6FtciwEdUsJCg2EsiayMcl82fGX8zFPvI6MpsOIB4PBYHDGnb2y4cww70I3pLHZUDj9wxFvrVwFaxJCPC0Jek3ZbBQENXbfbAcLvh6a0qdPbnRqnFxFppcEqsJ1GiUfjwqSSktIOMVpxmUarFdVu5ZZmiOqFjLoTz4lXnsj0DMlogCTmdoUZEtBk8pph0R0nMaAxIhlJtNxOPHystIFv2EW0t9VhPJKZjIMppyzZBknOpb4ZhAKZCeNwcgRrqcGNkS1OEolFOOT4nMRKMZiM4v6WSOB6qFHOX8acmBfzPxt09ABJZjVRSSligkcKpkWDgxdHy86Ctn2sl118YNOrdzP9asHDQdGuQh1FevHNY767zv6N8K4b7IYVyfZC9dwN9oSdXXouVirIUlVStOsrUEAIkXKh16uyiBR6W3qpcVxw7HCqVsVpxUvVr32gzkUWjjQ6d4l5PXrKerzzaKcNcLiKEYo369Ngida9X94lWjv0RknptD2LOYTSu8Ko5
+Received: XKdzibKiVv43ftIFWxyYp8mBR5vPDXIaikNEBYmUHfNmOVqiIc6vahwsaf5d3E1ZoFbnbE7ihLJvezRnRMWqtHYHkRkbTby5gQi5Uee1plkHazspBFVsMrzu7XMQzAKTQqPiKrZxS75qxnTwqpd0UQlRoxgbvquCU7kfo8Q45Jisx2dbf6SzM3H0onRZRAZl7AEk6Vc1cBiP1BpW57JHyQ6a1LzIJNsFLwpHFH8iGev5daRYVbeJpajhjXnriVwtGb0LgwrlRbgu1wJLLlS090ViN9PtUBcaaSk5CRgTsCCiwJt7u9ytzHPAGdtbeLz3bZyepUvVUx1H4iCoi0VX6lYCEHbgRRXsoLKRd6nyre3mD5Olui8qJUsLcIptZDZBOiTse6eJYXtbQ6AAe7qlRXwtfba2ey3tWKZyE37dOp2el1dDyJoFeax7zLxS9p9VzYJ4PFVdsN5REYU0g868Wr6J2tb2YaLMwVGBYbcGmYXpwrfQnZP7GLE72gzP4AbrTfsr4JxghIJRxngaCvVH4aEw439w1adJ3K0xTmSysbDgEj6FUQMMoO7gF6S6VwFO44CLeU9MtAsykn121BFfPCBU6RORBUg5MiGo2D0lChXkIMc9NfecfdwcsBtuTPpdvuHlv5LvciVktwh6R9XvcHNLG43ZIg03Q5fA1qvRMF031X0GXL1xSC6Z7zwDWl4kgZiXDUpOZdFO03ULEM9XO3uJtgMDHHnmeM9gems1FxF4rZFtjCGw6y5nTGqYLRAnbAJ3kzuolxgQLj9umEgg2aJLgxkrCkUeicXHPGv03PGCyGxYIR4ArBMLwu2zULT1lo80urpm6touzZJ5pB6WDGiz0YmIh59Ii57Smm2gVfRJ2YEhX84YEaM4yyDUsAcQ6Xgi7ZFT2UauqcQDbIafimYUabmIbFYXa54YS7pIRF05fG66OWau8yDZPpfos4AJx4fD1KLGPB9uG5pSSFBQ3CnGpJuYBsfym81bIAfVBeDFasYqvZ6obksGrdcsJ5gw
+Received: 3VLBVpUUJYahGwN2LIekqNqXoHFxAjh44t3NWOhfm5BqrMi0UBaAOFX0KalK9JE306EMKkpufoaL179J8aKKdfAn4lv3s0viuzs4ZWo3AEC1BBB7bJH2mFdgpPYXDJ4x6krW6TN7VPwXQvSq4aiffABKPXgSgYFd8ux5D80YNmtbYCHQaov5mvE1IiHn6ME24zx7xnTAOBZkDf0dHkWtVYkb4rC01Gtv5eqqG7oS8E29jsaqSxZlJ7BEmD2dIjMBE2sIzUawYSv58MjP760E3zIf1967iI8k8osy9GiVYTRVdykYvYdmOjGFiCCFJ8pHnW3kab3xtKIM7slsGCSUlYXIZXNiW0n7Khfl6YYphg2eObKSdcnC18KOWVuqMXnU2G5zeReBxUd9tnSKG3N5zXHLt1z3MaNFgJ29YUAMncJWFZhJQuCGFHPw8FpJd1OA8E9WY7i9ZqWdD1kUjlYosnZrqEyK5CI3EHQaCwaaaw3elbwKCKwvvLaaOOiHOq9QvPqv9GLY0C2beojgwWPhfn7tzd1BJyR2B8oAExW50OUU04ykOCItpDbfhQeoEwfFuHDw4arumACb41BI3HzgJO9oeeQiQvl80puvDcdpcgEUVGaOLNsUcs86KPda8CYzrIisiBW8haQ0eqEq2vAUb7QlKr9IuX7ZddIAfe6A4L1Zz3DroDBF8QoI7nRr8MFcqNaJrUJjfA6V29CeBEk9SOIP0X5yhAOLNoU29cZcaWxSVyxU2VUKhaXXvSMQQacbDuTAMrcnDQ5WCqr2B9AjXX4GoGW4fyUijlitSAWVOQsQ6XI6UIdreXvIeHA94Uhb6DKODhiQvOgrlnl5tEkNcVV4aU1UoYviZ4xcbVqKjLzIybBhfjv52EzSYqnBCWjbQW2ppizMrnSfERBj0udsyS9L9kMB6tbLETytzm4hPMATcB0StT9gm8rji1ick|<END>
+Server response: 0|
+Received: LOGIN|giaovien|123456|<END>
+Server response: 0|6|teacher|Dang nhap thanh cong|<END>
+Received: VIEW_MEETINGS|6|<END>
+Server response: 0|2024-12-15|[|2|6|pending|group||15:30:00|16:30:00|2024-12-15|]|2024-12-16|[|1|6|pending|personal||07:00:00|09:00:00|2024-12-16|]|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|pending|group||15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: test|pkDHTxmMR18N2l9k88EmLgN7cCCTt9rWksb1fEBw397vi5Ug1YHC3UAVUAoB9VYjCxYhzZSrWPc5IuZAHeCAyATJA7KAQghSS6yHTEyqRPja76aCbaANbTUbOdZf97vP1hVIlHw3UVRSQrSrFT4gmP61qTUnOD3FlOMKV8DoUS6i7OPDfHjIUd7AxPoBShF3tRCCPFqhYkFVxSWSa4YsXTtIiVI10NsjcujpyONKwQdhh005uMnFgUOCpW3fhkC9UkoGyzQiEsGli4eQGHVkchnF3elYElXZLAd7xug1cka8e4OkAhJaFwf6QETVqoszoLva3PPTzqRTid1g9A6Cua6BePUI4C8gLt6D8MWv0mEWD33C4xEmN9nsO50I5wpHdjKZteKjGM4IGxK8iNkwMMcaHQhDDKIgrQ6buEAzR47XpFTOS38cDa1LqYMrgUMNkGoSKnHbfEwLKFXa7T3AtuJXGVFmnPxNVcgfDl5iqrryvEOqXFoEzyc3HffvuT6FtciwEdUsJCg2EsiayMcl82fGX8zFPvI6MpsOIB4PBYHDGnb2y4cww70I3pLHZUDj9wxFvrVwFaxJCPC0Jek3ZbBQENXbfbAcLvh6a0qdPbnRqnFxFppcEqsJ1GiUfjwqSSktIOMVpxmUarFdVu5ZZmiOqFjLoTz4lXnsj0DMlogCTmdoUZEtBk8pph0R0nMaAxIhlJtNxOPHystIFv2EW0t9VhPJKZjIMppyzZBknOpb4ZhAKZCeNwcgRrqcGNkS1OEolFOOT4nMRKMZiM4v6WSOB6qFHOX8acmBfzPxt09ABJZjVRSSligkcKpkWDgxdHy86Ctn2sl118YNOrdzP9asHDQdGuQh1FevHNY767zv6N8K4b7IYVyfZC9dwN9oSdXXouVirIUlVStOsrUEAIkXKh16uyiBR6W3qpcVxw7HCqVsVpxUvVr32gzkUWjjQ6d4l5PXrKerzzaKcNcLiKEYo369Ngida9X94lWjv0RknptD2LOYTSu8Ko5
+Received: XKdzibKiVv43ftIFWxyYp8mBR5vPDXIaikNEBYmUHfNmOVqiIc6vahwsaf5d3E1ZoFbnbE7ihLJvezRnRMWqtHYHkRkbTby5gQi5Uee1plkHazspBFVsMrzu7XMQzAKTQqPiKrZxS75qxnTwqpd0UQlRoxgbvquCU7kfo8Q45Jisx2dbf6SzM3H0onRZRAZl7AEk6Vc1cBiP1BpW57JHyQ6a1LzIJNsFLwpHFH8iGev5daRYVbeJpajhjXnriVwtGb0LgwrlRbgu1wJLLlS090ViN9PtUBcaaSk5CRgTsCCiwJt7u9ytzHPAGdtbeLz3bZyepUvVUx1H4iCoi0VX6lYCEHbgRRXsoLKRd6nyre3mD5Olui8qJUsLcIptZDZBOiTse6eJYXtbQ6AAe7qlRXwtfba2ey3tWKZyE37dOp2el1dDyJoFeax7zLxS9p9VzYJ4PFVdsN5REYU0g868Wr6J2tb2YaLMwVGBYbcGmYXpwrfQnZP7GLE72gzP4AbrTfsr4JxghIJRxngaCvVH4aEw439w1adJ3K0xTmSysbDgEj6FUQMMoO7gF6S6VwFO44CLeU9MtAsykn121BFfPCBU6RORBUg5MiGo2D0lChXkIMc9NfecfdwcsBtuTPpdvuHlv5LvciVktwh6R9XvcHNLG43ZIg03Q5fA1qvRMF031X0GXL1xSC6Z7zwDWl4kgZiXDUpOZdFO03ULEM9XO3uJtgMDHHnmeM9gems1FxF4rZFtjCGw6y5nTGqYLRAnbAJ3kzuolxgQLj9umEgg2aJLgxkrCkUeicXHPGv03PGCyGxYIR4ArBMLwu2zULT1lo80urpm6touzZJ5pB6WDGiz0YmIh59Ii57Smm2gVfRJ2YEhX84YEaM4yyDUsAcQ6Xgi7ZFT2UauqcQDbIafimYUabmIbFYXa54YS7pIRF05fG66OWau8yDZPpfos4AJx4fD1KLGPB9uG5pSSFBQ3CnGpJuYBsfym81bIAfVBeDFasYqvZ6obksGrdcsJ5gw
+Received: 3VLBVpUUJYahGwN2LIekqNqXoHFxAjh44t3NWOhfm5BqrMi0UBaAOFX0KalK9JE306EMKkpufoaL179J8aKKdfAn4lv3s0viuzs4ZWo3AEC1BBB7bJH2mFdgpPYXDJ4x6krW6TN7VPwXQvSq4aiffABKPXgSgYFd8ux5D80YNmtbYCHQaov5mvE1IiHn6ME24zx7xnTAOBZkDf0dHkWtVYkb4rC01Gtv5eqqG7oS8E29jsaqSxZlJ7BEmD2dIjMBE2sIzUawYSv58MjP760E3zIf1967iI8k8osy9GiVYTRVdykYvYdmOjGFiCCFJ8pHnW3kab3xtKIM7slsGCSUlYXIZXNiW0n7Khfl6YYphg2eObKSdcnC18KOWVuqMXnU2G5zeReBxUd9tnSKG3N5zXHLt1z3MaNFgJ29YUAMncJWFZhJQuCGFHPw8FpJd1OA8E9WY7i9ZqWdD1kUjlYosnZrqEyK5CI3EHQaCwaaaw3elbwKCKwvvLaaOOiHOq9QvPqv9GLY0C2beojgwWPhfn7tzd1BJyR2B8oAExW50OUU04ykOCItpDbfhQeoEwfFuHDw4arumACb41BI3HzgJO9oeeQiQvl80puvDcdpcgEUVGaOLNsUcs86KPda8CYzrIisiBW8haQ0eqEq2vAUb7QlKr9IuX7ZddIAfe6A4L1Zz3DroDBF8QoI7nRr8MFcqNaJrUJjfA6V29CeBEk9SOIP0X5yhAOLNoU29cZcaWxSVyxU2VUKhaXXvSMQQacbDuTAMrcnDQ5WCqr2B9AjXX4GoGW4fyUijlitSAWVOQsQ6XI6UIdreXvIeHA94Uhb6DKODhiQvOgrlnl5tEkNcVV4aU1UoYviZ4xcbVqKjLzIybBhfjv52EzSYqnBCWjbQW2ppizMrnSfERBj0udsyS9L9kMB6tbLETytzm4hPMATcB0StT9gm8rji1ick|<END>
+Server response: 0|
+Received: LOGIN|giaovien|123456|<END>
+Server response: 0|6|teacher|Dang nhap thanh cong|<END>
+Received: VIEW_MEETINGS|6|<END>
+Server response: 0|2024-12-15|[|2|6|pending|group||15:30:00|16:30:00|2024-12-15|]|2024-12-16|[|1|6|pending|personal||07:00:00|09:00:00|2024-12-16|]|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|pending|group||15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: TEST|pkDHTxmMR18N2l9k88EmLgN7cCCTt9rWksb1fEBw397vi5Ug1YHC3UAVUAoB9VYjCxYhzZSrWPc5IuZAHeCAyATJA7KAQghSS6yHTEyqRPja76aCbaANbTUbOdZf97vP1hVIlHw3UVRSQrSrFT4gmP61qTUnOD3FlOMKV8DoUS6i7OPDfHjIUd7AxPoBShF3tRCCPFqhYkFVxSWSa4YsXTtIiVI10NsjcujpyONKwQdhh005uMnFgUOCpW3fhkC9UkoGyzQiEsGli4eQGHVkchnF3elYElXZLAd7xug1cka8e4OkAhJaFwf6QETVqoszoLva3PPTzqRTid1g9A6Cua6BePUI4C8gLt6D8MWv0mEWD33C4xEmN9nsO50I5wpHdjKZteKjGM4IGxK8iNkwMMcaHQhDDKIgrQ6buEAzR47XpFTOS38cDa1LqYMrgUMNkGoSKnHbfEwLKFXa7T3AtuJXGVFmnPxNVcgfDl5iqrryvEOqXFoEzyc3HffvuT6FtciwEdUsJCg2EsiayMcl82fGX8zFPvI6MpsOIB4PBYHDGnb2y4cww70I3pLHZUDj9wxFvrVwFaxJCPC0Jek3ZbBQENXbfbAcLvh6a0qdPbnRqnFxFppcEqsJ1GiUfjwqSSktIOMVpxmUarFdVu5ZZmiOqFjLoTz4lXnsj0DMlogCTmdoUZEtBk8pph0R0nMaAxIhlJtNxOPHystIFv2EW0t9VhPJKZjIMppyzZBknOpb4ZhAKZCeNwcgRrqcGNkS1OEolFOOT4nMRKMZiM4v6WSOB6qFHOX8acmBfzPxt09ABJZjVRSSligkcKpkWDgxdHy86Ctn2sl118YNOrdzP9asHDQdGuQh1FevHNY767zv6N8K4b7IYVyfZC9dwN9oSdXXouVirIUlVStOsrUEAIkXKh16uyiBR6W3qpcVxw7HCqVsVpxUvVr32gzkUWjjQ6d4l5PXrKerzzaKcNcLiKEYo369Ngida9X94lWjv0RknptD2LOYTSu8Ko5
+Received: XKdzibKiVv43ftIFWxyYp8mBR5vPDXIaikNEBYmUHfNmOVqiIc6vahwsaf5d3E1ZoFbnbE7ihLJvezRnRMWqtHYHkRkbTby5gQi5Uee1plkHazspBFVsMrzu7XMQzAKTQqPiKrZxS75qxnTwqpd0UQlRoxgbvquCU7kfo8Q45Jisx2dbf6SzM3H0onRZRAZl7AEk6Vc1cBiP1BpW57JHyQ6a1LzIJNsFLwpHFH8iGev5daRYVbeJpajhjXnriVwtGb0LgwrlRbgu1wJLLlS090ViN9PtUBcaaSk5CRgTsCCiwJt7u9ytzHPAGdtbeLz3bZyepUvVUx1H4iCoi0VX6lYCEHbgRRXsoLKRd6nyre3mD5Olui8qJUsLcIptZDZBOiTse6eJYXtbQ6AAe7qlRXwtfba2ey3tWKZyE37dOp2el1dDyJoFeax7zLxS9p9VzYJ4PFVdsN5REYU0g868Wr6J2tb2YaLMwVGBYbcGmYXpwrfQnZP7GLE72gzP4AbrTfsr4JxghIJRxngaCvVH4aEw439w1adJ3K0xTmSysbDgEj6FUQMMoO7gF6S6VwFO44CLeU9MtAsykn121BFfPCBU6RORBUg5MiGo2D0lChXkIMc9NfecfdwcsBtuTPpdvuHlv5LvciVktwh6R9XvcHNLG43ZIg03Q5fA1qvRMF031X0GXL1xSC6Z7zwDWl4kgZiXDUpOZdFO03ULEM9XO3uJtgMDHHnmeM9gems1FxF4rZFtjCGw6y5nTGqYLRAnbAJ3kzuolxgQLj9umEgg2aJLgxkrCkUeicXHPGv03PGCyGxYIR4ArBMLwu2zULT1lo80urpm6touzZJ5pB6WDGiz0YmIh59Ii57Smm2gVfRJ2YEhX84YEaM4yyDUsAcQ6Xgi7ZFT2UauqcQDbIafimYUabmIbFYXa54YS7pIRF05fG66OWau8yDZPpfos4AJx4fD1KLGPB9uG5pSSFBQ3CnGpJuYBsfym81bIAfVBeDFasYqvZ6obksGrdcsJ5gw
+Received: 3VLBVpUUJYahGwN2LIekqNqXoHFxAjh44t3NWOhfm5BqrMi0UBaAOFX0KalK9JE306EMKkpufoaL179J8aKKdfAn4lv3s0viuzs4ZWo3AEC1BBB7bJH2mFdgpPYXDJ4x6krW6TN7VPwXQvSq4aiffABKPXgSgYFd8ux5D80YNmtbYCHQaov5mvE1IiHn6ME24zx7xnTAOBZkDf0dHkWtVYkb4rC01Gtv5eqqG7oS8E29jsaqSxZlJ7BEmD2dIjMBE2sIzUawYSv58MjP760E3zIf1967iI8k8osy9GiVYTRVdykYvYdmOjGFiCCFJ8pHnW3kab3xtKIM7slsGCSUlYXIZXNiW0n7Khfl6YYphg2eObKSdcnC18KOWVuqMXnU2G5zeReBxUd9tnSKG3N5zXHLt1z3MaNFgJ29YUAMncJWFZhJQuCGFHPw8FpJd1OA8E9WY7i9ZqWdD1kUjlYosnZrqEyK5CI3EHQaCwaaaw3elbwKCKwvvLaaOOiHOq9QvPqv9GLY0C2beojgwWPhfn7tzd1BJyR2B8oAExW50OUU04ykOCItpDbfhQeoEwfFuHDw4arumACb41BI3HzgJO9oeeQiQvl80puvDcdpcgEUVGaOLNsUcs86KPda8CYzrIisiBW8haQ0eqEq2vAUb7QlKr9IuX7ZddIAfe6A4L1Zz3DroDBF8QoI7nRr8MFcqNaJrUJjfA6V29CeBEk9SOIP0X5yhAOLNoU29cZcaWxSVyxU2VUKhaXXvSMQQacbDuTAMrcnDQ5WCqr2B9AjXX4GoGW4fyUijlitSAWVOQsQ6XI6UIdreXvIeHA94Uhb6DKODhiQvOgrlnl5tEkNcVV4aU1UoYviZ4xcbVqKjLzIybBhfjv52EzSYqnBCWjbQW2ppizMrnSfERBj0udsyS9L9kMB6tbLETytzm4hPMATcB0StT9gm8rji1ick|<END>
+Server response: 0|
+Received: LOGIN|giaovien|123456|<END>
+Server response: 0|6|teacher|Dang nhap thanh cong|<END>
+Received: VIEW_MEETINGS|6|<END>
+Server response: 0|2024-12-15|[|2|6|pending|group||15:30:00|16:30:00|2024-12-15|]|2024-12-16|[|1|6|pending|personal||07:00:00|09:00:00|2024-12-16|]|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|pending|group||15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: TEST|pkDHTxmMR18N2l9k88EmLgN7cCCTt9rWksb1fEBw397vi5Ug1YHC3UAVUAoB9VYjCxYhzZSrWPc5IuZAHeCAyATJA7KAQghSS6yHTEyqRPja76aCbaANbTUbOdZf97vP1hVIlHw3UVRSQrSrFT4gmP61qTUnOD3FlOMKV8DoUS6i7OPDfHjIUd7AxPoBShF3tRCCPFqhYkFVxSWSa4YsXTtIiVI10NsjcujpyONKwQdhh005uMnFgUOCpW3fhkC9UkoGyzQiEsGli4eQGHVkchnF3elYElXZLAd7xug1cka8e4OkAhJaFwf6QETVqoszoLva3PPTzqRTid1g9A6Cua6BePUI4C8gLt6D8MWv0mEWD33C4xEmN9nsO50I5wpHdjKZteKjGM4IGxK8iNkwMMcaHQhDDKIgrQ6buEAzR47XpFTOS38cDa1LqYMrgUMNkGoSKnHbfEwLKFXa7T3AtuJXGVFmnPxNVcgfDl5iqrryvEOqXFoEzyc3HffvuT6FtciwEdUsJCg2EsiayMcl82fGX8zFPvI6MpsOIB4PBYHDGnb2y4cww70I3pLHZUDj9wxFvrVwFaxJCPC0Jek3ZbBQENXbfbAcLvh6a0qdPbnRqnFxFppcEqsJ1GiUfjwqSSktIOMVpxmUarFdVu5ZZmiOqFjLoTz4lXnsj0DMlogCTmdoUZEtBk8pph0R0nMaAxIhlJtNxOPHystIFv2EW0t9VhPJKZjIMppyzZBknOpb4ZhAKZCeNwcgRrqcGNkS1OEolFOOT4nMRKMZiM4v6WSOB6qFHOX8acmBfzPxt09ABJZjVRSSligkcKpkWDgxdHy86Ctn2sl118YNOrdzP9asHDQdGuQh1FevHNY767zv6N8K4b7IYVyfZC9dwN9oSdXXouVirIUlVStOsrUEAIkXKh16uyiBR6W3qpcVxw7HCqVsVpxUvVr32gzkUWjjQ6d4l5PXrKerzzaKcNcLiKEYo369Ngida9X94lWjv0RknptD2LOYTSu8Ko5
+Received: XKdzibKiVv43ftIFWxyYp8mBR5vPDXIaikNEBYmUHfNmOVqiIc6vahwsaf5d3E1ZoFbnbE7ihLJvezRnRMWqtHYHkRkbTby5gQi5Uee1plkHazspBFVsMrzu7XMQzAKTQqPiKrZxS75qxnTwqpd0UQlRoxgbvquCU7kfo8Q45Jisx2dbf6SzM3H0onRZRAZl7AEk6Vc1cBiP1BpW57JHyQ6a1LzIJNsFLwpHFH8iGev5daRYVbeJpajhjXnriVwtGb0LgwrlRbgu1wJLLlS090ViN9PtUBcaaSk5CRgTsCCiwJt7u9ytzHPAGdtbeLz3bZyepUvVUx1H4iCoi0VX6lYCEHbgRRXsoLKRd6nyre3mD5Olui8qJUsLcIptZDZBOiTse6eJYXtbQ6AAe7qlRXwtfba2ey3tWKZyE37dOp2el1dDyJoFeax7zLxS9p9VzYJ4PFVdsN5REYU0g868Wr6J2tb2YaLMwVGBYbcGmYXpwrfQnZP7GLE72gzP4AbrTfsr4JxghIJRxngaCvVH4aEw439w1adJ3K0xTmSysbDgEj6FUQMMoO7gF6S6VwFO44CLeU9MtAsykn121BFfPCBU6RORBUg5MiGo2D0lChXkIMc9NfecfdwcsBtuTPpdvuHlv5LvciVktwh6R9XvcHNLG43ZIg03Q5fA1qvRMF031X0GXL1xSC6Z7zwDWl4kgZiXDUpOZdFO03ULEM9XO3uJtgMDHHnmeM9gems1FxF4rZFtjCGw6y5nTGqYLRAnbAJ3kzuolxgQLj9umEgg2aJLgxkrCkUeicXHPGv03PGCyGxYIR4ArBMLwu2zULT1lo80urpm6touzZJ5pB6WDGiz0YmIh59Ii57Smm2gVfRJ2YEhX84YEaM4yyDUsAcQ6Xgi7ZFT2UauqcQDbIafimYUabmIbFYXa54YS7pIRF05fG66OWau8yDZPpfos4AJx4fD1KLGPB9uG5pSSFBQ3CnGpJuYBsfym81bIAfVBeDFasYqvZ6obksGrdcsJ5gw
+Received: 3VLBVpUUJYahGwN2LIekqNqXoHFxAjh44t3NWOhfm5BqrMi0UBaAOFX0KalK9JE306EMKkpufoaL179J8aKKdfAn4lv3s0viuzs4ZWo3AEC1BBB7bJH2mFdgpPYXDJ4x6krW6TN7VPwXQvSq4aiffABKPXgSgYFd8ux5D80YNmtbYCHQaov5mvE1IiHn6ME24zx7xnTAOBZkDf0dHkWtVYkb4rC01Gtv5eqqG7oS8E29jsaqSxZlJ7BEmD2dIjMBE2sIzUawYSv58MjP760E3zIf1967iI8k8osy9GiVYTRVdykYvYdmOjGFiCCFJ8pHnW3kab3xtKIM7slsGCSUlYXIZXNiW0n7Khfl6YYphg2eObKSdcnC18KOWVuqMXnU2G5zeReBxUd9tnSKG3N5zXHLt1z3MaNFgJ29YUAMncJWFZhJQuCGFHPw8FpJd1OA8E9WY7i9ZqWdD1kUjlYosnZrqEyK5CI3EHQaCwaaaw3elbwKCKwvvLaaOOiHOq9QvPqv9GLY0C2beojgwWPhfn7tzd1BJyR2B8oAExW50OUU04ykOCItpDbfhQeoEwfFuHDw4arumACb41BI3HzgJO9oeeQiQvl80puvDcdpcgEUVGaOLNsUcs86KPda8CYzrIisiBW8haQ0eqEq2vAUb7QlKr9IuX7ZddIAfe6A4L1Zz3DroDBF8QoI7nRr8MFcqNaJrUJjfA6V29CeBEk9SOIP0X5yhAOLNoU29cZcaWxSVyxU2VUKhaXXvSMQQacbDuTAMrcnDQ5WCqr2B9AjXX4GoGW4fyUijlitSAWVOQsQ6XI6UIdreXvIeHA94Uhb6DKODhiQvOgrlnl5tEkNcVV4aU1UoYviZ4xcbVqKjLzIybBhfjv52EzSYqnBCWjbQW2ppizMrnSfERBj0udsyS9L9kMB6tbLETytzm4hPMATcB0StT9gm8rji1ick|<END>
+Server response: 123|pkDHTxmMR18N2l9k88EmLgN7cCCTt9rWksb1fEBw397vi5Ug1YHC3UAVUAoB9VYjCxYhzZSrWPc5IuZAHeCAyATJA7KAQghSS6yHTEyqRPja76aCbaANbTUbOdZf97vP1hVIlHw3UVRSQrSrFT4gmP61qTUnOD3FlOMKV8DoUS6i7OPDfHjIUd7AxPoBShF3tRCCPFqhYkFVxSWSa4YsXTtIiVI10NsjcujpyONKwQdhh005uMnFgUOCpW3fhkC9UkoGyzQiEsGli4eQGHVkchnF3elYElXZLAd7xug1cka8e4OkAhJaFwf6QETVqoszoLva3PPTzqRTid1g9A6Cua6BePUI4C8gLt6D8MWv0mEWD33C4xEmN9nsO50I5wpHdjKZteKjGM4IGxK8iNkwMMcaHQhDDKIgrQ6buEAzR47XpFTOS38cDa1LqYMrgUMNkGoSKnHbfEwLKFXa7T3AtuJXGVFmnPxNVcgfDl5iqrryvEOqXFoEzyc3HffvuT6FtciwEdUsJCg2EsiayMcl82fGX8zFPvI6MpsOIB4PBYHDGnb2y4cww70I3pLHZUDj9wxFvrVwFaxJCPC0Jek3ZbBQENXbfbAcLvh6a0qdPbnRqnFxFppcEqsJ1GiUfjwqSSktIOMVpxmUarFdVu5ZZmiOqFjLoTz4lXnsj0DMlogCTmdoUZEtBk8pph0R0nMaAxIhlJtNxOPHystIFv2EW0t9VhPJKZjIMppyzZBknOpb4ZhAKZCeNwcgRrqcGNkS1OEolFOOT4nMRKMZiM4v6WSOB6qFHOX8acmBfzPxt09ABJZjVRSSligkcKpkWDgxdHy86Ctn2sl118YNOrdzP9asHDQdGuQh1FevHNY767zv6N8K4b7IYVyfZC9dwN9oSdXXouVirIUlVStOsrUEAIkXKh16uyiBR6W3qpcVxw7HCqVsVpxUvVr32gzkUWjjQ6d4l5PXrKerzzaKcNcLiKEYo369Ngida9X94lWjv0RknptD2LOYTSu8Ko5X
+Server response: KdzibKiVv43ftIFWxyYp8mBR5vPDXIaikNEBYmUHfNmOVqiIc6vahwsaf5d3E1ZoFbnbE7ihLJvezRnRMWqtHYHkRkbTby5gQi5Uee1plkHazspBFVsMrzu7XMQzAKTQqPiKrZxS75qxnTwqpd0UQlRoxgbvquCU7kfo8Q45Jisx2dbf6SzM3H0onRZRAZl7AEk6Vc1cBiP1BpW57JHyQ6a1LzIJNsFLwpHFH8iGev5daRYVbeJpajhjXnriVwtGb0LgwrlRbgu1wJLLlS090ViN9PtUBcaaSk5CRgTsCCiwJt7u9ytzHPAGdtbeLz3bZyepUvVUx1H4iCoi0VX6lYCEHbgRRXsoLKRd6nyre3mD5Olui8qJUsLcIptZDZBOiTse6eJYXtbQ6AAe7qlRXwtfba2ey3tWKZyE37dOp2el1dDyJoFeax7zLxS9p9VzYJ4PFVdsN5REYU0g868Wr6J2tb2YaLMwVGBYbcGmYXpwrfQnZP7GLE72gzP4AbrTfsr4JxghIJRxngaCvVH4aEw439w1adJ3K0xTmSysbDgEj6FUQMMoO7gF6S6VwFO44CLeU9MtAsykn121BFfPCBU6RORBUg5MiGo2D0lChXkIMc9NfecfdwcsBtuTPpdvuHlv5LvciVktwh6R9XvcHNLG43ZIg03Q5fA1qvRMF031X0GXL1xSC6Z7zwDWl4kgZiXDUpOZdFO03ULEM9XO3uJtgMDHHnmeM9gems1FxF4rZFtjCGw6y5nTGqYLRAnbAJ3kzuolxgQLj9umEgg2aJLgxkrCkUeicXHPGv03PGCyGxYIR4ArBMLwu2zULT1lo80urpm6touzZJ5pB6WDGiz0YmIh59Ii57Smm2gVfRJ2YEhX84YEaM4yyDUsAcQ6Xgi7ZFT2UauqcQDbIafimYUabmIbFYXa54YS7pIRF05fG66OWau8yDZPpfos4AJx4fD1KLGPB9uG5pSSFBQ3CnGpJuYBsfym81bIAfVBeDFasYqvZ6obksGrdcsJ5gw3
+Server response: VLBVpUUJYahGwN2LIekqNqXoHFxAjh44t3NWOhfm5BqrMi0UBaAOFX0KalK9JE306EMKkpufoaL179J8aKKdfAn4lv3s0viuzs4ZWo3AEC1BBB7bJH2mFdgpPYXDJ4x6krW6TN7VPwXQvSq4aiffABKPXgSgYFd8ux5D80YNmtbYCHQaov5mvE1IiHn6ME24zx7xnTAOBZkDf0dHkWtVYkb4rC01Gtv5eqqG7oS8E29jsaqSxZlJ7BEmD2dIjMBE2sIzUawYSv58MjP760E3zIf1967iI8k8osy9GiVYTRVdykYvYdmOjGFiCCFJ8pHnW3kab3xtKIM7slsGCSUlYXIZXNiW0n7Khfl6YYphg2eObKSdcnC18KOWVuqMXnU2G5zeReBxUd9tnSKG3N5zXHLt1z3MaNFgJ29YUAMncJWFZhJQuCGFHPw8FpJd1OA8E9WY7i9ZqWdD1kUjlYosnZrqEyK5CI3EHQaCwaaaw3elbwKCKwvvLaaOOiHOq9QvPqv9GLY0C2beojgwWPhfn7tzd1BJyR2B8oAExW50OUU04ykOCItpDbfhQeoEwfFuHDw4arumACb41BI3HzgJO9oeeQiQvl80puvDcdpcgEUVGaOLNsUcs86KPda8CYzrIisiBW8haQ0eqEq2vAUb7QlKr9IuX7ZddIAfe6A4L1Zz3DroDBF8QoI7nRr8MFcqNaJrUJjfA6V29CeBEk9SOIP0X5yhAOLNoU29cZcaWxSVyxU2VUKhaXXvSMQQacbDuTAMrcnDQ5WCqr2B9AjXX4GoGW4fyUijlitSAWVOQsQ6XI6UIdreXvIeHA94Uhb6DKODhiQvOgrlnl5tEkNcVV4aU1UoYviZ4xcbVqKjLzIybBhfjv52EzSYqnBCWjbQW2ppizMrnSfERBj0udsyS9L9kMB6tbLETytzm4hPMATcB0StT9gm8rji1ick<END>
+Received: LOGIN|giaovien|123456|<END>
+Server response: 0|6|teacher|Dang nhap thanh cong|<END>
+Received: VIEW_MEETINGS|6|<END>
+Server response: 0|2024-12-15|[|2|6|pending|group||15:30:00|16:30:00|2024-12-15|]|2024-12-16|[|1|6|pending|personal||07:00:00|09:00:00|2024-12-16|]|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|pending|group||15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: TEST|pkDHTxmMR18N2l9k88EmLgN7cCCTt9rWksb1fEBw397vi5Ug1YHC3UAVUAoB9VYjCxYhzZSrWPc5IuZAHeCAyATJA7KAQghSS6yHTEyqRPja76aCbaANbTUbOdZf97vP1hVIlHw3UVRSQrSrFT4gmP61qTUnOD3FlOMKV8DoUS6i7OPDfHjIUd7AxPoBShF3tRCCPFqhYkFVxSWSa4YsXTtIiVI10NsjcujpyONKwQdhh005uMnFgUOCpW3fhkC9UkoGyzQiEsGli4eQGHVkchnF3elYElXZLAd7xug1cka8e4OkAhJaFwf6QETVqoszoLva3PPTzqRTid1g9A6Cua6BePUI4C8gLt6D8MWv0mEWD33C4xEmN9nsO50I5wpHdjKZteKjGM4IGxK8iNkwMMcaHQhDDKIgrQ6buEAzR47XpFTOS38cDa1LqYMrgUMNkGoSKnHbfEwLKFXa7T3AtuJXGVFmnPxNVcgfDl5iqrryvEOqXFoEzyc3HffvuT6FtciwEdUsJCg2EsiayMcl82fGX8zFPvI6MpsOIB4PBYHDGnb2y4cww70I3pLHZUDj9wxFvrVwFaxJCPC0Jek3ZbBQENXbfbAcLvh6a0qdPbnRqnFxFppcEqsJ1GiUfjwqSSktIOMVpxmUarFdVu5ZZmiOqFjLoTz4lXnsj0DMlogCTmdoUZEtBk8pph0R0nMaAxIhlJtNxOPHystIFv2EW0t9VhPJKZjIMppyzZBknOpb4ZhAKZCeNwcgRrqcGNkS1OEolFOOT4nMRKMZiM4v6WSOB6qFHOX8acmBfzPxt09ABJZjVRSSligkcKpkWDgxdHy86Ctn2sl118YNOrdzP9asHDQdGuQh1FevHNY767zv6N8K4b7IYVyfZC9dwN9oSdXXouVirIUlVStOsrUEAIkXKh16uyiBR6W3qpcVxw7HCqVsVpxUvVr32gzkUWjjQ6d4l5PXrKerzzaKcNcLiKEYo369Ngida9X94lWjv0RknptD2LOYTSu8Ko5
+Received: XKdzibKiVv43ftIFWxyYp8mBR5vPDXIaikNEBYmUHfNmOVqiIc6vahwsaf5d3E1ZoFbnbE7ihLJvezRnRMWqtHYHkRkbTby5gQi5Uee1plkHazspBFVsMrzu7XMQzAKTQqPiKrZxS75qxnTwqpd0UQlRoxgbvquCU7kfo8Q45Jisx2dbf6SzM3H0onRZRAZl7AEk6Vc1cBiP1BpW57JHyQ6a1LzIJNsFLwpHFH8iGev5daRYVbeJpajhjXnriVwtGb0LgwrlRbgu1wJLLlS090ViN9PtUBcaaSk5CRgTsCCiwJt7u9ytzHPAGdtbeLz3bZyepUvVUx1H4iCoi0VX6lYCEHbgRRXsoLKRd6nyre3mD5Olui8qJUsLcIptZDZBOiTse6eJYXtbQ6AAe7qlRXwtfba2ey3tWKZyE37dOp2el1dDyJoFeax7zLxS9p9VzYJ4PFVdsN5REYU0g868Wr6J2tb2YaLMwVGBYbcGmYXpwrfQnZP7GLE72gzP4AbrTfsr4JxghIJRxngaCvVH4aEw439w1adJ3K0xTmSysbDgEj6FUQMMoO7gF6S6VwFO44CLeU9MtAsykn121BFfPCBU6RORBUg5MiGo2D0lChXkIMc9NfecfdwcsBtuTPpdvuHlv5LvciVktwh6R9XvcHNLG43ZIg03Q5fA1qvRMF031X0GXL1xSC6Z7zwDWl4kgZiXDUpOZdFO03ULEM9XO3uJtgMDHHnmeM9gems1FxF4rZFtjCGw6y5nTGqYLRAnbAJ3kzuolxgQLj9umEgg2aJLgxkrCkUeicXHPGv03PGCyGxYIR4ArBMLwu2zULT1lo80urpm6touzZJ5pB6WDGiz0YmIh59Ii57Smm2gVfRJ2YEhX84YEaM4yyDUsAcQ6Xgi7ZFT2UauqcQDbIafimYUabmIbFYXa54YS7pIRF05fG66OWau8yDZPpfos4AJx4fD1KLGPB9uG5pSSFBQ3CnGpJuYBsfym81bIAfVBeDFasYqvZ6obksGrdcsJ5gw
+Received: 3VLBVpUUJYahGwN2LIekqNqXoHFxAjh44t3NWOhfm5BqrMi0UBaAOFX0KalK9JE306EMKkpufoaL179J8aKKdfAn4lv3s0viuzs4ZWo3AEC1BBB7bJH2mFdgpPYXDJ4x6krW6TN7VPwXQvSq4aiffABKPXgSgYFd8ux5D80YNmtbYCHQaov5mvE1IiHn6ME24zx7xnTAOBZkDf0dHkWtVYkb4rC01Gtv5eqqG7oS8E29jsaqSxZlJ7BEmD2dIjMBE2sIzUawYSv58MjP760E3zIf1967iI8k8osy9GiVYTRVdykYvYdmOjGFiCCFJ8pHnW3kab3xtKIM7slsGCSUlYXIZXNiW0n7Khfl6YYphg2eObKSdcnC18KOWVuqMXnU2G5zeReBxUd9tnSKG3N5zXHLt1z3MaNFgJ29YUAMncJWFZhJQuCGFHPw8FpJd1OA8E9WY7i9ZqWdD1kUjlYosnZrqEyK5CI3EHQaCwaaaw3elbwKCKwvvLaaOOiHOq9QvPqv9GLY0C2beojgwWPhfn7tzd1BJyR2B8oAExW50OUU04ykOCItpDbfhQeoEwfFuHDw4arumACb41BI3HzgJO9oeeQiQvl80puvDcdpcgEUVGaOLNsUcs86KPda8CYzrIisiBW8haQ0eqEq2vAUb7QlKr9IuX7ZddIAfe6A4L1Zz3DroDBF8QoI7nRr8MFcqNaJrUJjfA6V29CeBEk9SOIP0X5yhAOLNoU29cZcaWxSVyxU2VUKhaXXvSMQQacbDuTAMrcnDQ5WCqr2B9AjXX4GoGW4fyUijlitSAWVOQsQ6XI6UIdreXvIeHA94Uhb6DKODhiQvOgrlnl5tEkNcVV4aU1UoYviZ4xcbVqKjLzIybBhfjv52EzSYqnBCWjbQW2ppizMrnSfERBj0udsyS9L9kMB6tbLETytzm4hPMATcB0StT9gm8rji1ick|<END>
+Server response: 123|pkDHTxmMR18N2l9k88EmLgN7cCCTt9rWksb1fEBw397vi5Ug1YHC3UAVUAoB9VYjCxYhzZSrWPc5IuZAHeCAyATJA7KAQghSS6yHTEyqRPja76aCbaANbTUbOdZf97vP1hVIlHw3UVRSQrSrFT4gmP61qTUnOD3FlOMKV8DoUS6i7OPDfHjIUd7AxPoBShF3tRCCPFqhYkFVxSWSa4YsXTtIiVI10NsjcujpyONKwQdhh005uMnFgUOCpW3fhkC9UkoGyzQiEsGli4eQGHVkchnF3elYElXZLAd7xug1cka8e4OkAhJaFwf6QETVqoszoLva3PPTzqRTid1g9A6Cua6BePUI4C8gLt6D8MWv0mEWD33C4xEmN9nsO50I5wpHdjKZteKjGM4IGxK8iNkwMMcaHQhDDKIgrQ6buEAzR47XpFTOS38cDa1LqYMrgUMNkGoSKnHbfEwLKFXa7T3AtuJXGVFmnPxNVcgfDl5iqrryvEOqXFoEzyc3HffvuT6FtciwEdUsJCg2EsiayMcl82fGX8zFPvI6MpsOIB4PBYHDGnb2y4cww70I3pLHZUDj9wxFvrVwFaxJCPC0Jek3ZbBQENXbfbAcLvh6a0qdPbnRqnFxFppcEqsJ1GiUfjwqSSktIOMVpxmUarFdVu5ZZmiOqFjLoTz4lXnsj0DMlogCTmdoUZEtBk8pph0R0nMaAxIhlJtNxOPHystIFv2EW0t9VhPJKZjIMppyzZBknOpb4ZhAKZCeNwcgRrqcGNkS1OEolFOOT4nMRKMZiM4v6WSOB6qFHOX8acmBfzPxt09ABJZjVRSSligkcKpkWDgxdHy86Ctn2sl118YNOrdzP9asHDQdGuQh1FevHNY767zv6N8K4b7IYVyfZC9dwN9oSdXXouVirIUlVStOsrUEAIkXKh16uyiBR6W3qpcVxw7HCqVsVpxUvVr32gzkUWjjQ6d4l5PXrKerzzaKcNcLiKEYo369Ngida9X94lWjv0RknptD2LOYTSu8Ko5X
+Server response: KdzibKiVv43ftIFWxyYp8mBR5vPDXIaikNEBYmUHfNmOVqiIc6vahwsaf5d3E1ZoFbnbE7ihLJvezRnRMWqtHYHkRkbTby5gQi5Uee1plkHazspBFVsMrzu7XMQzAKTQqPiKrZxS75qxnTwqpd0UQlRoxgbvquCU7kfo8Q45Jisx2dbf6SzM3H0onRZRAZl7AEk6Vc1cBiP1BpW57JHyQ6a1LzIJNsFLwpHFH8iGev5daRYVbeJpajhjXnriVwtGb0LgwrlRbgu1wJLLlS090ViN9PtUBcaaSk5CRgTsCCiwJt7u9ytzHPAGdtbeLz3bZyepUvVUx1H4iCoi0VX6lYCEHbgRRXsoLKRd6nyre3mD5Olui8qJUsLcIptZDZBOiTse6eJYXtbQ6AAe7qlRXwtfba2ey3tWKZyE37dOp2el1dDyJoFeax7zLxS9p9VzYJ4PFVdsN5REYU0g868Wr6J2tb2YaLMwVGBYbcGmYXpwrfQnZP7GLE72gzP4AbrTfsr4JxghIJRxngaCvVH4aEw439w1adJ3K0xTmSysbDgEj6FUQMMoO7gF6S6VwFO44CLeU9MtAsykn121BFfPCBU6RORBUg5MiGo2D0lChXkIMc9NfecfdwcsBtuTPpdvuHlv5LvciVktwh6R9XvcHNLG43ZIg03Q5fA1qvRMF031X0GXL1xSC6Z7zwDWl4kgZiXDUpOZdFO03ULEM9XO3uJtgMDHHnmeM9gems1FxF4rZFtjCGw6y5nTGqYLRAnbAJ3kzuolxgQLj9umEgg2aJLgxkrCkUeicXHPGv03PGCyGxYIR4ArBMLwu2zULT1lo80urpm6touzZJ5pB6WDGiz0YmIh59Ii57Smm2gVfRJ2YEhX84YEaM4yyDUsAcQ6Xgi7ZFT2UauqcQDbIafimYUabmIbFYXa54YS7pIRF05fG66OWau8yDZPpfos4AJx4fD1KLGPB9uG5pSSFBQ3CnGpJuYBsfym81bIAfVBeDFasYqvZ6obksGrdcsJ5gw3
+Server response: VLBVpUUJYahGwN2LIekqNqXoHFxAjh44t3NWOhfm5BqrMi0UBaAOFX0KalK9JE306EMKkpufoaL179J8aKKdfAn4lv3s0viuzs4ZWo3AEC1BBB7bJH2mFdgpPYXDJ4x6krW6TN7VPwXQvSq4aiffABKPXgSgYFd8ux5D80YNmtbYCHQaov5mvE1IiHn6ME24zx7xnTAOBZkDf0dHkWtVYkb4rC01Gtv5eqqG7oS8E29jsaqSxZlJ7BEmD2dIjMBE2sIzUawYSv58MjP760E3zIf1967iI8k8osy9GiVYTRVdykYvYdmOjGFiCCFJ8pHnW3kab3xtKIM7slsGCSUlYXIZXNiW0n7Khfl6YYphg2eObKSdcnC18KOWVuqMXnU2G5zeReBxUd9tnSKG3N5zXHLt1z3MaNFgJ29YUAMncJWFZhJQuCGFHPw8FpJd1OA8E9WY7i9ZqWdD1kUjlYosnZrqEyK5CI3EHQaCwaaaw3elbwKCKwvvLaaOOiHOq9QvPqv9GLY0C2beojgwWPhfn7tzd1BJyR2B8oAExW50OUU04ykOCItpDbfhQeoEwfFuHDw4arumACb41BI3HzgJO9oeeQiQvl80puvDcdpcgEUVGaOLNsUcs86KPda8CYzrIisiBW8haQ0eqEq2vAUb7QlKr9IuX7ZddIAfe6A4L1Zz3DroDBF8QoI7nRr8MFcqNaJrUJjfA6V29CeBEk9SOIP0X5yhAOLNoU29cZcaWxSVyxU2VUKhaXXvSMQQacbDuTAMrcnDQ5WCqr2B9AjXX4GoGW4fyUijlitSAWVOQsQ6XI6UIdreXvIeHA94Uhb6DKODhiQvOgrlnl5tEkNcVV4aU1UoYviZ4xcbVqKjLzIybBhfjv52EzSYqnBCWjbQW2ppizMrnSfERBj0udsyS9L9kMB6tbLETytzm4hPMATcB0StT9gm8rji1ick|<END>
+Received: VIEW_MEETINGS|6|<END>
+Server response: 0|2024-12-15|[|2|6|pending|group||15:30:00|16:30:00|2024-12-15|]|2024-12-16|[|1|6|pending|personal||07:00:00|09:00:00|2024-12-16|]|<END>
+Received: VIEW_MEETING|1|<END>
+Server response: 0|1|6|pending|personal||07:00:00|09:00:00|2024-12-16|[|5|Tanashi|Kuwado|]|<END>
+Received: VIEW_MEETINGS|6|<END>
+Server response: 0|2024-12-15|[|2|6|pending|group||15:30:00|16:30:00|2024-12-15|]|2024-12-16|[|1|6|pending|personal||07:00:00|09:00:00|2024-12-16|]|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|pending|group||15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: LOGIN|giaovien|123456|<END>
+Server response: 0|6|teacher|Dang nhap thanh cong|<END>
+Received: VIEW_MEETINGS|6|<END>
+Server response: 0|2024-12-15|[|2|6|pending|group||15:30:00|16:30:00|2024-12-15|]|2024-12-16|[|1|6|pending|personal||07:00:00|09:00:00|2024-12-16|]|2024-12-17|[|3|6|confirmed|personal||05:10:00|10:00:00|2024-12-17|]|2024-12-18|[|4|6|doing|personal||05:00:00|06:00:00|2024-12-18|]|<END>
+Received: VIEW_HISTORY|6|<END>
+Server response: 0|2024-12-10|[|5|6|completed|group||10:00:00|12:00:00|2024-12-10|]|2024-12-13|[|6|6|completed|personal||14:00:00|15:30:00|2024-12-13|]|<END>
+Received: VIEW_MEETING|5|<END>
+Server response: 0|5|6|completed|group||10:00:00|12:00:00|2024-12-10|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: VIEW_HISTORY|6|<END>
+Server response: 0|2024-12-10|[|5|6|completed|group||10:00:00|12:00:00|2024-12-10|]|2024-12-13|[|6|6|completed|personal||14:00:00|15:30:00|2024-12-13|]|<END>
+Received: VIEW_MEETINGS|6|<END>
+Server response: 0|2024-12-15|[|2|6|pending|group||15:30:00|16:30:00|2024-12-15|]|2024-12-16|[|1|6|pending|personal||07:00:00|09:00:00|2024-12-16|]|2024-12-17|[|3|6|confirmed|personal||05:10:00|10:00:00|2024-12-17|]|2024-12-18|[|4|6|doing|personal||05:00:00|06:00:00|2024-12-18|]|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|pending|group||15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: LOGIN|giaovien|123456|<END>
+Server response: 0|6|teacher|Dang nhap thanh cong|<END>
+Received: VIEW_HISTORY|6|<END>
+Server response: 0|2024-12-10|[|5|6|completed|group||10:00:00|12:00:00|2024-12-10|]|2024-12-13|[|6|6|completed|personal||14:00:00|15:30:00|2024-12-13|]|<END>
+Received: VIEW_MEETING|5|<END>
+Server response: 0|5|6|completed|group||10:00:00|12:00:00|2024-12-10|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: VIEW_MEETING|5|toi la hoan
+toi thich xem phim
+hehehe
+viet gif duoc GG GHD mJ
+|<END>
+Server response: 0|5|6|completed|group||10:00:00|12:00:00|2024-12-10|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: VIEW_MEETING|5|<END>
+Server response: 0|5|6|completed|group||10:00:00|12:00:00|2024-12-10|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: LOGIN|giaovien|123456|<END>
+Server response: 0|6|teacher|Dang nhap thanh cong|<END>
+Received: VIEW_HISTORY|6|<END>
+Server response: 0|2024-12-10|[|5|6|completed|group||10:00:00|12:00:00|2024-12-10|]|2024-12-13|[|6|6|completed|personal||14:00:00|15:30:00|2024-12-13|]|<END>
+Received: VIEW_MEETING|5|<END>
+Server response: 0|5|6|completed|group||10:00:00|12:00:00|2024-12-10|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: VIEW_MEETING|5|hoan
+|<END>
+Server response: 0|5|6|completed|group||10:00:00|12:00:00|2024-12-10|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: VIEW_MEETING|5|<END>
+Server response: 0|5|6|completed|group||10:00:00|12:00:00|2024-12-10|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: LOGIN|giaovien|123456|<END>
+Server response: 0|6|teacher|Dang nhap thanh cong|<END>
+Received: VIEW_HISTORY|6|<END>
+Server response: 0|2024-12-10|[|5|6|completed|group||10:00:00|12:00:00|2024-12-10|]|2024-12-13|[|6|6|completed|personal||14:00:00|15:30:00|2024-12-13|]|<END>
+Received: VIEW_MEETING|5|<END>
+Server response: 0|5|6|completed|group||10:00:00|12:00:00|2024-12-10|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: VIEW_HISTORY|6|<END>
+Server response: 0|2024-12-10|[|5|6|completed|group||10:00:00|12:00:00|2024-12-10|]|2024-12-13|[|6|6|completed|personal||14:00:00|15:30:00|2024-12-13|]|<END>
+Received: LOGIN|giaovien|123456|<END>
+Server response: 0|6|teacher|Dang nhap thanh cong|<END>
+Received: VIEW_HISTORY|6|<END>
+Server response: 0|2024-12-10|[|5|6|completed|group||10:00:00|12:00:00|2024-12-10|]|2024-12-13|[|6|6|completed|personal||14:00:00|15:30:00|2024-12-13|]|<END>
+Received: VIEW_MEETING|5|<END>
+Server response: 0|5|6|completed|group||10:00:00|12:00:00|2024-12-10|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: VIEW_MEETING|5|hoan*hao*|<END>
+Server response: 0|5|6|completed|group||10:00:00|12:00:00|2024-12-10|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: VIEW_MEETING|5|<END>
+Server response: 0|5|6|completed|group||10:00:00|12:00:00|2024-12-10|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: LOGIN|giaovien|123456|<END>
+Server response: 0|6|teacher|Dang nhap thanh cong|<END>
+Received: VIEW_HISTORY|6|<END>
+Server response: 0|2024-12-10|[|5|6|completed|group||10:00:00|12:00:00|2024-12-10|]|2024-12-13|[|6|6|completed|personal||14:00:00|15:30:00|2024-12-13|]|<END>
+Received: VIEW_MEETING|5|<END>
+Server response: 0|5|6|completed|group||10:00:00|12:00:00|2024-12-10|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: ENTER_MEETING_REPORT|5|hoan*hao*|<END>
+Server response: 0|Sua doi van ban cuoc hop thanh cong|<END>
+Received: VIEW_MEETING|5|<END>
+Server response: 0|5|6|completed|group|hoan*hao*|10:00:00|12:00:00|2024-12-10|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: LOGIN|giaovien|123456|<END>
+Server response: 0|6|teacher|Dang nhap thanh cong|<END>
+Received: VIEW_HISTORY|6|<END>
+Server response: 0|2024-12-10|[|5|6|completed|group|hoan*hao*|10:00:00|12:00:00|2024-12-10|]|2024-12-13|[|6|6|completed|personal||14:00:00|15:30:00|2024-12-13|]|<END>
+Received: VIEW_MEETING|5|<END>
+Server response: 0|5|6|completed|group|hoan*hao*|10:00:00|12:00:00|2024-12-10|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: ENTER_MEETING_REPORT|5|hoan
+hao
+qua
+|<END>
+Server response: 0|Sua doi van ban cuoc hop thanh cong|<END>
+Received: VIEW_MEETING|5|<END>
+Server response: 0|5|6|completed|group|hoan
+hao
+qua
+|10:00:00|12:00:00|2024-12-10|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: LOGIN|giao vien'|4|<END>
+Server response: 1|Tên đăng nhập không chính xác!|<END>
+Received: LOGIN|giaovien|123456|<END>
+Server response: 0|6|teacher|Dang nhap thanh cong|<END>
+Received: VIEW_HISTORY|6|<END>
+Server response: 0|2024-12-10|[|5|6|completed|group|hoan
+hao
+qua
+|10:00:00|12:00:00|2024-12-10|]|2024-12-13|[|6|6|completed|personal||14:00:00|15:30:00|2024-12-13|]|<END>
+Received: VIEW_MEETING|6|<END>
+Server response: 0|6|6|completed|personal||14:00:00|15:30:00|2024-12-13|[|1|Viet|Hoan|]|<END>
+Received: ENTER_MEETING_REPORT|6|nay hay qua|<END>
+Server response: 0|Sua doi van ban cuoc hop thanh cong|<END>
+Received: VIEW_MEETING|6|<END>
+Server response: 0|6|6|completed|personal|nay hay qua|14:00:00|15:30:00|2024-12-13|[|1|Viet|Hoan|]|<END>
+Received: LOGIN|giaovien|123456|<END>
+Server response: 0|6|teacher|Dang nhap thanh cong|<END>
+Received: VIEW_HISTORY|6|<END>
+Server response: 0|2024-12-10|[|5|6|completed|group|hoan
+hao
+qua
+|10:00:00|12:00:00|2024-12-10|]|2024-12-13|[|6|6|completed|personal|nay hay qua|14:00:00|15:30:00|2024-12-13|]|<END>
+Received: VIEW_MEETING|6|<END>
+Server response: 0|6|6|completed|personal|nay hay qua|14:00:00|15:30:00|2024-12-13|[|1|Viet|Hoan|]|<END>
+Received: ENTER_MEETING_REPORT|6|van
+ban
+cuoc hop
+nay hay qua|<END>
+Server response: 0|Sua doi van ban cuoc hop thanh cong|<END>
+Received: VIEW_MEETING|6|<END>
+Server response: 0|6|6|completed|personal|van
+ban
+cuoc hop
+nay hay qua|14:00:00|15:30:00|2024-12-13|[|1|Viet|Hoan|]|<END>
+Received: VIEW_HISTORY|6|<END>
+Server response: 0|2024-12-10|[|5|6|completed|group|hoan
+hao
+qua
+|10:00:00|12:00:00|2024-12-10|]|2024-12-13|[|6|6|completed|personal|van
+ban
+cuoc hop
+nay hay qua|14:00:00|15:30:00|2024-12-13|]|<END>
+Received: LOGIN|giaovien|123456|<END>
+Server response: 0|6|teacher|Dang nhap thanh cong|<END>
+Received: VIEW_MEETINGS|6|<END>
+Server response: 0|2024-12-15|[|2|6|pending|group||15:30:00|16:30:00|2024-12-15|]|2024-12-16|[|1|6|pending|personal||07:00:00|09:00:00|2024-12-16|]|2024-12-17|[|3|6|confirmed|personal||05:10:00|10:00:00|2024-12-17|]|2024-12-18|[|4|6|doing|personal||05:00:00|06:00:00|2024-12-18|]|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|pending|group||15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: UPDATE_MEETING_STATUS|2|doing|<END>
+Server response: 0|Sua doi trang thai cuoc hop thanh cong|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|doing|group||15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: UPDATE_MEETING_STATUS|2|canceled|<END>
+Server response: 0|Sua doi trang thai cuoc hop thanh cong|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|canceled|group||15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: UPDATE_MEETING_STATUS|2|pending|<END>
+Server response: 0|Sua doi trang thai cuoc hop thanh cong|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|pending|group||15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: UPDATE_MEETING_STATUS|2|confirmed|<END>
+Server response: 0|Sua doi trang thai cuoc hop thanh cong|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|confirmed|group||15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: ENTER_MEETING_REPORT|2|0|<END>
+Server response: 0|Sua doi van ban cuoc hop thanh cong|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|confirmed|group|0|15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: UPDATE_MEETING_STATUS|2|completed|<END>
+Server response: 0|Sua doi trang thai cuoc hop thanh cong|<END>
+Received: VIEW_MEETING|2|<END>
+Server response: 0|2|6|completed|group|0|15:30:00|16:30:00|2024-12-15|[|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|]|<END>
+Received: VIEW_MEETINGS|6|<END>
+Server response: 0|2024-12-16|[|1|6|pending|personal||07:00:00|09:00:00|2024-12-16|]|2024-12-17|[|3|6|confirmed|personal||05:10:00|10:00:00|2024-12-17|]|2024-12-18|[|4|6|doing|personal||05:00:00|06:00:00|2024-12-18|]|<END>
+Received: VIEW_HISTORY|6|<END>
+Server response: 0|2024-12-10|[|5|6|completed|group|hoan
+hao
+qua
+|10:00:00|12:00:00|2024-12-10|]|2024-12-13|[|6|6|completed|personal|van
+ban
+cuoc hop
+nay hay qua|14:00:00|15:30:00|2024-12-13|]|2024-12-15|[|2|6|completed|group|0|15:30:00|16:30:00|2024-12-15|]|<END>

@@ -11,6 +11,21 @@ class UserView {
     // Constructor
     UserView() {};
 
+    int showMenu() {
+        while (true) {
+            cout << "----------------Ung dung dat lich hen--------------" << endl;
+            cout << "1. Dang nhap" << endl;
+            cout << "2. Dang ky" << endl;
+            int choice;
+            cout << "Ban muon lam gi?" << endl;
+            cin >> choice;
+            cin.ignore();
+            if (choice == 1 || choice == 2) {
+                return choice;
+            }
+        }
+    }
+
     map<string, string> showLogin() {
         map<string, string> info;
         cout << "-----------------Dang nhap-------------------" << endl;
@@ -65,8 +80,7 @@ class UserView {
         cout << "--------------------------------------------" << endl;
 
         return info;
-  }
-
+    }
 };
 
 #endif

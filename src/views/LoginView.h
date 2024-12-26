@@ -4,9 +4,6 @@
 #include <gtk/gtk.h>
 #include <string>
 #include <functional>
-#include <gdk-pixbuf/gdk-pixbuf.h>
-#include "../client/Client.h"  // Bao gồm Client.h để gọi hàm gửi yêu cầu đến server
-using namespace std;
 
 class LoginView {
 public:
@@ -25,12 +22,6 @@ public:
         mainBox = gtk_fixed_new();
         gtk_container_add(GTK_CONTAINER(window), mainBox);
 
-        
-
-        // Sử dụng trong LoginView
-        GtkWidget *backgroundImage = createScaledImage("/home/dinhnam/Github/LTM-MeetingScheduler/src/images/background.jpg", 500, 300);
-
-        gtk_fixed_put(GTK_FIXED(mainBox), backgroundImage, 0, 0);
         // Tạo các trường nhập liệu
         usernameEntry = gtk_entry_new();
         passwordEntry = gtk_entry_new();
@@ -53,35 +44,6 @@ public:
         g_signal_connect(registerButton, "clicked", G_CALLBACK(onRegisterButtonClicked), this);
         g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), nullptr);
     }
-   GtkWidget *createScaledImage(const char *filePath, int width, int height) {
-    // Tải ảnh từ file
-        GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file(filePath, nullptr);
-        
-        // Kiểm tra nếu ảnh không tải được
-        if (!pixbuf) {
-            g_printerr("Lỗi khi tải ảnh: %s\n", filePath);
-            return nullptr;  // Trả về nullptr nếu ảnh không tải được
-        }
-
-        // Scale ảnh
-        GdkPixbuf *scaledPixbuf = gdk_pixbuf_scale_simple(pixbuf, width, height, GDK_INTERP_BILINEAR);
-        
-        // Giải phóng ảnh gốc sau khi scale
-        g_object_unref(pixbuf); 
-
-        if (!scaledPixbuf) {
-            g_printerr("Lỗi khi scale ảnh\n");
-            return nullptr;  // Trả về nullptr nếu không thể scale ảnh
-        }
-
-        GtkWidget *image = gtk_image_new_from_pixbuf(scaledPixbuf);
-
-        // Giải phóng ảnh đã scale
-        g_object_unref(scaledPixbuf); 
-
-        return image;
-    }
-
 
     void showLoginWindow() {
         gtk_widget_show_all(window);
@@ -94,14 +56,6 @@ public:
 
     std::string getPassword() {
         return password;
-    }
-
-    void show() {
-        gtk_widget_show_all(window);
-    }
-
-    void hide() {
-        gtk_widget_hide(window);
     }
 
 private:
@@ -117,11 +71,6 @@ private:
         LoginView *view = static_cast<LoginView *>(data);
         view->username = gtk_entry_get_text(GTK_ENTRY(view->usernameEntry));
         view->password = gtk_entry_get_text(GTK_ENTRY(view->passwordEntry));
-
-        // Tạo lệnh đăng nhập và gửi tới server
-        std::string loginCommand = "LOGIN|" + view->username + "|" + view->password;
-        sendRequestToServer(loginCommand);  // Gửi yêu cầu tới server
-
         gtk_widget_destroy(view->window);  // Đóng cửa sổ đăng nhập
     }
 
