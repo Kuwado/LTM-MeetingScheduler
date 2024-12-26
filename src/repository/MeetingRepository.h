@@ -195,6 +195,7 @@ class MeetingRepository {
             }
         }else {}}
 
+
     void updateReport(const int &id, const string &report) {
         if (db.connect()) {
             string query = "UPDATE meetings SET report = ? WHERE id = ?";
