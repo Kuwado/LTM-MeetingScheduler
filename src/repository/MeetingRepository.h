@@ -193,7 +193,8 @@ class MeetingRepository {
             {
                 std::cerr << "Lỗi khi xoa meeting: " << e.what() << std::endl;
             }
-        }else {
+        }else {}}
+
 
     void updateReport(const int &id, const string &report) {
         if (db.connect()) {
