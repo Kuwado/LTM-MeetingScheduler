@@ -66,6 +66,7 @@ class MeetingRepository {
         }
     }
 
+    // Lay lich hen chua hoan thanh
     map<string, vector<Meeting>> getWaitingMeetingsByTeacherId(const int &teacher_id) {
         map<string, vector<Meeting>> timeslots;
 
@@ -106,6 +107,80 @@ class MeetingRepository {
         }
 
         return timeslots;
+    }
+
+    string getWeekName(const string &date) {
+        struct tm tm = {};
+        strptime(date.c_str(), "%Y-%m-%d", &tm); // Chuyển chuỗi ngày sang `tm`
+        time_t time = mktime(&tm);               // Chuyển sang `time_t`
+
+        // Lấy ngày đầu tuần
+        int dayOfMonth = tm.tm_mday;
+        int firstDayOfMonth = dayOfMonth - (tm.tm_wday == 0 ? 6 : (tm.tm_wday - 1));
+        tm.tm_mday = firstDayOfMonth;
+        mktime(&tm); // Ngày đầu tuần đầu tiên trong tháng
+
+        // Tính số thứ tự tuần
+        int weekNumber = 1 + (dayOfMonth - firstDayOfMonth) / 7;
+
+        // Lấy tháng và ngày đầu/ cuối tuần
+        char bufferStart[11], bufferEnd[11];
+        strftime(bufferStart, sizeof(bufferStart), "%d/%m", &tm); // Ngày đầu tuần
+        tm.tm_mday += 6;
+        mktime(&tm); // Ngày cuối tuần
+        strftime(bufferEnd, sizeof(bufferEnd), "%d/%m", &tm);
+
+        // Trả về tên tuần
+        char result[50];
+        snprintf(result, sizeof(result), "Tuần %d tháng %d (%s - %s)", weekNumber, tm.tm_mon + 1, bufferStart,
+                 bufferEnd);
+        return string(result);
+    }
+
+    // Lay lich hen chua hen theo tuan
+    map<string, map<string, vector<Meeting>>> getWaitingMeetingsInWeeksByTeacherId(const int &teacher_id) {
+        map<string, map<string, vector<Meeting>>> meetings;
+
+        if (db.connect()) {
+            string query = "SELECT * FROM meetings WHERE teacher_id = ? AND (status = 'pending' OR status = "
+                           "'confirmed' OR status = 'doing')";
+            try {
+                sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
+                pstmt->setInt(1, teacher_id);
+                sql::ResultSet *res = pstmt->executeQuery();
+
+                while (res->next()) {
+                    Meeting meeting;
+                    meeting.setId(res->getInt("id"));
+                    meeting.setTeacherId(res->getInt("teacher_id"));
+                    meeting.setStatus(res->getString("status"));
+                    meeting.setType(res->getString("type"));
+                    meeting.setReport(res->getString("report"));
+                    meeting.setStart(res->getString("start"));
+                    meeting.setEnd(res->getString("end"));
+                    meeting.setDate(res->getString("date"));
+                    string date = meeting.getDate();
+                    string week = getWeekName(date);
+                    meetings[week][date].push_back(meeting);
+                }
+                delete res;
+                delete pstmt;
+            } catch (sql::SQLException &e) {
+                std::cerr << "Lỗi khi lấy dữ liệu từ meetings: " << e.what() << std::endl;
+            }
+        } else {
+            cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
+        }
+
+        // Sắp xếp lại meetings trong mỗi ngày theo giờ tăng dần
+        for (auto &weekEntry : meetings) {
+            for (auto &dayEntry : weekEntry.second) {
+                sort(dayEntry.second.begin(), dayEntry.second.end(),
+                     [](const Meeting &a, const Meeting &b) { return a.getStart() < b.getStart(); });
+            }
+        }
+
+        return meetings;
     }
 
     map<string, vector<Meeting>> getDoneMeetingsByTeacherId(const int &teacher_id) {

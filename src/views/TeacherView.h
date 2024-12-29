@@ -26,6 +26,7 @@ class TeacherView {
             cout << "2. Kiem tra thoi gian ranh" << endl;
             cout << "3. Xem lich hen voi sinh vien" << endl;
             cout << "4. Xem lich su cuoc hen" << endl;
+            cout << "5. Xem lich hen voi sinh vien theo tuan" << endl;
             cout << "0. Dang xuat" << endl;
             cout << "Ban muon thuc hien chuc nang nao?" << endl;
             cin >> choice;
@@ -36,6 +37,7 @@ class TeacherView {
             case 2:
             case 3:
             case 4:
+            case 5:
                 return choice;
                 break;
             default:
@@ -291,6 +293,57 @@ class TeacherView {
                 cout << index << ". Tu: " << currentMeetings[i].getStart() << " - Den: " << currentMeetings[i].getEnd()
                      << "( " << currentMeetings[i].getType() << " - " << currentMeetings[i].getStatus() << " )" << endl;
             }
+        }
+
+        cout << "-----------" << endl;
+        while (true) {
+            cout << "Ban co muon xem chi tiet hoac sua doi? Nhap so dong can sua: ";
+            cin >> choice;
+            cin.ignore();
+            if (choice > 0 && choice <= editMeetings.size()) {
+                return editMeetings[choice];
+            } else if (choice == 0) {
+                Meeting meeting;
+                meeting.setId(-1);
+                return meeting;
+            }
+        }
+    }
+
+    Meeting showMeetingsInWeeks(const map<string, map<string, vector<pair<Meeting, vector<User>>>>> &meetings) {
+        if (meetings.empty()) {
+            Meeting meeting;
+            cout << "Ban chua co cuoc hen nao" << endl;
+            return meeting;
+        }
+
+        map<int, Meeting> editMeetings;
+        int index = 0, choice = 0;
+        cout << "------------------Lich hen cua ban theo tuan-------------------" << endl;
+        for (const auto &week : meetings) {
+            cout << "---------------" << week.first << "---------------" << endl;
+            map<string, vector<pair<Meeting, vector<User>>>> dailyMeetings = week.second;
+            for (const auto &day : dailyMeetings) {
+                cout << "----Ngay: " << day.first << endl;
+                vector<pair<Meeting, vector<User>>> currentMeetings = day.second;
+                for (int i = 0; i < currentMeetings.size(); i++) {
+                    index++;
+                    Meeting currentMeeting = currentMeetings[i].first;
+                    editMeetings[index] = currentMeeting;
+                    vector<User> students = currentMeetings[i].second;
+                    cout << index << ". Tu: " << currentMeeting.getStart() << " - Den: " << currentMeeting.getEnd()
+                         << "( " << currentMeeting.getType() << " - " << currentMeeting.getStatus() << " ). ";
+                    cout << "Nguoi tham gia: ";
+                    for (size_t i = 0; i < students.size(); ++i) {
+                        cout << students[i].getFirstName() << " " << students[i].getLastName();
+                        if (i != students.size() - 1) {
+                            cout << ", ";
+                        }
+                    }
+                    cout << "" << endl;
+                }
+            }
+            cout << "" << endl;
         }
 
         cout << "-----------" << endl;

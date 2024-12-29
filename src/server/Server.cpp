@@ -92,6 +92,9 @@ void processClientRequest(int clientSocket, const string &request) {
     } else if (command == "VIEW_MEETING") {
         int meeting_id = stoi(result[1]);
         res = teacherResponseController.viewMeeting(meeting_id);
+    } else if (command == "VIEW_MEETINGS_IN_WEEKS") {
+        int meeting_id = stoi(result[1]);
+        res = teacherResponseController.viewMeetingsInWeeks(meeting_id);
     } else if (command == "VIEW_HISTORY") {
         int teacher_id = stoi(result[1]);
         res = teacherResponseController.viewHistory(teacher_id);
