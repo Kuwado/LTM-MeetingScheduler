@@ -314,11 +314,11 @@ void handleViewAndBookTeacherSlots() {
             map<string, vector<Timeslot>> timeslots = clientController.viewTimeslots(response);
             map<string, vector<Timeslot>> filteredTimeslots;
             for (const auto &entry : timeslots) {
-                string date = entry.first;               
-                vector<Timeslot> slots = entry.second;   
+                string date = entry.first;
+                vector<Timeslot> slots = entry.second;
                 vector<Timeslot> freeSlots;
                 for (const Timeslot &slot : slots) {
-                    if (slot.getStatus() == "free") {    
+                    if (slot.getStatus() == "free") {
                         freeSlots.push_back(slot);
                     }
                 }
@@ -337,7 +337,7 @@ void handleCancelMeeting() {
     string requestMeeting = "FETCH_STUDENT_METTINGS|" + to_string(user_id) + "|<END>";
     string responseMeeting = sendRequestToServer(requestMeeting);
     string statusMeeting = responseMeeting.substr(0, responseMeeting.find('|'));
-    if (statusMeeting == "0"){
+    if (statusMeeting == "0") {
         vector<Meeting> meetings = clientController.parseMeetingsFromResponse(responseMeeting);
         int meetingId = studentView.selectMeeting(meetings);
         string cancelRequest = "CANCEL_MEETING|" + to_string(meetingId) + "|" + to_string(user_id) + "|<END>";
@@ -356,8 +356,9 @@ void handleStudentMenu() {
         handleStudentMenu();
         break;
     case 2:
+        handleCancelMeeting();
         // handleViewTimeslots();
-        // handleTeacherMenu();
+        handleTeacherMenu();
         break;
     case 3:
         break;

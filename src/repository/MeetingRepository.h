@@ -2,9 +2,9 @@
 #define MEETINGREPOSITORY_H
 
 #include "../../data/Database.h"
+#include "../models/Attendance.h"
 #include "../models/Meeting.h"
 #include "../models/User.h"
-#include "../models/Attendance.h"
 #include "./AttendanceRepository.h"
 #include "UserRepository.h"
 #include <cppconn/prepared_statement.h>
@@ -51,7 +51,7 @@ class MeetingRepository {
                 sql::Statement *stmt = db.getConnection()->createStatement();
                 sql::ResultSet *res = stmt->executeQuery("SELECT LAST_INSERT_ID()");
                 if (res->next()) {
-                    meetingId = res->getInt(1); 
+                    meetingId = res->getInt(1);
                 }
                 delete res;
                 delete stmt;
@@ -180,20 +180,20 @@ class MeetingRepository {
         return meeting;
     }
 
-    void deleteMeeting (const int &id){
-        if (db.connect()){
+    void deleteMeeting(const int &id) {
+        if (db.connect()) {
             string query = "DELETE FROM meetings WHERE id = ?";
-            try
-            {
+            try {
                 sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
                 pstmt->setInt(1, id);
                 sql::ResultSet *res = pstmt->executeQuery();
-            }
-            catch (sql::SQLException &e) 
-            {
+            } catch (sql::SQLException &e) {
                 std::cerr << "Lỗi khi xoa meeting: " << e.what() << std::endl;
             }
-        }else {
+        } else {
+            cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
+        }
+    }
 
     void updateReport(const int &id, const string &report) {
         if (db.connect()) {
