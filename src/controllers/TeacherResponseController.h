@@ -141,6 +141,50 @@ class TeacherResponseController {
         return res;
     }
 
+    Response viewMeetingsInWeeks(const int &teacher_id) {
+        Response res;
+        User user = userRepository.getUserById(teacher_id);
+        if (user.getId() == 0) {
+            res.setStatus(8);
+            res.setMessage("Giao vien khong ton tai|");
+        } else {
+            map<string, map<string, vector<Meeting>>> meetings =
+                meetingRepo.getWaitingMeetingsInWeeksByTeacherId(teacher_id);
+            if (meetings.empty()) {
+                res.setStatus(16);
+                res.setMessage("Giao vien khong co lich hen|");
+            } else {
+                string message = "";
+                for (const auto &week : meetings) {
+                    const string weekName = week.first;
+                    const map<string, vector<Meeting>> dailyMeetings = week.second;
+                    message += weekName + "|{";
+                    for (const auto &day : dailyMeetings) {
+                        const string dayName = day.first;
+                        vector<Meeting> mts = day.second;
+                        message += "|" + dayName + "|[";
+                        for (int i = 0; i < mts.size(); i++) {
+                            message += "|" + mts[i].toString();
+                            vector<User> students = attendanceRepo.getStudentsFromMeeting(mts[i].getId());
+                            message += "|students|{";
+                            for (const auto &student : students) {
+                                message += "|" + to_string(student.getId()) + "|" + student.getFirstName() + "|" +
+                                           student.getLastName();
+                            }
+                            message += "|}";
+                        }
+                        message += "|]";
+                    }
+                    message += "|}|";
+                }
+                res.setStatus(0);
+                res.setMessage(message);
+            }
+        }
+
+        return res;
+    }
+
     Response viewMeeting(const int &meeting_id) {
         Response res;
         vector<User> students = attendanceRepo.getStudentsFromMeeting(meeting_id);

@@ -234,6 +234,26 @@ void handleTeacherViewMeetings() {
     }
 }
 
+void handleTracherViewMeetingsInWeeks() {
+    string request = "VIEW_MEETINGS_IN_WEEKS|" + to_string(user_id) + "|<END>";
+    string response = sendRequestToServer(request);
+    string status = response.substr(0, response.find('|'));
+    if (status == "0") {
+        map<string, map<string, vector<pair<Meeting, vector<User>>>>> meetings =
+            teacherController.getMeetingsInWeeksFromResponse(response);
+        Meeting meeting = teacherView.showMeetingsInWeeks(meetings);
+        if (meeting.getId() == -1) {
+            return;
+        }
+        // Detail Meeting
+        handleTeacherViewMeeting(meeting.getId());
+        handleTeacherViewMeetings();
+    } else if (status == "16") {
+        vector<string> tokens = splitString(response, '|');
+        cout << tokens[1] << endl;
+    }
+}
+
 void handleTeacherViewHistoryMeeting(const int &meeting_id) {
     string request = "VIEW_MEETING|" + to_string(meeting_id) + "|<END>";
     string response = sendRequestToServer(request);
@@ -290,6 +310,10 @@ void handleTeacherMenu() {
         break;
     case 4:
         handleTeacherViewHistory();
+        handleTeacherMenu();
+        break;
+    case 5:
+        handleTracherViewMeetingsInWeeks();
         handleTeacherMenu();
         break;
 
