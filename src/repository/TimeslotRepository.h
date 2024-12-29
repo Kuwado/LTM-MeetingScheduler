@@ -205,6 +205,55 @@ class TimeslotRepository {
         }
         return ts;
     }
+
+    void updateStatus(const int &id, const string &status) {
+        if (db.connect()) {
+            string query = "UPDATE timeslots SET status = ? WHERE id = ?";
+            try {
+                sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
+                pstmt->setString(1, status);
+                pstmt->setInt(2, id);
+                pstmt->executeUpdate();
+                delete pstmt;
+            } catch (sql::SQLException &e) {
+                cerr << "Lỗi khi cập nhật trạng thái timeslot: " << e.what() << endl;
+            }
+        } else {
+            cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
+        }
+    }
+
+    Timeslot getTimeslotByDetails(const int &teacher_id, const string &start, const string &end){
+        Timeslot ts;
+        if (db.connect()){
+            string query = "SELECT * FROM timeslots WHERE teacher_id = ? AND start = ? AND end = ?";
+            try {
+                sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
+                pstmt->setInt(1, teacher_id);
+                pstmt->setString(2, start);
+                pstmt->setString(3, end);
+                sql::ResultSet *res = pstmt->executeQuery();
+
+                if (res->next()) {
+                    ts.setId(res->getInt("id"));
+                    ts.setStart(res->getString("start"));
+                    ts.setEnd(res->getString("end"));
+                    ts.setDate(res->getString("date"));
+                    ts.setType(res->getString("type"));
+                    ts.setStatus(res->getString("status"));
+                    ts.setTeacherId(res->getInt("teacher_id"));
+                }
+
+                delete res;
+                delete pstmt;
+            } catch (sql::SQLException &e){
+                cerr << "Lỗi khi lay du lieu: " << e.what() << endl;
+            }
+        } else {
+            cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
+        }
+        return ts;
+    }
 };
 
 #endif

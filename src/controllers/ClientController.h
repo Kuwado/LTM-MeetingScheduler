@@ -72,34 +72,41 @@ class ClientController {
         vector<User> teachers;
 
         vector<string> tokens = splitString(message, '|');
-        int i = 0;
+        int i = 1;
 
         while (i < tokens.size()) {
             User user;
-
-            if (tokens[i].find("ID: ") != string::npos) {
-                user.setId(stoi(tokens[i].substr(4))); 
-                i++;
-            }
-            if (i < tokens.size() && tokens[i].find("Ho ten: ") != string::npos) {
-                string fullName = tokens[i].substr(8); 
-                size_t spaceIndex = fullName.find_last_of(' ');
-                if (spaceIndex != string::npos) {
-                    user.setFirstName(fullName.substr(0, spaceIndex));
-                    user.setLastName(fullName.substr(spaceIndex + 1));
-                }
-                i++;
-            }
-            if (i < tokens.size() && tokens[i].find("Vai tro: ") != string::npos) {
-                user.setRole(tokens[i].substr(9)); 
-                i++;
-            }
-
-            
+            user.setId(stoi(tokens[i]));
+            user.setFirstName(tokens[i+1]);
+            user.setLastName(tokens[i+2]);            
             teachers.push_back(user);
+            i = i + 3;
         }
 
         return teachers;
+    }
+
+    vector<Meeting> parseMeetingsFromResponse(const string &message) {
+        vector<Meeting> meetings;
+
+        vector<string> tokens = splitString(message, '|');
+        int i = 1;
+
+        while (i < tokens.size()) {
+            Meeting meeting;
+            meeting.setId(stoi(tokens[i]));
+            meeting.setTeacherId(stoi(tokens[i+1]));
+            meeting.setStatus(tokens[i+2]);
+            meeting.setType(tokens[i+3]);
+            meeting.setReport(tokens[i+4]);
+            meeting.setStart(tokens[i+5]);
+            meeting.setEnd(tokens[i+6]);
+            meeting.setDate(tokens[i+7]);
+            meetings.push_back(meeting);
+            i = i + 8;
+        }
+
+        return meetings;
     }
 
 

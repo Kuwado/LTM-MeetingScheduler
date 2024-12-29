@@ -473,5 +473,3 @@ qua
 ban
 cuoc hop
 nay hay qua|14:00:00|15:30:00|2024-12-13|]|2024-12-15|[|2|6|completed|group|0|15:30:00|16:30:00|2024-12-15|]|<END>
-Received: LOGIN|giaovien|123456|<END>
-Server response: 0|6|teacher|Dang nhap thanh cong|<END>
