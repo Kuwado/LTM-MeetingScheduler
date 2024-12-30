@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QTableWidget>
 #include <QtWidgets/QVBoxLayout>
@@ -23,31 +24,32 @@ class Ui_ViewAllTeacherWidget
 {
 public:
     QVBoxLayout *verticalLayout;
-    QTableWidget *teacherTable;
-    QPushButton *viewButton;
+    QLabel *label;
+    QTableWidget *tableWidget;
+    QPushButton *btnBack;
 
     void setupUi(QWidget *ViewAllTeacherWidget)
     {
         if (ViewAllTeacherWidget->objectName().isEmpty())
             ViewAllTeacherWidget->setObjectName(QString::fromUtf8("ViewAllTeacherWidget"));
-        ViewAllTeacherWidget->resize(400, 300);
+        ViewAllTeacherWidget->resize(600, 400);
         verticalLayout = new QVBoxLayout(ViewAllTeacherWidget);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        teacherTable = new QTableWidget(ViewAllTeacherWidget);
-        if (teacherTable->columnCount() < 2)
-            teacherTable->setColumnCount(2);
-        QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
-        teacherTable->setHorizontalHeaderItem(0, __qtablewidgetitem);
-        QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
-        teacherTable->setHorizontalHeaderItem(1, __qtablewidgetitem1);
-        teacherTable->setObjectName(QString::fromUtf8("teacherTable"));
+        label = new QLabel(ViewAllTeacherWidget);
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setAlignment(Qt::AlignCenter);
 
-        verticalLayout->addWidget(teacherTable);
+        verticalLayout->addWidget(label);
 
-        viewButton = new QPushButton(ViewAllTeacherWidget);
-        viewButton->setObjectName(QString::fromUtf8("viewButton"));
+        tableWidget = new QTableWidget(ViewAllTeacherWidget);
+        tableWidget->setObjectName(QString::fromUtf8("tableWidget"));
 
-        verticalLayout->addWidget(viewButton);
+        verticalLayout->addWidget(tableWidget);
+
+        btnBack = new QPushButton(ViewAllTeacherWidget);
+        btnBack->setObjectName(QString::fromUtf8("btnBack"));
+
+        verticalLayout->addWidget(btnBack);
 
 
         retranslateUi(ViewAllTeacherWidget);
@@ -57,12 +59,9 @@ public:
 
     void retranslateUi(QWidget *ViewAllTeacherWidget)
     {
-        ViewAllTeacherWidget->setWindowTitle(QApplication::translate("ViewAllTeacherWidget", "Xem danh s\303\241ch gi\303\241o vi\303\252n", nullptr));
-        QTableWidgetItem *___qtablewidgetitem = teacherTable->horizontalHeaderItem(0);
-        ___qtablewidgetitem->setText(QApplication::translate("ViewAllTeacherWidget", "H\341\273\215 t\303\252n", nullptr));
-        QTableWidgetItem *___qtablewidgetitem1 = teacherTable->horizontalHeaderItem(1);
-        ___qtablewidgetitem1->setText(QApplication::translate("ViewAllTeacherWidget", "ID", nullptr));
-        viewButton->setText(QApplication::translate("ViewAllTeacherWidget", "Xem", nullptr));
+        ViewAllTeacherWidget->setWindowTitle(QApplication::translate("ViewAllTeacherWidget", "Danh s\303\241ch gi\303\241o vi\303\252n", nullptr));
+        label->setText(QApplication::translate("ViewAllTeacherWidget", "Danh s\303\241ch gi\303\241o vi\303\252n", nullptr));
+        btnBack->setText(QApplication::translate("ViewAllTeacherWidget", "Quay l\341\272\241i", nullptr));
     } // retranslateUi
 
 };

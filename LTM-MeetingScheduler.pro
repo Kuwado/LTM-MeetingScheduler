@@ -19,6 +19,14 @@ SOURCES += \
     src/views/userviews/registerwidget.cpp \
     src/views/teacherviews/TeacherMenuWidget.cpp \
     src/views/studentviews/ViewAllTeacherWidget.cpp \
+    src/views/studentviews/teacherlistviewer.cpp \
+    src/views/studentviews/timeslotcalendar.cpp \
+    src/views/studentviews/meetingbooking.cpp \
+    src/views/studentviews/meetingcalendarviewer.cpp \
+    src/views/studentviews/MeetingDialog.cpp \
+    src/views/studentviews/StudentMenu.cpp \
+
+
     # Thêm các file .cpp khác
 
 HEADERS += \
@@ -36,6 +44,13 @@ HEADERS += \
     src/views/userviews/registerwidget.h \
     src/views/teacherviews/TeacherMenuWidget.h \
     src/views/studentviews/ViewAllTeacherWidget.h \
+    src/views/studentviews/teacherlistviewer.h \
+    src/views/studentviews/timeslotcalendar.h \
+    src/views/studentviews/meetingbooking.h \
+    src/views/studentviews/meetingcalendarviewer.h \
+    src/views/studentviews/MeetingDialog.h \
+    src/views/studentviews/StudentMenu.h \
+
     # Thêm các file .h khác
 
 FORMS += \
@@ -52,6 +67,13 @@ FORMS += \
     src/views/userviews/registerwidget.ui \
     src/views/teacherviews/TeacherMenuWidget.ui \
     src/views/studentviews/ViewAllTeacherWidget.ui \
+    src/views/studentviews/teacherlistviewer.ui \
+    src/views/studentviews/timeslotcalendar.ui \
+    src/views/studentviews/meetingbooking.ui \
+    src/views/studentviews/meetingcalendarviewer.ui \
+    src/views/studentviews/MeetingDialog.ui \
+    src/views/studentviews/StudentMenu.ui \
+
 
 
 INCLUDEPATH += \

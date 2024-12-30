@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ViewAllTeacherWidget</class>
- <widget class="QWidget" name="ViewAllTeacherWidget">
+ <class>TeacherListViewer</class>
+ <widget class="QDialog" name="TeacherListViewer">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>400</height>
+    <width>400</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,20 +17,20 @@
    <item>
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Danh sách giáo viên</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
+      <string>Chọn giáo viên:</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QTableWidget" name="tableWidget"/>
+    <widget class="QListWidget" name="listWidget"/>
    </item>
    <item>
-    <widget class="QPushButton" name="btnBack">
-     <property name="text">
-      <string>Quay lại</string>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
     </widget>
    </item>

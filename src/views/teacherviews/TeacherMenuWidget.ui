@@ -32,42 +32,42 @@
    <item>
     <widget class="QPushButton" name="declareTimeSlotButton">
      <property name="text">
-      <string>1. Khai báo thời gian rảnh</string>
+      <string>Khai báo thời gian rảnh</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QPushButton" name="checkAvailabilityButton">
      <property name="text">
-      <string>2. Kiểm tra thời gian rảnh</string>
+      <string>Kiểm tra thời gian rảnh</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QPushButton" name="viewMeetingsButton">
      <property name="text">
-      <string>3. Xem lịch hẹn với sinh viên</string>
+      <string>Xem lịch hẹn với sinh viên</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QPushButton" name="viewHistoryButton">
      <property name="text">
-      <string>4. Xem lịch sử cuộc hẹn</string>
+      <string>Xem lịch sử cuộc hẹn</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QPushButton" name="viewWeeklyMeetingsButton">
      <property name="text">
-      <string>5. Xem lịch hẹn theo tuần</string>
+      <string>Xem lịch hẹn theo tuần</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QPushButton" name="logoutButton">
      <property name="text">
-      <string>0. Đăng xuất</string>
+      <string>Đăng xuất</string>
      </property>
     </widget>
    </item>

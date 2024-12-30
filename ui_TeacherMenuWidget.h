@@ -86,12 +86,12 @@ public:
     {
         TeacherMenuWidget->setWindowTitle(QApplication::translate("TeacherMenuWidget", "Teacher Menu", nullptr));
         titleLabel->setText(QApplication::translate("TeacherMenuWidget", "Teacher Menu", nullptr));
-        declareTimeSlotButton->setText(QApplication::translate("TeacherMenuWidget", "1. Khai b\303\241o th\341\273\235i gian r\341\272\243nh", nullptr));
-        checkAvailabilityButton->setText(QApplication::translate("TeacherMenuWidget", "2. Ki\341\273\203m tra th\341\273\235i gian r\341\272\243nh", nullptr));
-        viewMeetingsButton->setText(QApplication::translate("TeacherMenuWidget", "3. Xem l\341\273\213ch h\341\272\271n v\341\273\233i sinh vi\303\252n", nullptr));
-        viewHistoryButton->setText(QApplication::translate("TeacherMenuWidget", "4. Xem l\341\273\213ch s\341\273\255 cu\341\273\231c h\341\272\271n", nullptr));
-        viewWeeklyMeetingsButton->setText(QApplication::translate("TeacherMenuWidget", "5. Xem l\341\273\213ch h\341\272\271n theo tu\341\272\247n", nullptr));
-        logoutButton->setText(QApplication::translate("TeacherMenuWidget", "0. \304\220\304\203ng xu\341\272\245t", nullptr));
+        declareTimeSlotButton->setText(QApplication::translate("TeacherMenuWidget", "Khai b\303\241o th\341\273\235i gian r\341\272\243nh", nullptr));
+        checkAvailabilityButton->setText(QApplication::translate("TeacherMenuWidget", "Ki\341\273\203m tra th\341\273\235i gian r\341\272\243nh", nullptr));
+        viewMeetingsButton->setText(QApplication::translate("TeacherMenuWidget", "Xem l\341\273\213ch h\341\272\271n v\341\273\233i sinh vi\303\252n", nullptr));
+        viewHistoryButton->setText(QApplication::translate("TeacherMenuWidget", "Xem l\341\273\213ch s\341\273\255 cu\341\273\231c h\341\272\271n", nullptr));
+        viewWeeklyMeetingsButton->setText(QApplication::translate("TeacherMenuWidget", "Xem l\341\273\213ch h\341\272\271n theo tu\341\272\247n", nullptr));
+        logoutButton->setText(QApplication::translate("TeacherMenuWidget", "\304\220\304\203ng xu\341\272\245t", nullptr));
     } // retranslateUi
 
 };
