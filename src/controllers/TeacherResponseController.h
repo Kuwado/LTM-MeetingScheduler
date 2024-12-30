@@ -209,14 +209,15 @@ class TeacherResponseController {
         return res;
     }
 
-    Response viewHistory(const int &teacher_id) {
+    Response viewHistory(const int &teacher_id, const int &student_id) {
         Response res;
         User user = userRepository.getUserById(teacher_id);
         if (user.getId() == 0) {
             res.setStatus(8);
             res.setMessage("Giao vien khong ton tai|");
         } else {
-            map<string, map<string, vector<Meeting>>> meetings = meetingRepo.getDoneMeetingsByTeacherId(teacher_id);
+            map<string, map<string, vector<Meeting>>> meetings =
+                meetingRepo.getDoneMeetingsByTeacherIdAndStudentId(teacher_id, student_id);
             if (meetings.empty()) {
                 res.setStatus(18);
                 res.setMessage("Khong co lich su cuoc hop|");
@@ -288,6 +289,27 @@ class TeacherResponseController {
             res.setStatus(0);
             res.setMessage("Sua doi trang thai cuoc hop thanh cong|");
         }
+        return res;
+    }
+
+    Response getStudentList(const string &message) {
+        Response res;
+        vector<string> tokens = splitString(message, '|');
+        int teacher_id = stoi(tokens[1]);
+        vector<User> students = userRepository.getStudentsInHistory(teacher_id);
+
+        if (students.empty()) {
+            res.setStatus(17);
+            res.setMessage("Khong co sinh vien nao hen");
+        } else {
+            string message = "";
+            for (int i = 0; i < students.size(); i++) {
+                message += students[i].toStringProfile() + "|";
+            }
+            res.setStatus(0);
+            res.setMessage(message);
+        }
+
         return res;
     }
 };

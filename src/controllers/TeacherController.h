@@ -207,6 +207,24 @@ class TeacherController {
         meetingDetail.second = students;
         return meetingDetail;
     }
+
+    vector<User> seeStudentList(const string &message) {
+        vector<User> teachers;
+
+        vector<string> tokens = splitString(message, '|');
+        int i = 1;
+
+        while (i < tokens.size()) {
+            User user;
+            user.setId(stoi(tokens[i]));
+            user.setFirstName(tokens[i + 1]);
+            user.setLastName(tokens[i + 2]);
+            teachers.push_back(user);
+            i = i + 3;
+        }
+
+        return teachers;
+    }
 };
 
 #endif

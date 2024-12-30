@@ -513,6 +513,37 @@ class TeacherView {
             }
         }
     }
+
+    int showStudentList(const vector<User> &students) {
+        int studentId;
+        if (students.empty()) {
+            cout << "Không có sinh vien nao nào để chọn." << endl;
+            studentId = -1;
+            return studentId;
+        }
+
+        cout << "------------Danh sách sinh vien da hen------------" << endl;
+        for (int i = 0; i < students.size(); i++) {
+            cout << i + 1 << ". " << students[i].getFirstName() << " " << students[i].getLastName()
+                 << " (ID: " << students[i].getId() << ")" << endl;
+        }
+        cout << "------------------------------------------" << endl;
+
+        int choice;
+        while (true) {
+            cout << "Nhập số thứ tự của sinh viên bạn muốn xem: ";
+            cin >> choice;
+            cin.ignore();
+
+            if (choice > 0 && choice <= students.size()) {
+                return students[choice - 1].getId();
+            } else if (choice == 0) {
+                studentId = -1;
+                return studentId;
+            }
+            cout << "Lựa chọn không hợp lệ, vui lòng thử lại!" << endl;
+        }
+    }
 };
 
 #endif
