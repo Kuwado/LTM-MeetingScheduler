@@ -1151,3 +1151,5 @@ Received: VIEW_FREE_TIME_SLOTS|6|<END>
 Server response: 0|2024-11-05|[|3|06:32:00|07:10:00|2024-11-05|both|free|6|7|15:25:00|15:40:00|2024-11-05|group|free|6|9|15:35:00|15:50:00|2024-11-05|group|free|6|4|15:50:12|16:30:00|2024-11-05|group|free|6|8|16:00:00|16:20:00|2024-11-05|group|free|6|]|2024-11-15|[|1|07:50:00|09:15:00|2024-11-15|both|free|6|]|2024-12-16|[|14|05:15:00|07:12:00|2024-12-16|group|free|6|]|2024-12-18|[|15|08:20:00|10:10:00|2024-12-18|personal|free|6|]|2024-12-30|[|19|07:00:00|08:00:00|2024-12-30|personal|free|6|]|2025-01-20|[|2|03:30:00|06:00:00|2025-01-20|group|free|6|]|<END>
 Received: FETCH_ALL_TEACHER|<END>
 Server response: 0|6|Giao|Vien|7|Giao|Vien2|8|giao|vien|9|le|le|10|ll|ss|11|giao|vien|13|cao|ha|14|cao|hoan|16|hoan|liu|17|haon|uho|19|uugh|uhryei|21|hyeiw|hriha|<END>
+Received: REGISTER|rhaf|uih|teacher|fvhi|ẳfeư|<END>
+Server response: 0|Dang ky thanh cong|23|teacher|<END>
