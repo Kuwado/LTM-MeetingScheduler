@@ -99,45 +99,53 @@ class AttendanceRepository {
         return students;
     }
 
-    vector<Meeting> getMeetingsByStudentId(const int &student_id) {
-        vector<Meeting> meetings;
-
-        if (db.connect()) {
-            string query = "SELECT meeting_id FROM attendances WHERE student_id = ?";
-            try {
-                sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
-                pstmt->setInt(1, student_id);
-                sql::ResultSet *res = pstmt->executeQuery();
-
-                // while (res->next()) {
-                //     Meeting meeting = mr.getMeetingById(res->getInt("meeting_id"));
-                //     meetings.push_back(meeting);
-                // }
-
-            } catch (sql::SQLException &e) {
-                std::cerr << "Lỗi khi lấy dữ liệu từ attendance: " << e.what() << std::endl;
-            }
-        } else {
-            cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
-        }
-
-        return meetings;
-    }
-
-    void deleteAttendanceByMeetingAndStudent(const int &meeting_id, const int &student_id) {
+    void deleteAttendanceByMeetingIdAndStudentId(const int &meeting_id, const int &student_id) {
         if (db.connect()) {
             string query = "DELETE FROM attendances WHERE meeting_id = ? AND student_id = ?";
             try {
                 sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
                 pstmt->setInt(1, meeting_id);
                 pstmt->setInt(2, student_id);
-                pstmt->executeQuery();
+                sql::ResultSet *res = pstmt->executeQuery();
             } catch (sql::SQLException &e) {
-                std::cerr << "Lỗi khi xoa du lieu: " << e.what() << std::endl;
+                std::cerr << "Lỗi khi xoa attendance: " << e.what() << std::endl;
             }
+            db.disconnect();
+
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
+    }
+
+    vector<Attendance> getAttendancesByMeetingId(const int &meeting_id) {
+        vector<Attendance> attendances;
+
+        if (db.connect()) {
+            string query = "SELECT * FROM attendances WHERE meeting_id = ?";
+            try {
+                sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
+                pstmt->setInt(1, meeting_id);
+                sql::ResultSet *res = pstmt->executeQuery();
+
+                while (res->next()) {
+                    Attendance attendance;
+                    attendance.setId(res->getInt("id"));
+                    attendance.setMeetingId(res->getInt("meeting_id"));
+                    attendance.setStudentId(res->getInt("student_id"));
+                    attendances.push_back(attendance);
+                }
+
+                delete res;
+                delete pstmt;
+            } catch (sql::SQLException &e) {
+                std::cerr << "Lỗi khi lấy dữ liệu từ attendances: " << e.what() << std::endl;
+            }
+            db.disconnect();
+        } else {
+            cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
+        }
+
+        return attendances;
     }
 };
 
