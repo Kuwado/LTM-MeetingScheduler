@@ -372,6 +372,61 @@ class MeetingRepository {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
     }
+
+    map<string, map<string, vector<Meeting>>> getMeetingsInWeeksByStudentId(const int &student_id) {
+        map<string, map<string, vector<Meeting>>> meetings;
+
+        if (db.connect()) {
+            string query = R"(
+                SELECT meetings.*
+                FROM meetings
+                INNER JOIN attendances ON attendances.meeting_id = meetings.id
+                INNER JOIN users ON attendances.student_id = users.id
+                WHERE users.id = ? 
+                AND (meetings.status = 'pending' OR meetings.status = 'confirmed' OR meetings.status = 'doing' OR meetings.status = 'completed')
+            )";
+            try {
+                sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
+                pstmt->setInt(1, student_id);
+                sql::ResultSet *res = pstmt->executeQuery();
+
+                while (res->next()) {
+                    Meeting meeting;
+                    Timeslot timeslot = timeslotRepo.getTimeslotById(res->getInt("timeslot_id"));
+                    meeting.setId(res->getInt("id"));
+                    meeting.setTeacherId(timeslot.getTeacherId());
+                    meeting.setStatus(res->getString("status"));
+                    meeting.setType(res->getString("type"));
+                    meeting.setReport(res->getString("report"));
+                    meeting.setStart(timeslot.getStart());
+                    meeting.setEnd(timeslot.getEnd());
+                    meeting.setDate(timeslot.getDate());
+                    meeting.setTimeslotId(res->getInt("timeslot_id"));
+                    string date = meeting.getDate();
+                    string week = getWeekName(date);
+                    meetings[week][date].push_back(meeting);
+                }
+                delete res;
+                delete pstmt;
+            } catch (sql::SQLException &e) {
+                std::cerr << "Lỗi khi lấy dữ liệu từ meetings: " << e.what() << std::endl;
+            }
+            db.disconnect();
+
+        } else {
+            cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
+        }
+
+        // Sắp xếp lại meetings trong mỗi ngày theo giờ tăng dần
+        for (auto &weekEntry : meetings) {
+            for (auto &dayEntry : weekEntry.second) {
+                sort(dayEntry.second.begin(), dayEntry.second.end(),
+                     [](const Meeting &a, const Meeting &b) { return a.getStart() < b.getStart(); });
+            }
+        }
+
+        return meetings;
+    }
 };
 
 #endif
