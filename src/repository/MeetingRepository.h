@@ -211,7 +211,8 @@ class MeetingRepository {
         return meetings;
     }
 
-    map<string, map<string, vector<Meeting>>> getDoneMeetingsByTeacherId(const int &teacher_id) {
+    map<string, map<string, vector<Meeting>>> getDoneMeetingsByTeacherIdAndStudentId(const int &teacher_id,
+                                                                                     const int &student_id) {
         map<string, map<string, vector<Meeting>>> meetings;
 
         if (db.connect()) {
@@ -220,13 +221,15 @@ class MeetingRepository {
                 SELECT meetings.*
                 FROM meetings
                 INNER JOIN timeslots ON meetings.timeslot_id = timeslots.id
-                INNER JOIN users ON timeslots.teacher_id = users.id
-                WHERE users.id = ? 
+                INNER JOIN attendances ON attendances.meeting_id = meetings.id
+                WHERE timeslots.teacher_id = ? 
+                AND attendances.student_id = ?
                 AND meetings.status = 'completed'
             )";
             try {
                 sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
                 pstmt->setInt(1, teacher_id);
+                pstmt->setInt(2, student_id);
                 sql::ResultSet *res = pstmt->executeQuery();
 
                 while (res->next()) {

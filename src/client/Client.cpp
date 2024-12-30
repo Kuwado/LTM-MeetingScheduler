@@ -279,8 +279,8 @@ void handleTeacherViewHistoryMeeting(const int &meeting_id) {
     }
 }
 
-void handleTeacherViewHistory() {
-    string request = "VIEW_HISTORY|" + to_string(user_id) + "|<END>";
+void handleTeacherViewHistory(const int &student_id) {
+    string request = "VIEW_HISTORY|" + to_string(user_id) + "|" + to_string(student_id) + "|<END>";
     string response = sendRequestToServer(request);
     string status = response.substr(0, response.find('|'));
     if (status == "0") {
@@ -292,8 +292,26 @@ void handleTeacherViewHistory() {
         }
         // Detail Meeting
         handleTeacherViewHistoryMeeting(meeting.getId());
-        handleTeacherViewHistory();
+        handleTeacherViewHistory(student_id);
     } else if (status == "18") {
+        vector<string> tokens = splitString(response, '|');
+        cout << tokens[1] << endl;
+    }
+}
+
+void handleTeacherSeeStudentList() {
+    string request = "FETCH_ALL_STUDENT|" + to_string(user_id) + "|<END>";
+    string response = sendRequestToServer(request);
+    string status = response.substr(0, response.find("|"));
+    if (status == "0") {
+        vector<User> students = teacherController.seeStudentList(response);
+        int studentId = teacherView.showStudentList(students);
+        if (studentId == -1) {
+            return;
+        }
+        handleTeacherViewHistory(studentId);
+        handleTeacherSeeStudentList();
+    } else if (status == "21") {
         vector<string> tokens = splitString(response, '|');
         cout << tokens[1] << endl;
     }
@@ -318,7 +336,7 @@ void handleTeacherMenu() {
         handleTeacherMenu();
         break;
     case 4:
-        handleTeacherViewHistory();
+        handleTeacherSeeStudentList();
         handleTeacherMenu();
         break;
     case 5:
