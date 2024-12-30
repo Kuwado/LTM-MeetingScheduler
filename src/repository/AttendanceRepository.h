@@ -36,7 +36,7 @@ class AttendanceRepository {
             } catch (sql::SQLException &e) {
                 cerr << "Loi them cuoc hen: " << e.what() << endl;
             }
-            db.disconnect();
+
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
@@ -64,7 +64,7 @@ class AttendanceRepository {
             } catch (sql::SQLException &e) {
                 std::cerr << "Lỗi khi lấy dữ liệu từ attendances: " << e.what() << std::endl;
             }
-            db.disconnect();
+
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
@@ -91,7 +91,7 @@ class AttendanceRepository {
             } catch (sql::SQLException &e) {
                 std::cerr << "Lỗi khi lấy dữ liệu từ meetings: " << e.what() << std::endl;
             }
-            db.disconnect();
+
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
@@ -110,7 +110,6 @@ class AttendanceRepository {
             } catch (sql::SQLException &e) {
                 std::cerr << "Lỗi khi xoa attendance: " << e.what() << std::endl;
             }
-            db.disconnect();
 
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
@@ -140,7 +139,7 @@ class AttendanceRepository {
             } catch (sql::SQLException &e) {
                 std::cerr << "Lỗi khi lấy dữ liệu từ attendances: " << e.what() << std::endl;
             }
-            db.disconnect();
+
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }

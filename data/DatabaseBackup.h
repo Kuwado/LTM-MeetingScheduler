@@ -4,7 +4,6 @@
 #include "../environment.h"
 #include <cppconn/resultset.h>
 #include <cppconn/statement.h>
-#include <memory>
 #include <mysql_connection.h>
 #include <mysql_driver.h>
 #include <string>
@@ -22,31 +21,17 @@ class Database {
     string database = "ltm";
 
   public:
-    Database() : driver(nullptr), con(nullptr) {}
+    Database() {}
+    ~Database();
 
-    ~Database() {
-        disconnect(); // Đảm bảo ngắt kết nối khi đối tượng bị hủy
-    }
-
-    sql::Connection *getConnection() {
-        if (!con) {
-            // Nếu chưa có kết nối, thực hiện kết nối mới
-            connect();
-        }
-        return con;
-    }
+    sql::Connection *getConnection() { return con; }
 
     bool connect() {
-        if (con) {
-            return true; // Nếu đã có kết nối thì không làm gì thêm
-        }
-
         try {
-            if (!driver) {
-                driver = sql::mysql::get_mysql_driver_instance();
-            }
+            driver = sql::mysql::get_mysql_driver_instance();
             con = driver->connect(host, user, password);
             con->setSchema(database);
+            // cout << "Connected to database successfully!" << endl;
             return true;
         } catch (sql::SQLException &e) {
             cerr << "Connection error: " << e.what() << endl;
@@ -59,6 +44,7 @@ class Database {
             try {
                 delete con;    // Giải phóng tài nguyên
                 con = nullptr; // Đảm bảo con không trỏ đến địa chỉ cũ
+                // cout << "Disconnected from database successfully!" << endl;
             } catch (sql::SQLException &e) {
                 cerr << "Disconnection error: " << e.what() << endl;
             }
@@ -66,14 +52,8 @@ class Database {
     }
 
     void executeQuery(const string &query) {
-        sql::Connection *connection = getConnection();
-        if (!connection) {
-            cerr << "No database connection." << endl;
-            return;
-        }
-
         try {
-            sql::Statement *stmt = connection->createStatement();
+            sql::Statement *stmt = con->createStatement();
             sql::ResultSet *res = stmt->executeQuery(query);
             while (res->next()) {
                 cout << "Data: " << res->getString(1) << endl;
@@ -87,14 +67,12 @@ class Database {
 
     // Thực thi truy vấn UPDATE, INSERT, DELETE
     void executeUpdate(const string &query) {
-        sql::Connection *connection = getConnection();
-        if (!connection) {
+        if (!con) {
             cerr << "No database connection." << endl;
             return;
         }
-
         try {
-            sql::Statement *stmt = connection->createStatement();
+            sql::Statement *stmt = con->createStatement();
             int affectedRows = stmt->executeUpdate(query);
             cout << "Query executed, " << affectedRows << " rows affected." << endl;
             delete stmt;

@@ -187,9 +187,16 @@ class TeacherResponseController {
 
     Response viewMeeting(const int &meeting_id) {
         Response res;
+        Meeting meeting = meetingRepo.getMeetingById(meeting_id);
+
+        if (meeting.getId() == 0) {
+            res.setStatus(12);
+            res.setMessage("Khong tim thay meeting|");
+            return res;
+        }
+
         vector<User> students = attendanceRepo.getStudentsFromMeeting(meeting_id);
 
-        Meeting meeting = meetingRepo.getMeetingById(meeting_id);
         string message = meeting.toString();
         message += "|[";
         for (const auto &student : students) {
@@ -209,19 +216,33 @@ class TeacherResponseController {
             res.setStatus(8);
             res.setMessage("Giao vien khong ton tai|");
         } else {
-            map<string, vector<Meeting>> meetings = meetingRepo.getDoneMeetingsByTeacherId(teacher_id);
+            map<string, map<string, vector<Meeting>>> meetings = meetingRepo.getDoneMeetingsByTeacherId(teacher_id);
             if (meetings.empty()) {
                 res.setStatus(18);
                 res.setMessage("Khong co lich su cuoc hop|");
             } else {
                 string message = "";
-                for (const auto &ts : meetings) {
-                    message += ts.first + "|[";
-                    vector<Meeting> tss = ts.second;
-                    for (int i = 0; i < tss.size(); i++) {
-                        message += "|" + tss[i].toString();
+                for (const auto &week : meetings) {
+                    const string weekName = week.first;
+                    const map<string, vector<Meeting>> dailyMeetings = week.second;
+                    message += weekName + "|{";
+                    for (const auto &day : dailyMeetings) {
+                        const string dayName = day.first;
+                        vector<Meeting> mts = day.second;
+                        message += "|" + dayName + "|[";
+                        for (int i = 0; i < mts.size(); i++) {
+                            message += "|" + mts[i].toString();
+                            vector<User> students = attendanceRepo.getStudentsFromMeeting(mts[i].getId());
+                            message += "|students|{";
+                            for (const auto &student : students) {
+                                message += "|" + to_string(student.getId()) + "|" + student.getFirstName() + "|" +
+                                           student.getLastName();
+                            }
+                            message += "|}";
+                        }
+                        message += "|]";
                     }
-                    message += "|]|";
+                    message += "|}|";
                 }
                 res.setStatus(0);
                 res.setMessage(message);
@@ -258,7 +279,12 @@ class TeacherResponseController {
             res.setStatus(12);
             res.setMessage("Khong tim thay cuoc hen|");
         } else {
-            meetingRepo.updateStatus(meeting_id, status);
+            if (status == "canceled") {
+                meetingRepo.deleteMeeting(meeting_id);
+                timeslotRepo.updateStatus(meeting.getTimeslotId(), "free");
+            } else {
+                meetingRepo.updateStatus(meeting_id, status);
+            }
             res.setStatus(0);
             res.setMessage("Sua doi trang thai cuoc hop thanh cong|");
         }

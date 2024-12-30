@@ -70,7 +70,7 @@ class TimeslotRepository {
             } catch (sql::SQLException &e) {
                 cerr << "Loi them khe thoi gian: " << e.what() << endl;
             }
-            db.disconnect();
+
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
@@ -96,7 +96,7 @@ class TimeslotRepository {
             } catch (sql::SQLException &e) {
                 cerr << "Lỗi khi cập nhật thời gian: " << e.what() << endl;
             }
-            db.disconnect();
+
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
@@ -132,7 +132,7 @@ class TimeslotRepository {
             } catch (sql::SQLException &e) {
                 std::cerr << "Lỗi khi lấy dữ liệu từ timeslots: " << e.what() << std::endl;
             }
-            db.disconnect();
+
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
@@ -176,7 +176,7 @@ class TimeslotRepository {
             } catch (sql::SQLException &e) {
                 std::cerr << "Lỗi khi lấy dữ liệu từ timeslots: " << e.what() << std::endl;
             }
-            db.disconnect();
+
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
@@ -217,7 +217,7 @@ class TimeslotRepository {
             } catch (sql::SQLException &e) {
                 std::cerr << "Lỗi khi lấy dữ liệu từ timeslots: " << e.what() << std::endl;
             }
-            db.disconnect();
+
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
@@ -248,7 +248,7 @@ class TimeslotRepository {
             } catch (sql::SQLException &e) {
                 std::cerr << "Lỗi khi lấy dữ liệu từ timeslots: " << e.what() << std::endl;
             }
-            db.disconnect();
+
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
@@ -267,7 +267,7 @@ class TimeslotRepository {
             } catch (sql::SQLException &e) {
                 cerr << "Lỗi khi cập nhật trạng thái timeslot: " << e.what() << endl;
             }
-            db.disconnect();
+
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
@@ -285,7 +285,7 @@ class TimeslotRepository {
             } catch (sql::SQLException &e) {
                 cerr << "Lỗi khi cập nhật trạng thái timeslot: " << e.what() << endl;
             }
-            db.disconnect();
+
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
@@ -317,7 +317,7 @@ class TimeslotRepository {
             } catch (sql::SQLException &e) {
                 cerr << "Lỗi khi lay du lieu: " << e.what() << endl;
             }
-            db.disconnect();
+
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
