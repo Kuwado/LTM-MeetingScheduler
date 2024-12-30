@@ -1,8 +1,12 @@
 #ifndef STUDENTCONTROLLER_H
 #define STUDENTCONTROLLER_H
 
+#include<iostream>
+#include "../models/Meeting.h"
 #include "../models/Response.h"
-#include "../models/User.h"
+#include "../models/Timeslot.h"
+#include "../repository/MeetingRepository.h"
+
 #include "../repository/TimeslotRepository.h"
 #include "../repository/UserRepository.h"
 #include "StudentController.h"
