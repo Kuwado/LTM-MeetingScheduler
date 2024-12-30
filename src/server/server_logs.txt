@@ -1462,3 +1462,49 @@ hop|15:25:00|15:40:00|2024-11-05|9|9|pending|personal||15:35:00|15:50:00|2024-11
 hòaojoia
 fjheiwj|05:12:00|06:13:00|2024-12-03|]|2024-12-16|[|19|14|pending|group||05:15:00|07:12:00|2024-12-16|]|2024-12-30|[|18|19|pending|personal||07:00:00|08:00:00|2024-12-30|]|2025-01-10|[|11|16|pending|personal||07:00:00|09:00:00|2025-01-10|12|16|pending|personal||07:00:00|09:00:00|2025-01-10|]|2025-01-20|[|2|2|pending|group|helo anh em
 aa|03:30:00|06:00:00|2025-01-20|15|2|pending|group||03:30:00|06:00:00|2025-01-20|]|<END>
+Received: LOGIN|giaovien|123456|<END>
+Server response: 0|6|teacher|Dang nhap thanh cong|<END>
+Received: VIEW_MEETINGS_IN_WEEKS|6|<END>
+Server response: 0|Tuần cua tháng 1 (06/01 - 12/01)|{|2025-01-10|[|11|16|pending|personal||07:00:00|09:00:00|2025-01-10|students|{|5|Tanashi|Kuwado|}|12|16|pending|personal||07:00:00|09:00:00|2025-01-10|students|{|}|]|}|Tuần cua tháng 1 (20/01 - 26/01)|{|2025-01-20|[|2|2|pending|group|helo anh em
+aa|03:30:00|06:00:00|2025-01-20|students|{|5|Tanashi|Kuwado|1|Viet|Hoan|4|Viet ox|Hoan oy|5|Tanashi|Kuwado|5|Tanashi|Kuwado|5|Tanashi|Kuwado|}|15|2|pending|group||03:30:00|06:00:00|2025-01-20|students|{|}|]|}|Tuần cua tháng 1 (30/12 - 05/01)|{|2024-12-30|[|18|19|pending|personal||07:00:00|08:00:00|2024-12-30|students|{|5|Tanashi|Kuwado|}|]|}|Tuần cua tháng 11 (04/11 - 10/11)|{|2024-11-05|[|3|3|doing|personal||06:32:00|07:10:00|2024-11-05|students|{|2|Viet|Hoan|}|7|7|confirmed|personal|van
+ban
+cuoc
+hop|15:25:00|15:40:00|2024-11-05|students|{|5|Tanashi|Kuwado|}|9|9|pending|personal||15:35:00|15:50:00|2024-11-05|students|{|5|Tanashi|Kuwado|}|4|4|confirmed|personal||15:50:12|16:30:00|2024-11-05|students|{|5|Tanashi|Kuwado|}|8
+Server response: |8|pending|personal||16:00:00|16:20:00|2024-11-05|students|{|5|Tanashi|Kuwado|}|]|}|Tuần cua tháng 12 (02/12 - 08/12)|{|2024-12-03|[|10|10|doing|group|Hoan
+hòaojoia
+fjheiwj|05:12:00|06:13:00|2024-12-03|students|{|5|Tanashi|Kuwado|}|]|}|Tuần cua tháng 12 (16/12 - 22/12)|{|2024-12-16|[|19|14|pending|group||05:15:00|07:12:00|2024-12-16|students|{|5|Tanashi|Kuwado|}|]|}|<END>
+Received: VIEW_HISTORY|6|<END>
+Server response: 0|Tuần cua tháng 11 (04/11 - 10/11)|{|2024-11-05|[|5|5|completed|group|hoan
+hao
+qua
+|06:20:00|06:45:00|2024-11-05|students|{|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|}|6|6|completed|personal|van
+ban
+cuoc hop
+nay hay qua
+hoant òaoirahaoivjol
+|15:20:00|15:30:00|2024-11-05|students|{|1|Viet|Hoan|}|]|}|<END>
+Received: VIEW_MEETING|5|<END>
+Server response: 0|5|5|completed|group|hoan
+hao
+qua
+|06:20:00|06:45:00|2024-11-05|[|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|]|<END>
+Received: VIEW_HISTORY|6|<END>
+Server response: 0|Tuần cua tháng 11 (04/11 - 10/11)|{|2024-11-05|[|5|5|completed|group|hoan
+hao
+qua
+|06:20:00|06:45:00|2024-11-05|students|{|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|}|6|6|completed|personal|van
+ban
+cuoc hop
+nay hay qua
+hoant òaoirahaoivjol
+|15:20:00|15:30:00|2024-11-05|students|{|1|Viet|Hoan|}|]|}|<END>
+Received: VIEW_HISTORY|6|<END>
+Server response: 0|Tuần cua tháng 11 (04/11 - 10/11)|{|2024-11-05|[|5|5|completed|group|hoan
+hao
+qua
+|06:20:00|06:45:00|2024-11-05|students|{|5|Tanashi|Kuwado|3|Viet oxiro|Hoan|}|6|6|completed|personal|van
+ban
+cuoc hop
+nay hay qua
+hoant òaoirahaoivjol
+|15:20:00|15:30:00|2024-11-05|students|{|1|Viet|Hoan|}|]|}|<END>

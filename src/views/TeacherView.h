@@ -386,25 +386,40 @@ class TeacherView {
         }
     }
 
-    Meeting showHistory(const map<string, vector<Meeting>> &meetings) {
+    Meeting showHistory(const map<string, map<string, vector<pair<Meeting, vector<User>>>>> &meetings) {
         if (meetings.empty()) {
             Meeting meeting;
-            cout << "Ban chua hoan thanh cuoc hen nao" << endl;
+            cout << "Ban chua co cuoc hen nao hoan thanh" << endl;
             return meeting;
         }
 
         map<int, Meeting> editMeetings;
         int index = 0, choice = 0;
-        cout << "------------------Lich su cuoc hen-------------------" << endl;
-        for (const auto &meeting : meetings) {
-            cout << "--Ngay: " << meeting.first << endl;
-            vector<Meeting> currentMeetings = meeting.second;
-            for (int i = 0; i < currentMeetings.size(); i++) {
-                index++;
-                editMeetings[index] = currentMeetings[i];
-                cout << index << ". Tu: " << currentMeetings[i].getStart() << " - Den: " << currentMeetings[i].getEnd()
-                     << "( " << currentMeetings[i].getType() << " - " << currentMeetings[i].getStatus() << " )" << endl;
+        cout << "------------------Lich su cuoc hen cua ban-------------------" << endl;
+        for (const auto &week : meetings) {
+            cout << "---------------" << week.first << "---------------" << endl;
+            map<string, vector<pair<Meeting, vector<User>>>> dailyMeetings = week.second;
+            for (const auto &day : dailyMeetings) {
+                cout << "----Ngay: " << day.first << endl;
+                vector<pair<Meeting, vector<User>>> currentMeetings = day.second;
+                for (int i = 0; i < currentMeetings.size(); i++) {
+                    index++;
+                    Meeting currentMeeting = currentMeetings[i].first;
+                    editMeetings[index] = currentMeeting;
+                    vector<User> students = currentMeetings[i].second;
+                    cout << index << ". Tu: " << currentMeeting.getStart() << " - Den: " << currentMeeting.getEnd()
+                         << "( " << currentMeeting.getType() << " - " << currentMeeting.getStatus() << " ). ";
+                    cout << "Nguoi tham gia: ";
+                    for (size_t i = 0; i < students.size(); ++i) {
+                        cout << students[i].getFirstName() << " " << students[i].getLastName();
+                        if (i != students.size() - 1) {
+                            cout << ", ";
+                        }
+                    }
+                    cout << "" << endl;
+                }
             }
+            cout << "" << endl;
         }
 
         cout << "-----------" << endl;

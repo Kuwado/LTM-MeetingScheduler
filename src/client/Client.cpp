@@ -284,7 +284,8 @@ void handleTeacherViewHistory() {
     string response = sendRequestToServer(request);
     string status = response.substr(0, response.find('|'));
     if (status == "0") {
-        map<string, vector<Meeting>> meetings = teacherController.getMeetingsFromResponse(response);
+        map<string, map<string, vector<pair<Meeting, vector<User>>>>> meetings =
+            teacherController.getMeetingsInWeeksFromResponse(response);
         Meeting meeting = teacherView.showHistory(meetings);
         if (meeting.getId() == -1) {
             return;

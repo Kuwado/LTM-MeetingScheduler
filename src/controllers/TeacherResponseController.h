@@ -216,19 +216,33 @@ class TeacherResponseController {
             res.setStatus(8);
             res.setMessage("Giao vien khong ton tai|");
         } else {
-            map<string, vector<Meeting>> meetings = meetingRepo.getDoneMeetingsByTeacherId(teacher_id);
+            map<string, map<string, vector<Meeting>>> meetings = meetingRepo.getDoneMeetingsByTeacherId(teacher_id);
             if (meetings.empty()) {
                 res.setStatus(18);
                 res.setMessage("Khong co lich su cuoc hop|");
             } else {
                 string message = "";
-                for (const auto &ts : meetings) {
-                    message += ts.first + "|[";
-                    vector<Meeting> tss = ts.second;
-                    for (int i = 0; i < tss.size(); i++) {
-                        message += "|" + tss[i].toString();
+                for (const auto &week : meetings) {
+                    const string weekName = week.first;
+                    const map<string, vector<Meeting>> dailyMeetings = week.second;
+                    message += weekName + "|{";
+                    for (const auto &day : dailyMeetings) {
+                        const string dayName = day.first;
+                        vector<Meeting> mts = day.second;
+                        message += "|" + dayName + "|[";
+                        for (int i = 0; i < mts.size(); i++) {
+                            message += "|" + mts[i].toString();
+                            vector<User> students = attendanceRepo.getStudentsFromMeeting(mts[i].getId());
+                            message += "|students|{";
+                            for (const auto &student : students) {
+                                message += "|" + to_string(student.getId()) + "|" + student.getFirstName() + "|" +
+                                           student.getLastName();
+                            }
+                            message += "|}";
+                        }
+                        message += "|]";
                     }
-                    message += "|]|";
+                    message += "|}|";
                 }
                 res.setStatus(0);
                 res.setMessage(message);

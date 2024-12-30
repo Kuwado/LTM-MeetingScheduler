@@ -152,8 +152,7 @@ class MeetingRepository {
 
         // Trả về tên tuần
         char result[50];
-        snprintf(result, sizeof(result), "Tuần %d tháng %d (%s - %s)", weekNumber, tm.tm_mon + 1, bufferStart,
-                 bufferEnd);
+        snprintf(result, sizeof(result), "Tuần cua tháng %d (%s - %s)", tm.tm_mon + 1, bufferStart, bufferEnd);
         return string(result);
     }
 
@@ -212,8 +211,8 @@ class MeetingRepository {
         return meetings;
     }
 
-    map<string, vector<Meeting>> getDoneMeetingsByTeacherId(const int &teacher_id) {
-        map<string, vector<Meeting>> timeslots;
+    map<string, map<string, vector<Meeting>>> getDoneMeetingsByTeacherId(const int &teacher_id) {
+        map<string, map<string, vector<Meeting>>> meetings;
 
         if (db.connect()) {
             // string query = "SELECT * FROM meetings WHERE teacher_id = ? AND status = 'completed' ";
@@ -243,7 +242,8 @@ class MeetingRepository {
                     meeting.setDate(timeslot.getDate());
                     meeting.setTimeslotId(res->getInt("timeslot_id"));
                     string date = meeting.getDate();
-                    timeslots[date].push_back(meeting);
+                    string week = getWeekName(date);
+                    meetings[week][date].push_back(meeting);
                 }
                 delete res;
                 delete pstmt;
@@ -255,13 +255,15 @@ class MeetingRepository {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
 
-        // Sắp xếp lại Timeslots trong mỗi ngày theo giờ tăng dần
-        for (auto &entry : timeslots) {
-            sort(entry.second.begin(), entry.second.end(),
-                 [](const Meeting &a, const Meeting &b) { return a.getStart() < b.getStart(); });
+        // Sắp xếp lại meetings trong mỗi ngày theo giờ tăng dần
+        for (auto &weekEntry : meetings) {
+            for (auto &dayEntry : weekEntry.second) {
+                sort(dayEntry.second.begin(), dayEntry.second.end(),
+                     [](const Meeting &a, const Meeting &b) { return a.getStart() < b.getStart(); });
+            }
         }
 
-        return timeslots;
+        return meetings;
     }
 
     Meeting getMeetingById(const int &id) {
