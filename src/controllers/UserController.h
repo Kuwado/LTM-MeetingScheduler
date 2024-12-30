@@ -7,6 +7,10 @@
 #include <cppconn/prepared_statement.h>
 #include <iostream>
 #include <map>
+#include <sstream>
+#include <string>
+#include <utility>
+#include <vector>
 
 using namespace std;
 
@@ -17,69 +21,57 @@ class UserController {
   public:
     UserController() {}
 
+    vector<string> splitString(const string &str, char delimiter) {
+        vector<string> tokens;
+        string token;
+        stringstream ss(str);
+
+        // Sử dụng getline để tách chuỗi
+        while (getline(ss, token, delimiter)) {
+            tokens.push_back(token);
+        }
+        return tokens;
+    }
+
     Response login(const string &username, const string &password) {
         Response res;
         User user = userRepository.getUserByUsername(username);
         if (user.getId() == 0) {
             res.setStatus(1);
-            res.setMessage("Tên đăng nhập không chính xác!");
+            res.setMessage("Tên đăng nhập không chính xác!|");
         } else if (user.getPassword() != password) {
             res.setStatus(2);
-            res.setMessage("Mật khẩu không chính xác!");
+            res.setMessage("Mật khẩu không chính xác!|");
         } else {
             res.setStatus(0);
-            res.setMessage("Dang nhap thanh cong");
+            string message = to_string(user.getId()) + "|" + user.getRole() + "|" + "Dang nhap thanh cong|";
+            res.setMessage(message);
         }
 
         return res;
     }
 
-    void registerAccount() {
-        bool choiceChoosen = false, usernameExist = true;
-        int choice;
-        string username, password, role, first_name, last_name;
-        cout << "------------------------Dang ky--------------------------" << endl;
-        while (!choiceChoosen) {
-            cout << "1. Hoc sinh\n" << "2. Giao vien\n" << "Ban la ai (1 hoac 2): ";
-            cin >> choice;
-            cin.ignore();
-
-            switch (choice) {
-            case 1:
-                role = "student";
-                choiceChoosen = true;
-                cout << "Ban la hoc sinh" << endl;
-                break;
-            case 2:
-                role = "teacher";
-                choiceChoosen = true;
-                cout << "Ban la giao vien" << endl;
-                break;
-            default:
-                cout << "Lua chon khong phu hop (1 hoac 2)" << endl;
-                break;
-            }
+    Response registerAccount(const string &message) {
+        vector<string> tokens = splitString(message, '|');
+        Response res;
+        string username = tokens[1];
+        string password = tokens[2];
+        string role = tokens[3];
+        string first_name = tokens[4];
+        string last_name = tokens[5];
+        User user = userRepository.getUserByUsername(username);
+        if (user.getId() != 0) {
+            res.setStatus(3);
+            res.setMessage("Tên đăng nhập da ton tai!|");
+        } else {
+            User newUser(username, password, role, first_name, last_name);
+            userRepository.create(newUser);
+            User user = userRepository.getUserByUsername(username);
+            string message = "Dang ky thanh cong|" + to_string(user.getId()) + "|" + user.getRole() + "|";
+            res.setStatus(0);
+            res.setMessage(message);
         }
-
-        while (usernameExist) {
-            cout << "Nhập tên đăng nhập: ";
-            getline(cin, username);
-            if (userRepository.checkUsernameExists(username)) {
-                cout << "Ten dang nhap da ton tai" << endl;
-            } else {
-                usernameExist = false;
-            }
-        }
-
-        cout << "Nhập mật khẩu: ";
-        getline(cin, password);
-        cout << "Nhập ho: ";
-        getline(cin, first_name);
-        cout << "Nhập ten: ";
-        getline(cin, last_name);
-        User user(username, password, role, first_name, last_name);
-        userRepository.create(user);
-        cout << "--------------------------------------------" << endl;
+        return res;
     }
 };
 

@@ -39,6 +39,18 @@ class Database {
         }
     }
 
+    void disconnect() {
+        if (con) {
+            try {
+                delete con;    // Giải phóng tài nguyên
+                con = nullptr; // Đảm bảo con không trỏ đến địa chỉ cũ
+                // cout << "Disconnected from database successfully!" << endl;
+            } catch (sql::SQLException &e) {
+                cerr << "Disconnection error: " << e.what() << endl;
+            }
+        }
+    }
+
     void executeQuery(const string &query) {
         try {
             sql::Statement *stmt = con->createStatement();

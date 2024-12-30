@@ -1,218 +1,211 @@
 #ifndef TEACHERCONTROLLER_H
 #define TEACHERCONTROLLER_H
 
+#include "../models/Meeting.h"
+#include "../models/Response.h"
 #include "../models/Timeslot.h"
 #include "../models/User.h"
 
+#include "../repository/MeetingRepository.h"
 #include "../repository/TimeslotRepository.h"
-#include "../utils/Utils.h"
+#include "../repository/UserRepository.h"
+#include "StudentController.h"
+#include "TeacherController.h"
+
 #include <cppconn/prepared_statement.h>
 #include <iostream>
 #include <map>
+#include <sstream>
+#include <string>
+#include <utility>
 #include <vector>
 
 using namespace std;
 
 class TeacherController {
   private:
-    TimeslotRepository timeslotRepository;
-    Utils utils;
+    UserRepository userRepository;
+    TimeslotRepository timeslotRepo;
+    // Utils utils;
 
   public:
     TeacherController() {}
 
-    void declareTimeslots(const int &teacher_id) {
-        string startH, startM, endH, endM, day, month, year, type;
-        bool done = false, typechosen = false;
-        cout << "------------------------Khai bao thoi gian ranh--------------------------" << endl;
+    vector<string> splitString(const string &str, char delimiter) {
+        vector<string> tokens;
+        string token;
+        stringstream ss(str);
 
-        while (!done) {
-            cout << "Nhập thoi gian bat dau:" << endl;
-            while (!utils.checkHour(startH)) {
-                cout << "- Gio: ";
-                getline(cin, startH);
-                if (!utils.checkHour(startH)) {
-                    cout << "Gio khong hop le!" << endl;
-                }
-            }
-            while (!utils.checkMinute(startM)) {
-                cout << "- Phut: ";
-                getline(cin, startM);
-                if (!utils.checkMinute(startM)) {
-                    cout << "Phut khong hop le!" << endl;
-                }
-            }
-
-            cout << "Nhập thoi gian ket thuc:" << endl;
-            while (!utils.checkHour(endH)) {
-                cout << "- Gio: ";
-                getline(cin, endH);
-                if (!utils.checkHour(endH)) {
-                    cout << "Gio khong hop le!" << endl;
-                }
-            }
-            while (!utils.checkMinute(endM)) {
-                cout << "- Phut: ";
-                getline(cin, endM);
-                if (!utils.checkMinute(endM)) {
-                    cout << "Phut khong hop le!" << endl;
-                }
-            }
-
-            while (!utils.checkDay(day)) {
-                cout << "Ngay: ";
-                getline(cin, day);
-                if (!utils.checkDay(day)) {
-                    cout << "Ngay khong hop le!" << endl;
-                }
-            }
-            while (!utils.checkMonth(month)) {
-                cout << "Thang: ";
-                getline(cin, month);
-                if (!utils.checkMonth(month)) {
-                    cout << "Thang khong hop le!" << endl;
-                }
-            }
-            while (!utils.checkYear(year)) {
-                cout << "Nam: ";
-                getline(cin, year);
-                if (!utils.checkYear(year)) {
-                    cout << "Nam khong hop le!" << endl;
-                }
-            }
-
-            while (!typechosen) {
-                int choice = 0;
-                cout << "Loai cuoc hen: 1. Ca nhan; 2. Nhom; 3. Ca hai;" << endl;
-                cin >> choice;
-                cin.ignore();
-                switch (choice) {
-                case 1:
-                    type = "personal";
-                    typechosen = true;
-                    break;
-                case 2:
-                    type = "group";
-                    typechosen = true;
-                    break;
-                case 3:
-                    type = "both";
-                    typechosen = true;
-                    break;
-                default:
-                    cout << "Lua chon khong hop le" << endl;
-                    break;
-                }
-            }
-
-            cout << "--------------------------------------------" << endl;
-            string start = startH + ":" + startM;
-            string end = endH + ":" + endM;
-            string date = year + "-" + month + "-" + day;
-            Timeslot ts(start, end, date, type, teacher_id);
-            timeslotRepository.create(ts);
-            done = true;
+        // Sử dụng getline để tách chuỗi
+        while (getline(ss, token, delimiter)) {
+            tokens.push_back(token);
         }
+        return tokens;
     }
 
-    void viewTimeslots(const int &teacher_id) {
-        map<string, vector<Timeslot>> timeslots = timeslotRepository.getTimeslotsByTeacherId(teacher_id);
-        map<int, Timeslot> editTimeslots; // index - timeslot
-        int index = 0;
-        int choice;
-        bool typechosen = false;
-
-        if (timeslots.empty()) {
-            cout << "Ban chua khai bao thoi gian ranh" << endl;
-            return;
-        }
-
-        cout << "------------------Thoi gian ranh cua ban-------------------" << endl;
-        for (const auto &ts : timeslots) {
-            cout << "Ngay: " << ts.first << endl;
-            vector<Timeslot> tss = ts.second;
-            for (int i = 0; i < tss.size(); i++) {
-                index++;
-                editTimeslots[index] = tss[i];
-                cout << index << ". Tu: " << tss[i].getStart() << " - Den: " << tss[i].getEnd() << "( "
-                     << tss[i].getType() << " )" << endl;
+    map<string, vector<Timeslot>> viewTimeslots(const string &message) {
+        map<string, vector<Timeslot>> timeslots;
+        vector<string> tokens = splitString(message, '|');
+        string date = tokens[1];
+        int i = 2;
+        while (i < tokens.size()) {
+            if (tokens[i - 1] == "]") {
+                date = tokens[i];
+                i++;
+            } else if (tokens[i] == "]" || tokens[i] == "[") {
+                i++;
+            } else {
+                // [
+                Timeslot ts;
+                ts.setId(stoi(tokens[i]));
+                ts.setStart(tokens[i + 1]);
+                ts.setEnd(tokens[i + 2]);
+                ts.setDate(tokens[i + 3]);
+                ts.setType(tokens[i + 4]);
+                ts.setStatus(tokens[i + 5]);
+                ts.setTeacherId(stoi(tokens[i + 6]));
+                timeslots[date].push_back(ts);
+                i = i + 7;
             }
         }
+        return timeslots;
+    }
 
-        cout << "-----------" << endl;
-        cout << "Ban co muon sua doi khong? Nhap so dong can sua(hoac 0 de thoat): ";
-        cin >> choice;
-        cin.ignore();
-        if (choice > 1 && choice <= index) {
-            int id = editTimeslots[choice].getId();
-            string type = editTimeslots[choice].getType();
-            string startH, startM, endH, endM;
-
-            cout << "Nhập thoi gian bat dau:" << endl;
-            while (!utils.checkHour(startH)) {
-                cout << "- Gio: ";
-                getline(cin, startH);
-                if (!utils.checkHour(startH)) {
-                    cout << "Gio khong hop le!" << endl;
-                }
+    map<string, vector<Timeslot>> getTimeslotsFromResponse(const string &message) {
+        map<string, vector<Timeslot>> timeslots;
+        vector<string> tokens = splitString(message, '|');
+        string date = tokens[1];
+        int i = 2;
+        while (i < tokens.size()) {
+            if (tokens[i - 1] == "]") {
+                date = tokens[i];
+                i++;
+            } else if (tokens[i] == "]" || tokens[i] == "[") {
+                i++;
+            } else {
+                // [
+                Timeslot ts;
+                ts.setId(stoi(tokens[i]));
+                ts.setStart(tokens[i + 1]);
+                ts.setEnd(tokens[i + 2]);
+                ts.setDate(tokens[i + 3]);
+                ts.setType(tokens[i + 4]);
+                ts.setStatus(tokens[i + 5]);
+                ts.setTeacherId(stoi(tokens[i + 6]));
+                timeslots[date].push_back(ts);
+                i = i + 7;
             }
-            while (!utils.checkMinute(startM)) {
-                cout << "- Phut: ";
-                getline(cin, startM);
-                if (!utils.checkMinute(startM)) {
-                    cout << "Phut khong hop le!" << endl;
-                }
-            }
-
-            cout << "Nhập thoi gian ket thuc:" << endl;
-            while (!utils.checkHour(endH)) {
-                cout << "- Gio: ";
-                getline(cin, endH);
-                if (!utils.checkHour(endH)) {
-                    cout << "Gio khong hop le!" << endl;
-                }
-            }
-            while (!utils.checkMinute(endM)) {
-                cout << "- Phut: ";
-                getline(cin, endM);
-                if (!utils.checkMinute(endM)) {
-                    cout << "Phut khong hop le!" << endl;
-                }
-            }
-
-            while (!typechosen) {
-                int choice = 0;
-                cout << "Loai cuoc hen: 1. Ca nhan; 2. Nhom; 3. Ca hai; 0. Khong doi" << endl;
-                cin >> choice;
-                cin.ignore();
-                switch (choice) {
-                case 0:
-                    typechosen = true;
-                    break;
-                case 1:
-                    type = "personal";
-                    typechosen = true;
-                    break;
-                case 2:
-                    type = "group";
-                    typechosen = true;
-                    break;
-                case 3:
-                    type = "both";
-                    typechosen = true;
-                    break;
-                default:
-                    cout << "Lua chon khong hop le" << endl;
-                    break;
-                }
-            }
-
-            string start = startH + ":" + startM;
-            string end = endH + ":" + endM;
-            timeslotRepository.updateTimeAndType(id, start, end, type);
-        } else {
-            return;
         }
+        return timeslots;
+    }
+
+    map<string, vector<Meeting>> getMeetingsFromResponse(const string &message) {
+        map<string, vector<Meeting>> meetings;
+        vector<string> tokens = splitString(message, '|');
+        string date = tokens[1];
+        int i = 2;
+        while (i < tokens.size()) {
+            if (tokens[i - 1] == "]") {
+                date = tokens[i];
+                i++;
+            } else if (tokens[i] == "]" || tokens[i] == "[") {
+                i++;
+            } else {
+                // [
+                Meeting meeting;
+                meeting.setId(stoi(tokens[i]));
+                meeting.setTimeslotId(stoi(tokens[i + 1]));
+                meeting.setStatus(tokens[i + 2]);
+                meeting.setType(tokens[i + 3]);
+                meeting.setReport(tokens[i + 4]);
+                meeting.setStart(tokens[i + 5]);
+                meeting.setEnd(tokens[i + 6]);
+                meeting.setDate(tokens[i + 7]);
+                meetings[date].push_back(meeting);
+                i = i + 8;
+            }
+        }
+        return meetings;
+    }
+
+    map<string, map<string, vector<pair<Meeting, vector<User>>>>>
+    getMeetingsInWeeksFromResponse(const string &message) {
+        map<string, map<string, vector<pair<Meeting, vector<User>>>>> meetings;
+        vector<string> tokens = splitString(message, '|');
+        string week = tokens[1];
+        string date = tokens[3];
+        int i = 2;
+        while (i < tokens.size()) {
+            if (tokens[i - 1] == "}" && tokens[i - 2] == "]") {
+                week = tokens[i];
+                i++;
+            } else if ((tokens[i - 1] == "{" && tokens[i - 2] != "students") ||
+                       (tokens[i - 1] == "]" && tokens[i - 2] == "}")) {
+                date = tokens[i];
+                i++;
+            } else if (tokens[i] == "]" || tokens[i] == "[" || tokens[i] == "}" || tokens[i] == "{") {
+                i++;
+            } else {
+                // [
+                pair<Meeting, vector<User>> meetingWithUser;
+                vector<User> students;
+                Meeting meeting;
+                meeting.setId(stoi(tokens[i]));
+                meeting.setTimeslotId(stoi(tokens[i + 1]));
+                meeting.setStatus(tokens[i + 2]);
+                meeting.setType(tokens[i + 3]);
+                meeting.setReport(tokens[i + 4]);
+                meeting.setStart(tokens[i + 5]);
+                meeting.setEnd(tokens[i + 6]);
+                meeting.setDate(tokens[i + 7]);
+                meetingWithUser.first = meeting;
+                // i + 8 == students; i + 9 == "{"
+                i = i + 10; //
+                while (tokens[i] != "}") {
+                    User student;
+                    student.setId(stoi(tokens[i]));
+                    student.setFirstName(tokens[i + 1]);
+                    student.setLastName(tokens[i + 2]);
+                    students.push_back(student);
+                    i = i + 3;
+                }
+                meetingWithUser.second = students;
+                meetings[week][date].push_back(meetingWithUser);
+            }
+        }
+        return meetings;
+    }
+
+    pair<Meeting, vector<User>> getMeetingFromResponse(const string &message) {
+        pair<Meeting, vector<User>> meetingDetail;
+        vector<User> students;
+        vector<string> tokens = splitString(message, '|');
+
+        Meeting meeting;
+        meeting.setId(stoi(tokens[1]));
+        meeting.setTimeslotId(stoi(tokens[2]));
+        meeting.setStatus(tokens[3]);
+        meeting.setType(tokens[4]);
+        meeting.setReport(tokens[5]);
+        meeting.setStart(tokens[6]);
+        meeting.setEnd(tokens[7]);
+        meeting.setDate(tokens[8]);
+        meetingDetail.first = meeting;
+        // 9 = [
+        int i = 10;
+        while (i < tokens.size()) {
+            if (tokens[i] == "]") {
+                break;
+            }
+            User student;
+            student.setId(stoi(tokens[i]));
+            student.setFirstName(tokens[i + 1]);
+            student.setLastName(tokens[i + 2]);
+            students.push_back(student);
+            i = i + 3;
+        };
+        meetingDetail.second = students;
+        return meetingDetail;
     }
 };
 
