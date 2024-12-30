@@ -218,6 +218,8 @@ void handleTeacherViewMeeting(const int &meeting_id) {
             handleUpdateStatus(meeting_id, status);
             handleTeacherViewMeeting(meeting_id);
         }
+    } else if (status == "12") {
+        return;
     }
 }
 

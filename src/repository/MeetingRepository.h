@@ -34,14 +34,10 @@ class MeetingRepository {
                 pstmt->setString(2, meeting.getType());
                 pstmt->executeUpdate();
                 delete pstmt;
-                // if (meeting.getType() == "personal") {
-                //     timeslotRepo.updateStatus(meeting.getTimeslotId(), "busy");
-                // }
-
             } catch (sql::SQLException &e) {
                 cerr << "Loi them cuoc hen: " << e.what() << endl;
             }
-            db.disconnect();
+
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
@@ -74,7 +70,6 @@ class MeetingRepository {
             } catch (sql::SQLException &e) {
                 std::cerr << "Lỗi khi lấy dữ liệu từ timeslots: " << e.what() << std::endl;
             }
-            db.disconnect();
 
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
@@ -120,7 +115,7 @@ class MeetingRepository {
             } catch (sql::SQLException &e) {
                 std::cerr << "Lỗi khi lấy dữ liệu từ meetings: " << e.what() << std::endl;
             }
-            db.disconnect();
+
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
@@ -201,7 +196,6 @@ class MeetingRepository {
             } catch (sql::SQLException &e) {
                 std::cerr << "Lỗi khi lấy dữ liệu từ meetings: " << e.what() << std::endl;
             }
-            db.disconnect();
 
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
@@ -256,7 +250,6 @@ class MeetingRepository {
             } catch (sql::SQLException &e) {
                 std::cerr << "Lỗi khi lấy dữ liệu từ meetings: " << e.what() << std::endl;
             }
-            db.disconnect();
 
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
@@ -298,7 +291,6 @@ class MeetingRepository {
             } catch (sql::SQLException &e) {
                 std::cerr << "Lỗi khi lấy dữ liệu từ timeslots: " << e.what() << std::endl;
             }
-            db.disconnect();
 
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
@@ -316,7 +308,6 @@ class MeetingRepository {
             } catch (sql::SQLException &e) {
                 std::cerr << "Lỗi khi xoa meeting: " << e.what() << std::endl;
             }
-            db.disconnect();
 
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
@@ -341,7 +332,6 @@ class MeetingRepository {
             } catch (sql::SQLException &e) {
                 cerr << "Lỗi khi cập nhật meeting: " << e.what() << endl;
             }
-            db.disconnect();
 
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
@@ -366,7 +356,6 @@ class MeetingRepository {
             } catch (sql::SQLException &e) {
                 cerr << "Lỗi khi cập nhật meeting: " << e.what() << endl;
             }
-            db.disconnect();
 
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
@@ -411,7 +400,6 @@ class MeetingRepository {
             } catch (sql::SQLException &e) {
                 std::cerr << "Lỗi khi lấy dữ liệu từ meetings: " << e.what() << std::endl;
             }
-            db.disconnect();
 
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;

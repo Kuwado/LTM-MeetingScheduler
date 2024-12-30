@@ -187,9 +187,16 @@ class TeacherResponseController {
 
     Response viewMeeting(const int &meeting_id) {
         Response res;
+        Meeting meeting = meetingRepo.getMeetingById(meeting_id);
+
+        if (meeting.getId() == 0) {
+            res.setStatus(12);
+            res.setMessage("Khong tim thay meeting|");
+            return res;
+        }
+
         vector<User> students = attendanceRepo.getStudentsFromMeeting(meeting_id);
 
-        Meeting meeting = meetingRepo.getMeetingById(meeting_id);
         string message = meeting.toString();
         message += "|[";
         for (const auto &student : students) {
@@ -258,7 +265,12 @@ class TeacherResponseController {
             res.setStatus(12);
             res.setMessage("Khong tim thay cuoc hen|");
         } else {
-            meetingRepo.updateStatus(meeting_id, status);
+            if (status == "canceled") {
+                meetingRepo.deleteMeeting(meeting_id);
+                timeslotRepo.updateStatus(meeting.getTimeslotId(), "free");
+            } else {
+                meetingRepo.updateStatus(meeting_id, status);
+            }
             res.setStatus(0);
             res.setMessage("Sua doi trang thai cuoc hop thanh cong|");
         }
