@@ -43,6 +43,34 @@ class TeacherController {
         return tokens;
     }
 
+    map<string, vector<Timeslot>> viewTimeslots(const string &message) {
+        map<string, vector<Timeslot>> timeslots;
+        vector<string> tokens = splitString(message, '|');
+        string date = tokens[1];
+        int i = 2;
+        while (i < tokens.size()) {
+            if (tokens[i - 1] == "]") {
+                date = tokens[i];
+                i++;
+            } else if (tokens[i] == "]" || tokens[i] == "[") {
+                i++;
+            } else {
+                // [
+                Timeslot ts;
+                ts.setId(stoi(tokens[i]));
+                ts.setStart(tokens[i + 1]);
+                ts.setEnd(tokens[i + 2]);
+                ts.setDate(tokens[i + 3]);
+                ts.setType(tokens[i + 4]);
+                ts.setStatus(tokens[i + 5]);
+                ts.setTeacherId(stoi(tokens[i + 6]));
+                timeslots[date].push_back(ts);
+                i = i + 7;
+            }
+        }
+        return timeslots;
+    }
+
     map<string, vector<Timeslot>> getTimeslotsFromResponse(const string &message) {
         map<string, vector<Timeslot>> timeslots;
         vector<string> tokens = splitString(message, '|');
@@ -86,7 +114,7 @@ class TeacherController {
                 // [
                 Meeting meeting;
                 meeting.setId(stoi(tokens[i]));
-                meeting.setTeacherId(stoi(tokens[i + 1]));
+                meeting.setTimeslotId(stoi(tokens[i + 1]));
                 meeting.setStatus(tokens[i + 2]);
                 meeting.setType(tokens[i + 3]);
                 meeting.setReport(tokens[i + 4]);
@@ -123,7 +151,7 @@ class TeacherController {
                 vector<User> students;
                 Meeting meeting;
                 meeting.setId(stoi(tokens[i]));
-                meeting.setTeacherId(stoi(tokens[i + 1]));
+                meeting.setTimeslotId(stoi(tokens[i + 1]));
                 meeting.setStatus(tokens[i + 2]);
                 meeting.setType(tokens[i + 3]);
                 meeting.setReport(tokens[i + 4]);
@@ -155,7 +183,7 @@ class TeacherController {
 
         Meeting meeting;
         meeting.setId(stoi(tokens[1]));
-        meeting.setTeacherId(stoi(tokens[2]));
+        meeting.setTimeslotId(stoi(tokens[2]));
         meeting.setStatus(tokens[3]);
         meeting.setType(tokens[4]);
         meeting.setReport(tokens[5]);

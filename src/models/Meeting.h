@@ -13,6 +13,7 @@ class Meeting {
     string start;
     string end;
     string date;
+    int timeslot_id;
 
   public:
     // Constructor
@@ -24,10 +25,16 @@ class Meeting {
             const string &nstart, const string &nend, const string &ndate)
         : teacher_id(nteacher_id), status(nstatus), type(ntype), report(nreport), start(nstart), end(nend),
           date(ndate) {}
+    Meeting(const int &nteacher_id, const string &nstatus, const string &ntype, const string &nreport,
+            const string &nstart, const string &nend, const string &ndate, const int &ntimeslot_id)
+        : teacher_id(nteacher_id), status(nstatus), type(ntype), report(nreport), start(nstart), end(nend), date(ndate),
+          timeslot_id(ntimeslot_id) {}
+    Meeting(const string &ntype, const int &ntimeslot_id) : type(ntype), timeslot_id(ntimeslot_id) {}
 
     // Getter
     int getId() const { return id; }
     int getTeacherId() const { return teacher_id; }
+    int getTimeslotId() const { return timeslot_id; }
     string getStatus() const { return status; }
     string getType() const { return type; }
     string getReport() const { return report; }
@@ -38,6 +45,7 @@ class Meeting {
     // Setter
     void setId(const int &newId) { id = newId; }
     void setTeacherId(const int &newTeacherId) { teacher_id = newTeacherId; }
+    void setTimeslotId(const int &newTimeslotId) { timeslot_id = newTimeslotId; }
     void setStatus(const string &newStatus) { status = newStatus; }
     void setType(const string &newType) { type = newType; }
     void setReport(const string &newReport) { report = newReport; }
@@ -46,7 +54,7 @@ class Meeting {
     void setDate(const string &newDate) { date = newDate; }
 
     string toString() {
-        return to_string(id) + "|" + to_string(teacher_id) + "|" + status + "|" + type + "|" + report + "|" + start +
+        return to_string(id) + "|" + to_string(timeslot_id) + "|" + status + "|" + type + "|" + report + "|" + start +
                "|" + end + "|" + date;
     }
 

@@ -66,7 +66,8 @@ class UserController {
         } else {
             User newUser(username, password, role, first_name, last_name);
             userRepository.create(newUser);
-            string message = "Dang ky thanh cong|" + to_string(newUser.getId()) + "|" + newUser.getRole() + "|";
+            User user = userRepository.getUserByUsername(username);
+            string message = "Dang ky thanh cong|" + to_string(user.getId()) + "|" + user.getRole() + "|";
             res.setStatus(0);
             res.setMessage(message);
         }

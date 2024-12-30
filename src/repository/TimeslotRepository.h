@@ -70,6 +70,7 @@ class TimeslotRepository {
             } catch (sql::SQLException &e) {
                 cerr << "Loi them khe thoi gian: " << e.what() << endl;
             }
+            db.disconnect();
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
@@ -95,6 +96,7 @@ class TimeslotRepository {
             } catch (sql::SQLException &e) {
                 cerr << "Lỗi khi cập nhật thời gian: " << e.what() << endl;
             }
+            db.disconnect();
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
@@ -130,6 +132,51 @@ class TimeslotRepository {
             } catch (sql::SQLException &e) {
                 std::cerr << "Lỗi khi lấy dữ liệu từ timeslots: " << e.what() << std::endl;
             }
+            db.disconnect();
+        } else {
+            cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
+        }
+
+        // Sắp xếp lại Timeslots trong mỗi ngày theo giờ tăng dần
+        for (auto &entry : timeslotsByDate) {
+            sort(entry.second.begin(), entry.second.end(),
+                 [](const Timeslot &a, const Timeslot &b) { return a.getStart() < b.getStart(); });
+        }
+
+        return timeslotsByDate;
+    }
+
+    map<string, vector<Timeslot>> getFreeTimeslotsByTeacherId(const int &teacher_id) {
+        map<string, vector<Timeslot>> timeslotsByDate;
+        Database db;
+
+        if (db.connect()) {
+            string query = "SELECT * FROM timeslots WHERE teacher_id = ? AND status = 'free'";
+            try {
+                sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
+                pstmt->setInt(1, teacher_id);
+                sql::ResultSet *res = pstmt->executeQuery();
+
+                while (res->next()) {
+                    Timeslot ts;
+                    ts.setId(res->getInt("id"));
+                    ts.setStart(res->getString("start"));
+                    ts.setEnd(res->getString("end"));
+                    ts.setDate(res->getString("date"));
+                    ts.setType(res->getString("type"));
+                    ts.setStatus(res->getString("status"));
+                    ts.setTeacherId(res->getInt("teacher_id"));
+
+                    string date = ts.getDate();
+                    timeslotsByDate[date].push_back(ts);
+                }
+
+                delete res;
+                delete pstmt;
+            } catch (sql::SQLException &e) {
+                std::cerr << "Lỗi khi lấy dữ liệu từ timeslots: " << e.what() << std::endl;
+            }
+            db.disconnect();
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
@@ -170,6 +217,7 @@ class TimeslotRepository {
             } catch (sql::SQLException &e) {
                 std::cerr << "Lỗi khi lấy dữ liệu từ timeslots: " << e.what() << std::endl;
             }
+            db.disconnect();
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
@@ -200,6 +248,7 @@ class TimeslotRepository {
             } catch (sql::SQLException &e) {
                 std::cerr << "Lỗi khi lấy dữ liệu từ timeslots: " << e.what() << std::endl;
             }
+            db.disconnect();
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
@@ -218,14 +267,33 @@ class TimeslotRepository {
             } catch (sql::SQLException &e) {
                 cerr << "Lỗi khi cập nhật trạng thái timeslot: " << e.what() << endl;
             }
+            db.disconnect();
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
     }
 
-    Timeslot getTimeslotByDetails(const int &teacher_id, const string &start, const string &end){
+    void updateType(const int &id, const string &type) {
+        if (db.connect()) {
+            string query = "UPDATE timeslots SET type = ? WHERE id = ?";
+            try {
+                sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
+                pstmt->setString(1, type);
+                pstmt->setInt(2, id);
+                pstmt->executeUpdate();
+                delete pstmt;
+            } catch (sql::SQLException &e) {
+                cerr << "Lỗi khi cập nhật trạng thái timeslot: " << e.what() << endl;
+            }
+            db.disconnect();
+        } else {
+            cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
+        }
+    }
+
+    Timeslot getTimeslotByDetails(const int &teacher_id, const string &start, const string &end) {
         Timeslot ts;
-        if (db.connect()){
+        if (db.connect()) {
             string query = "SELECT * FROM timeslots WHERE teacher_id = ? AND start = ? AND end = ?";
             try {
                 sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
@@ -246,9 +314,10 @@ class TimeslotRepository {
 
                 delete res;
                 delete pstmt;
-            } catch (sql::SQLException &e){
+            } catch (sql::SQLException &e) {
                 cerr << "Lỗi khi lay du lieu: " << e.what() << endl;
             }
+            db.disconnect();
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
