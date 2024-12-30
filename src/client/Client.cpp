@@ -398,15 +398,46 @@ void handleViewAllTeacher() {
     }
 }
 
-void handleCancelMeeting() {
-    string requestMeeting = "FETCH_STUDENT_METTINGS|" + to_string(user_id) + "|<END>";
-    string responseMeeting = sendRequestToServer(requestMeeting);
-    string statusMeeting = responseMeeting.substr(0, responseMeeting.find('|'));
-    if (statusMeeting == "0") {
-        vector<Meeting> meetings = clientController.parseMeetingsFromResponse(responseMeeting);
-        int meetingId = studentView.selectMeeting(meetings);
-        string cancelRequest = "CANCEL_MEETING|" + to_string(meetingId) + "|" + to_string(user_id) + "|<END>";
-        string cancelResponse = sendRequestToServer(cancelRequest);
+void handleCancelMeeting(const int &meeting_id) {
+    string request = "CANCEL_MEETING|" + to_string(user_id) + "|" + to_string(meeting_id) + "|<END>";
+    string response = sendRequestToServer(request);
+    string status = response.substr(0, response.find('|'));
+    vector<string> tokens = splitString(response, '|');
+    cout << tokens[1] << endl;
+}
+
+void handleStudentViewMeeting(const int &meeting_id) {
+    string request = "VIEW_MEETING_STUDENT|" + to_string(meeting_id) + "|<END>";
+    string response = sendRequestToServer(request);
+    string status = response.substr(0, response.find('|'));
+    if (status == "0") {
+        pair<Meeting, User> meetingDetail = studentController.getMeetingFromResponse(response);
+        int choice = studentView.showMeeting(meetingDetail.first, meetingDetail.second);
+        if (choice == 0) {
+            return;
+        } else if (choice == 1) {
+            handleCancelMeeting(meeting_id);
+        }
+    }
+}
+
+void handleStudentViewMeetings() {
+    string request = "VIEW_MEETINGS_STUDENT|" + to_string(user_id) + "|<END>";
+    string response = sendRequestToServer(request);
+    string status = response.substr(0, response.find("|"));
+    if (status == "0") {
+        map<string, map<string, vector<pair<Meeting, User>>>> meetings =
+            studentController.getMeetingsInWeeksFromResponse(response);
+        Meeting meeting = studentView.showMeetingsInWeeks(meetings);
+        if (meeting.getId() == -1) {
+            return;
+        }
+        // Detail Meeting
+        handleStudentViewMeeting(meeting.getId());
+        handleStudentViewMeetings();
+    } else if (status == "16") {
+        vector<string> tokens = splitString(response, '|');
+        cout << tokens[1] << endl;
     }
 }
 
@@ -421,13 +452,8 @@ void handleStudentMenu() {
         handleStudentMenu();
         break;
     case 2:
-        handleCancelMeeting();
-        // handleViewTimeslots();
+        handleStudentViewMeetings();
         handleTeacherMenu();
-        break;
-    case 3:
-        break;
-    case 4:
         break;
 
     default:
