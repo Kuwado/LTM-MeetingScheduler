@@ -1,81 +1,135 @@
 #ifndef STUDENTRESPONSECONTROLLER_H
 #define STUDENTRESPONSECONTROLLER_H
 
-#include <iostream>
-#include <vector>
-#include "../repository/UserRepository.h"
-#include "../repository/MeetingRepository.h"
-#include "../repository/TimeslotRepository.h"
-#include "../repository/AttendanceRepository.h"
+#include "../models/Attendance.h"
+#include "../models/Meeting.h"
 #include "../models/Response.h"
 #include "../models/User.h"
-#include "../models/Meeting.h"
-#include "../models/Attendance.h"
+#include "../repository/AttendanceRepository.h"
+#include "../repository/MeetingRepository.h"
+#include "../repository/TimeslotRepository.h"
+#include "../repository/UserRepository.h"
 #include "./TeacherResponseController.h"
+#include <iostream>
+#include <vector>
 using namespace std;
 
 class StudentResponseController {
-    private:
-        UserRepository userRepository;
-        MeetingRepository meetingRepository;
-        TimeslotRepository timeslotRepository;
-        AttendanceRepository attendanceRepository;
-        TeacherResponseController trc;        
-    public:
-        StudentResponseController () {}
+  private:
+    UserRepository userRepository;
+    MeetingRepository meetingRepository;
+    TimeslotRepository timeslotRepository;
+    AttendanceRepository attendanceRepository;
+    TeacherResponseController trc;
+
+  public:
+    StudentResponseController() {}
 
     Response getAllTeacher() {
         Response res;
         vector<User> teachers = userRepository.getAllTeachers();
 
         if (teachers.empty()) {
-            res.setStatus(8); 
+            res.setStatus(8);
             res.setMessage("Khong co giao vien nao trong he thong");
         } else {
             string message = "";
-            for (int i = 0; i < teachers.size(); i++){
+            for (int i = 0; i < teachers.size(); i++) {
                 message += teachers[i].toStringProfile() + "|";
             }
-            res.setStatus(0); 
+            res.setStatus(0);
             res.setMessage(message);
         }
 
         return res;
     }
 
-    Response bookMeeting(const string request) {
+    Response viewFreeTimeslots(const int &teacher_id) {
+        Response res;
+        User user = userRepository.getUserById(teacher_id);
+        if (user.getId() == 0) {
+            res.setStatus(8);
+            res.setMessage("Giao vien khong ton tai|");
+        } else {
+            map<string, vector<Timeslot>> timeslots = timeslotRepository.getFreeTimeslotsByTeacherId(teacher_id);
+            if (timeslots.empty()) {
+                res.setStatus(9);
+                res.setMessage("Giao vien khong co lich ranh|");
+            } else {
+                string message = "";
+                for (const auto &ts : timeslots) {
+                    message += ts.first + "|[";
+                    vector<Timeslot> tss = ts.second;
+                    for (int i = 0; i < tss.size(); i++) {
+                        message += "|" + tss[i].toString();
+                    }
+                    message += "|]|";
+                }
+                res.setStatus(0);
+                res.setMessage(message);
+            }
+        }
+
+        return res;
+    }
+
+    Response bookMeeting(const string &request) {
         Response res;
         vector<string> tokens = trc.splitString(request, '|');
-        string start = tokens[1];
-        string end = tokens[2];
-        string date = tokens[3];
-        string type = tokens[4];
-        int teacher_id = stoi(tokens[5]);
-        int time_slot_id = stoi(tokens[6]);
-        int student_id = stoi(tokens[7]);
-        if (start.empty() || end.empty() || date.empty() || type.empty() || teacher_id <= 0 || time_slot_id <= 0 || student_id <= 0) {
-            res.setStatus(13); 
-            res.setMessage("Du lieu khong hop le |");
+        int student_id = stoi(tokens[1]);
+        int timeslot_id = stoi(tokens[2]);
+        string type = tokens[3];
+
+        User student = userRepository.getUserById(student_id);
+        if (student.getId() == 0) {
+            res.setStatus(17);
+            res.setMessage("Sinh vien khong ton tai|");
             return res;
         }
 
-        Timeslot timeslot = timeslotRepository.getTimeslotById(time_slot_id);
+        Timeslot timeslot = timeslotRepository.getTimeslotById(timeslot_id);
         if (timeslot.getId() == 0) {
-            res.setStatus(14);
-            res.setMessage("Khong tim thay timeslot |");
+            res.setStatus(10);
+            res.setMessage("Khong tim thay timeslot|");
             return res;
         }
 
-        Meeting newMeeting(teacher_id, "pending", type, start, end, date);
+        // Kiem tra xem meeting ton tai chua
+        Meeting meeting = meetingRepository.getMeetingByTimeslotId(timeslot_id);
+        if (meeting.getId() != 0 && meeting.getType() == "personal") {
+            res.setStatus(20);
+            res.setMessage("Cuoc hen da ton tai|");
+            return res;
+        } else if (meeting.getId() == 0) {
+            // Tao meeting
+            Meeting newMeeting(type, timeslot_id);
+            meetingRepository.create(newMeeting);
+            meeting = meetingRepository.getMeetingByTimeslotId(timeslot_id);
+        }
 
-        meetingRepository.create(newMeeting, student_id);
+        // Update type cho timeslot neu no la both
+        if (timeslot.getType() == "both") {
+            timeslotRepository.updateType(timeslot_id, type);
+        }
 
-        if (timeslot.getType() == "personal") {
-            timeslotRepository.updateStatus(time_slot_id, "busy");
+        if (type == "personal") {
+            timeslotRepository.updateStatus(timeslot_id, "busy");
+        }
+
+        // Them attendance
+        // Kiem tra attendance ton tai chua
+        Attendance att = attendanceRepository.getAttendanceByMeetingIdAndStudentId(meeting.getId(), student_id);
+        if (att.getId() == 0) {
+            Attendance newAttendance(meeting.getId(), student_id);
+            attendanceRepository.create(newAttendance);
+        } else {
+            res.setStatus(19);
+            res.setMessage("Sinh vien da dang ky cuoc hen nay|");
+            return res;
         }
 
         res.setStatus(0);
-        res.setMessage("Dat lich hop thanh cong |");
+        res.setMessage("Dat lich hop thanh cong|");
 
         return res;
     }
@@ -90,13 +144,13 @@ class StudentResponseController {
             return res;
         }
         vector<Meeting> meetings = attendanceRepository.getMeetingsByStudentId(student_id);
-        if (meetings.empty()){
+        if (meetings.empty()) {
             res.setStatus(16);
             res.setMessage("Ban khong co lich hop nao |");
             return res;
         }
         string message = "";
-        for ( auto &meeting : meetings) {
+        for (auto &meeting : meetings) {
             message += meeting.toString();
         }
         res.setStatus(0);
@@ -104,7 +158,7 @@ class StudentResponseController {
         return res;
     }
 
-    Response cancelMeeting(const string request){
+    Response cancelMeeting(const string request) {
         Response res;
         vector<string> tokens = trc.splitString(request, '|');
         int meeting_id = stoi(tokens[1]);
@@ -131,9 +185,8 @@ class StudentResponseController {
         attendanceRepository.deleteAttendanceByMeetingAndStudent(meeting_id, student_id);
         res.setStatus(0);
         res.setMessage("Huy meeting thanh cong |");
-        return res;        
-    }   
-
+        return res;
+    }
 };
 
 #endif

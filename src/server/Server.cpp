@@ -2,15 +2,14 @@
 #include "../controllers/ResponseController.h"
 #include "../controllers/StudentResponseController.h"
 #include "../controllers/TeacherResponseController.h"
-
 #include "../controllers/UserController.h"
-
 #include "../models/Response.h"
 #include "../models/User.h"
 #include "../repository/UserRepository.h"
 #include "../utils/MessageUtils.h"
 #include <arpa/inet.h>
 #include <fstream>
+#include <ifaddrs.h>
 #include <iostream>
 #include <map>
 #include <netinet/in.h>
@@ -80,8 +79,6 @@ void processClientRequest(int clientSocket, const string &request) {
     } else if (command == "VIEW_TIME_SLOTS") {
         int teacher_id = stoi(result[1]);
         res = teacherResponseController.viewTimeslots(teacher_id);
-    } else if (command == "FETCH_ALL_TEACHER") {
-        res = studentResponseController.getAllTeacher();
     } else if (command == "UPDATE_TIME_SLOT") {
         res = teacherResponseController.updateTimeslot(request);
     } else if (command == "DECLARE_TIME_SLOT") {
@@ -111,14 +108,19 @@ void processClientRequest(int clientSocket, const string &request) {
         }
         res.setStatus(123);
         res.setMessage(randomString + "|");
+    } else if (command == "FETCH_ALL_TEACHER") {
+        res = studentResponseController.getAllTeacher();
+    } else if (command == "VIEW_FREE_TIME_SLOTS") {
+        int teacher_id = stoi(result[1]);
+        res = studentResponseController.viewFreeTimeslots(teacher_id);
+    } else if (command == "BOOK_MEETING") {
+        res = studentResponseController.bookMeeting(request);
     }
-    // } else if (command == "BOOK_MEETING") {
-    //     res = studentResponseController.bookMeeting(request);
-    // } else if (command == "FETCH_STUDENT_MEETINGS"){
-    //     res = studentResponseController.getMeetingsByStudent(request);
-    // } else if (command == "CANCEL_MEETING"){
-    //     res = studentResponseController.cancelMeeting(request);
-    // }
+    // else if (command == "FETCH_STUDENT_MEETINGS"){
+    //      res = studentResponseController.getMeetingsByStudent(request);
+    //  } else if (command == "CANCEL_MEETING"){
+    //      res = studentResponseController.cancelMeeting(request);
+    //  }
     else {
         response = MessageUtils::createMessage(Status::UNKNOWN_ERROR, "Yeu cau khong hop le");
     }
@@ -180,6 +182,22 @@ void handleClient(int clientSocket) {
 
     // Đóng kết nối khi xử lý xong
     close(clientSocket);
+}
+
+void printServerIP() {
+    struct ifaddrs *interfaces = nullptr;
+    getifaddrs(&interfaces);
+
+    cout << "Server IP Address:" << endl;
+    for (struct ifaddrs *addr = interfaces; addr != nullptr; addr = addr->ifa_next) {
+        if (addr->ifa_addr && addr->ifa_addr->sa_family == AF_INET) {
+            struct sockaddr_in *ipv4 = (struct sockaddr_in *)addr->ifa_addr;
+            char ip[INET_ADDRSTRLEN];
+            inet_ntop(AF_INET, &(ipv4->sin_addr), ip, INET_ADDRSTRLEN);
+            cout << " - " << ip << endl;
+        }
+    }
+    freeifaddrs(interfaces);
 }
 
 void startServer() {

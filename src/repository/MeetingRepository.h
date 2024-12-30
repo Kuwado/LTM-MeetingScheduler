@@ -4,8 +4,9 @@
 #include "../../data/Database.h"
 #include "../models/Attendance.h"
 #include "../models/Meeting.h"
+#include "../models/Timeslot.h"
 #include "../models/User.h"
-#include "./AttendanceRepository.h"
+#include "./TimeslotRepository.h"
 #include "UserRepository.h"
 #include <cppconn/prepared_statement.h>
 #include <iostream>
@@ -18,52 +19,67 @@ class MeetingRepository {
   private:
     Database db;
     UserRepository userRepo;
+    TimeslotRepository timeslotRepo;
 
   public:
     MeetingRepository() {}
 
-    void create(Meeting meeting, const int studentId) {
+    void create(const Meeting &meeting) {
         if (db.connect()) {
-            User user = userRepo.getUserById(meeting.getTeacherId());
-            if (user.getId() == 0) {
-                cout << "User khong ton tai!" << endl;
-                return;
-            } else if (user.getRole() != "teacher") {
-                cout << "User khong phai giao vien!" << endl;
-                return;
-            }
-
-            string query = "INSERT INTO meetings (teacher_id, status, type, report, start, end, date ) VALUES (?, ?, "
-                           "?, ?, ?, ?, ?)";
+            string query = "INSERT INTO meetings (timeslot_id, type ) VALUES (?, ?)";
 
             try {
                 sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
-                pstmt->setInt(1, meeting.getTeacherId());
-                pstmt->setString(2, meeting.getStatus());
-                pstmt->setString(3, meeting.getType());
-                pstmt->setString(4, meeting.getReport());
-                pstmt->setString(5, meeting.getStart());
-                pstmt->setString(6, meeting.getEnd());
-                pstmt->setString(7, meeting.getDate());
+                pstmt->setInt(1, meeting.getTimeslotId());
+                pstmt->setString(2, meeting.getType());
                 pstmt->executeUpdate();
                 delete pstmt;
-                int meetingId = 0;
-                sql::Statement *stmt = db.getConnection()->createStatement();
-                sql::ResultSet *res = stmt->executeQuery("SELECT LAST_INSERT_ID()");
-                if (res->next()) {
-                    meetingId = res->getInt(1);
-                }
-                delete res;
-                delete stmt;
-                AttendanceRepository attendanceRepo;
-                Attendance attendance(meetingId, studentId);
-                attendanceRepo.create(attendance);
+                // if (meeting.getType() == "personal") {
+                //     timeslotRepo.updateStatus(meeting.getTimeslotId(), "busy");
+                // }
+
             } catch (sql::SQLException &e) {
                 cerr << "Loi them cuoc hen: " << e.what() << endl;
             }
+            db.disconnect();
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
+    }
+
+    Meeting getMeetingByTimeslotId(const int &timeslot_id) {
+        Meeting meeting;
+        if (db.connect()) {
+            string query = "SELECT * FROM meetings WHERE timeslot_id  = ?";
+            try {
+                sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
+                pstmt->setInt(1, timeslot_id);
+                sql::ResultSet *res = pstmt->executeQuery();
+
+                if (res->next()) {
+                    Timeslot timeslot = timeslotRepo.getTimeslotById(res->getInt("timeslot_id"));
+                    meeting.setId(res->getInt("id"));
+                    meeting.setTeacherId(timeslot.getTeacherId());
+                    meeting.setStatus(res->getString("status"));
+                    meeting.setType(res->getString("type"));
+                    meeting.setReport(res->getString("report"));
+                    meeting.setStart(timeslot.getStart());
+                    meeting.setEnd(timeslot.getEnd());
+                    meeting.setDate(timeslot.getDate());
+                    meeting.setTimeslotId(res->getInt("timeslot_id"));
+                }
+
+                delete res;
+                delete pstmt;
+            } catch (sql::SQLException &e) {
+                std::cerr << "Lỗi khi lấy dữ liệu từ timeslots: " << e.what() << std::endl;
+            }
+            db.disconnect();
+
+        } else {
+            cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
+        }
+        return meeting;
     }
 
     // Lay lich hen chua hoan thanh
@@ -71,8 +87,14 @@ class MeetingRepository {
         map<string, vector<Meeting>> timeslots;
 
         if (db.connect()) {
-            string query = "SELECT * FROM meetings WHERE teacher_id = ? AND (status = 'pending' OR status = "
-                           "'confirmed' OR status = 'doing')";
+            string query = R"(
+                SELECT meetings.*
+                FROM meetings
+                INNER JOIN timeslots ON meetings.timeslot_id = timeslots.id
+                INNER JOIN users ON timeslots.teacher_id = users.id
+                WHERE users.id = ? 
+                AND (meetings.status = 'pending' OR meetings.status = 'confirmed' OR meetings.status = 'doing')
+            )";
             try {
                 sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
                 pstmt->setInt(1, teacher_id);
@@ -80,14 +102,16 @@ class MeetingRepository {
 
                 while (res->next()) {
                     Meeting meeting;
+                    Timeslot timeslot = timeslotRepo.getTimeslotById(res->getInt("timeslot_id"));
                     meeting.setId(res->getInt("id"));
-                    meeting.setTeacherId(res->getInt("teacher_id"));
+                    meeting.setTeacherId(timeslot.getTeacherId());
                     meeting.setStatus(res->getString("status"));
                     meeting.setType(res->getString("type"));
                     meeting.setReport(res->getString("report"));
-                    meeting.setStart(res->getString("start"));
-                    meeting.setEnd(res->getString("end"));
-                    meeting.setDate(res->getString("date"));
+                    meeting.setStart(timeslot.getStart());
+                    meeting.setEnd(timeslot.getEnd());
+                    meeting.setDate(timeslot.getDate());
+                    meeting.setTimeslotId(res->getInt("timeslot_id"));
                     string date = meeting.getDate();
                     timeslots[date].push_back(meeting);
                 }
@@ -96,6 +120,7 @@ class MeetingRepository {
             } catch (sql::SQLException &e) {
                 std::cerr << "Lỗi khi lấy dữ liệu từ meetings: " << e.what() << std::endl;
             }
+            db.disconnect();
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
@@ -142,8 +167,14 @@ class MeetingRepository {
         map<string, map<string, vector<Meeting>>> meetings;
 
         if (db.connect()) {
-            string query = "SELECT * FROM meetings WHERE teacher_id = ? AND (status = 'pending' OR status = "
-                           "'confirmed' OR status = 'doing')";
+            string query = R"(
+                SELECT meetings.*
+                FROM meetings
+                INNER JOIN timeslots ON meetings.timeslot_id = timeslots.id
+                INNER JOIN users ON timeslots.teacher_id = users.id
+                WHERE users.id = ? 
+                AND (meetings.status = 'pending' OR meetings.status = 'confirmed' OR meetings.status = 'doing')
+            )";
             try {
                 sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
                 pstmt->setInt(1, teacher_id);
@@ -151,14 +182,16 @@ class MeetingRepository {
 
                 while (res->next()) {
                     Meeting meeting;
+                    Timeslot timeslot = timeslotRepo.getTimeslotById(res->getInt("timeslot_id"));
                     meeting.setId(res->getInt("id"));
-                    meeting.setTeacherId(res->getInt("teacher_id"));
+                    meeting.setTeacherId(timeslot.getTeacherId());
                     meeting.setStatus(res->getString("status"));
                     meeting.setType(res->getString("type"));
                     meeting.setReport(res->getString("report"));
-                    meeting.setStart(res->getString("start"));
-                    meeting.setEnd(res->getString("end"));
-                    meeting.setDate(res->getString("date"));
+                    meeting.setStart(timeslot.getStart());
+                    meeting.setEnd(timeslot.getEnd());
+                    meeting.setDate(timeslot.getDate());
+                    meeting.setTimeslotId(res->getInt("timeslot_id"));
                     string date = meeting.getDate();
                     string week = getWeekName(date);
                     meetings[week][date].push_back(meeting);
@@ -168,6 +201,8 @@ class MeetingRepository {
             } catch (sql::SQLException &e) {
                 std::cerr << "Lỗi khi lấy dữ liệu từ meetings: " << e.what() << std::endl;
             }
+            db.disconnect();
+
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
@@ -187,7 +222,15 @@ class MeetingRepository {
         map<string, vector<Meeting>> timeslots;
 
         if (db.connect()) {
-            string query = "SELECT * FROM meetings WHERE teacher_id = ? AND status = 'completed' ";
+            // string query = "SELECT * FROM meetings WHERE teacher_id = ? AND status = 'completed' ";
+            string query = R"(
+                SELECT meetings.*
+                FROM meetings
+                INNER JOIN timeslots ON meetings.timeslot_id = timeslots.id
+                INNER JOIN users ON timeslots.teacher_id = users.id
+                WHERE users.id = ? 
+                AND meetings.status = 'completed'
+            )";
             try {
                 sql::PreparedStatement *pstmt = db.getConnection()->prepareStatement(query);
                 pstmt->setInt(1, teacher_id);
@@ -195,14 +238,16 @@ class MeetingRepository {
 
                 while (res->next()) {
                     Meeting meeting;
+                    Timeslot timeslot = timeslotRepo.getTimeslotById(res->getInt("timeslot_id"));
                     meeting.setId(res->getInt("id"));
-                    meeting.setTeacherId(res->getInt("teacher_id"));
+                    meeting.setTeacherId(timeslot.getTeacherId());
                     meeting.setStatus(res->getString("status"));
                     meeting.setType(res->getString("type"));
                     meeting.setReport(res->getString("report"));
-                    meeting.setStart(res->getString("start"));
-                    meeting.setEnd(res->getString("end"));
-                    meeting.setDate(res->getString("date"));
+                    meeting.setStart(timeslot.getStart());
+                    meeting.setEnd(timeslot.getEnd());
+                    meeting.setDate(timeslot.getDate());
+                    meeting.setTimeslotId(res->getInt("timeslot_id"));
                     string date = meeting.getDate();
                     timeslots[date].push_back(meeting);
                 }
@@ -211,6 +256,8 @@ class MeetingRepository {
             } catch (sql::SQLException &e) {
                 std::cerr << "Lỗi khi lấy dữ liệu từ meetings: " << e.what() << std::endl;
             }
+            db.disconnect();
+
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
@@ -234,14 +281,16 @@ class MeetingRepository {
                 sql::ResultSet *res = pstmt->executeQuery();
 
                 if (res->next()) {
+                    Timeslot timeslot = timeslotRepo.getTimeslotById(res->getInt("timeslot_id"));
                     meeting.setId(res->getInt("id"));
-                    meeting.setStart(res->getString("start"));
-                    meeting.setEnd(res->getString("end"));
-                    meeting.setDate(res->getString("date"));
-                    meeting.setType(res->getString("type"));
+                    meeting.setTeacherId(timeslot.getTeacherId());
                     meeting.setStatus(res->getString("status"));
-                    meeting.setTeacherId(res->getInt("teacher_id"));
+                    meeting.setType(res->getString("type"));
                     meeting.setReport(res->getString("report"));
+                    meeting.setStart(timeslot.getStart());
+                    meeting.setEnd(timeslot.getEnd());
+                    meeting.setDate(timeslot.getDate());
+                    meeting.setTimeslotId(res->getInt("timeslot_id"));
                 }
 
                 delete res;
@@ -249,6 +298,8 @@ class MeetingRepository {
             } catch (sql::SQLException &e) {
                 std::cerr << "Lỗi khi lấy dữ liệu từ timeslots: " << e.what() << std::endl;
             }
+            db.disconnect();
+
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
@@ -265,6 +316,8 @@ class MeetingRepository {
             } catch (sql::SQLException &e) {
                 std::cerr << "Lỗi khi xoa meeting: " << e.what() << std::endl;
             }
+            db.disconnect();
+
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
@@ -288,6 +341,8 @@ class MeetingRepository {
             } catch (sql::SQLException &e) {
                 cerr << "Lỗi khi cập nhật meeting: " << e.what() << endl;
             }
+            db.disconnect();
+
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
@@ -311,6 +366,8 @@ class MeetingRepository {
             } catch (sql::SQLException &e) {
                 cerr << "Lỗi khi cập nhật meeting: " << e.what() << endl;
             }
+            db.disconnect();
+
         } else {
             cout << "Lỗi không thể truy cập cơ sở dữ liệu." << endl;
         }
