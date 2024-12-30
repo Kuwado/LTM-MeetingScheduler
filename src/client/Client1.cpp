@@ -1,6 +1,7 @@
 #include "../controllers/ClientController.h"
 #include "../controllers/ResponseController.h"
 #include "../controllers/TeacherController.h"
+#include "../controllers/StudentController.h"
 #include "../controllers/UserController.h"
 
 #include "../utils/MessageUtils.h"
@@ -15,11 +16,13 @@
 #include "../views/teacherviews/teacherviewmeetingsdialog.h"
 #include "../views/teacherviews/meetingdetaildialog.h"
 #include "../views/teacherviews/meetinghistorydialog.h"
+#include "../views/teacherviews/TeacherMenuWidget.h"
 #include "../views/teacherviews/viewmeetinghistorydialog.h"
 #include "../views/teacherviews/viewweeklymeetingsdialog.h"
 #include "../views/userviews/loginwidget.h"
 #include "../views/userviews/mainmenu.h"
 #include "../views/userviews/registerwidget.h"
+#include "../views/studentviews/ViewAllTeacherWidget.h"
 #include <QMessageBox>
 
 #include <algorithm>
@@ -33,8 +36,8 @@
 #include <utility>
 #include <vector>
 
-// #define SERVER_IP "127.0.0.1"
-#define SERVER_IP "172.0.1.252"
+#define SERVER_IP "127.0.0.1"
+// #define SERVER_IP "172.0.1.252"
 #define SERVER_PORT 8080
 #define BUFFER_SIZE 1024
 
@@ -49,6 +52,7 @@ UserController userController;
 ClientController clientController;
 ResponseController responseController;
 TeacherController teacherController;
+StudentController studentController;
 int user_id = 0;
 string role = "none";
 
@@ -135,11 +139,21 @@ string sendRequestToServer(const string &command) {
 
     return response.empty() ? "100" : response;
 }
-
+void handleUserMenu();
 void logout() {
     user_id = 0;
     role = "none";
+    
+    // Đóng cửa sổ hiện tại
+    QWidget* currentWidget = QApplication::activeWindow();
+    if (currentWidget) {
+        currentWidget->close();  // Đóng cửa sổ hiện tại
+    }
+    
+    // Hiển thị lại menu người dùng
+    handleUserMenu();
 }
+
 
 // Teacher
 void handleDeclareTimeSlot() {
@@ -394,71 +408,131 @@ void handleTracherViewMeetingsInWeeks() {
 
 
 void handleTeacherMenu() {
-    int choice = teacherView.showMenu();
-    switch (choice) {
-    case 0:
-        logout();
-        break;
-    case 1:
-        handleDeclareTimeSlot();
-        handleTeacherMenu();
-        break;
-    case 2:
-        handleViewTimeslots();
-        handleTeacherMenu();
-        break;
-    case 3:
-        handleTeacherViewMeetings();
-        handleTeacherMenu();
-        break;
-    case 4:
-        handleTeacherViewHistory();
-        handleTeacherMenu();
-        break;
-    case 5:
-        handleTracherViewMeetingsInWeeks();
-        handleTeacherMenu();
-        break;
+    TeacherMenuWidget* teacherMenuWidget = new TeacherMenuWidget();
 
-    default:
-        break;
-    }
+    // Kết nối tín hiệu từ các nút
+    QObject::connect(teacherMenuWidget, &TeacherMenuWidget::actionSelected, [&](int action) {
+        switch(action) {
+            case 0: // Đăng xuất
+                logout();
+                break;
+            case 1: // Khai báo thời gian rảnh
+                handleDeclareTimeSlot();
+                handleTeacherMenu();  // Gọi lại menu sau khi thực hiện
+                break;
+            case 2: // Kiểm tra thời gian rảnh
+                handleViewTimeslots();
+                handleTeacherMenu();
+                break;
+            case 3: // Xem lịch hẹn với sinh viên
+                handleTeacherViewMeetings();
+                handleTeacherMenu();
+                break;
+            case 4: // Xem lịch sử cuộc hẹn
+                handleTeacherViewHistory();
+                handleTeacherMenu();
+                break;
+            case 5: // Xem lịch hẹn theo tuần
+                handleTracherViewMeetingsInWeeks();
+                handleTeacherMenu();
+                break;
+            default:
+                break;
+        }
+    });
+
+    teacherMenuWidget->show();
 }
 
 // Student
-void handleViewAndBookTeacherSlots() {
-    string requestTeacher = "FETCH_ALL_TEACHER||<END>";
-    string responseTeacher = sendRequestToServer(requestTeacher);
-    string statusTeacher = responseTeacher.substr(0, responseTeacher.find("|"));
-    if (statusTeacher == "0") {
-        vector<User> teachers = clientController.parseTeachersFromResponse(responseTeacher);
-        int teacherId = studentView.selectTeacher(teachers);
-        string request = "VIEW_TIME_SLOTS|" + to_string(teacherId) + "|<END>";
-        cout << request << endl;
-        string response = sendRequestToServer(request);
-        string status = response.substr(0, response.find('|'));
-        if (status == "0") {
-            map<string, vector<Timeslot>> timeslots = clientController.viewTimeslots(response);
-            map<string, vector<Timeslot>> filteredTimeslots;
-            for (const auto &entry : timeslots) {
-                string date = entry.first;
-                vector<Timeslot> tsss = entry.second;
-                vector<Timeslot> freeSlots;
-                for (const Timeslot &slot : tsss) {
-                    if (slot.getStatus() == "free") {
-                        freeSlots.push_back(slot);
-                    }
-                }
-                if (!freeSlots.empty()) {
-                    filteredTimeslots[date] = freeSlots;
-                }
-            }
-            Timeslot ts = studentView.showAvailableSlots(filteredTimeslots);
-            string bookingRequest = "BOOK_MEETING|" + ts.toStringBookMeeting() + "|" + to_string(user_id) + "|<END>";
-            string bookingResponse = sendRequestToServer(bookingRequest);
-        }
+// Student
+void handleBookMeeting(const Meeting &meeting) {
+    string request = "BOOK_MEETING|" + to_string(user_id) + "|" + to_string(meeting.getTimeslotId()) + "|" +
+                     meeting.getType() + "|<END>";
+    string response = sendRequestToServer(request);
+    string status = response.substr(0, response.find('|'));
+    if (status == "0") {
+        vector<string> tokens = splitString(response, '|');
+        cout << tokens[1] << endl;
+    } else if (status == "17") {
+        vector<string> tokens = splitString(response, '|');
+        cout << tokens[1] << endl;
+    } else if (status == "10") {
+        vector<string> tokens = splitString(response, '|');
+        cout << tokens[1] << endl;
+    } else if (status == "19") {
+        vector<string> tokens = splitString(response, '|');
+        cout << tokens[1] << endl;
+    } else if (status == "20") {
+        vector<string> tokens = splitString(response, '|');
+        cout << tokens[1] << endl;
     }
 }
+
+void handleViewTimeslotsOfTeacher(const int &teacher_id, const string &teacherName) {
+    string request = "VIEW_FREE_TIME_SLOTS|" + to_string(teacher_id) + "|<END>";
+    string response = sendRequestToServer(request);
+    string status = response.substr(0, response.find('|'));
+    if (status == "0") {
+        map<string, vector<Timeslot>> timeslots = studentController.viewTimeslots(response);
+        Timeslot ts = studentView.showTimeslots(timeslots, teacherName);
+        if (ts.getId() == -1) {
+            return;
+        }
+        // Detail Timeslot
+        Meeting meeting = studentView.showBookMeeting(ts, teacherName);
+        if (meeting.getId() == -1) {
+            return;
+        } else {
+            handleBookMeeting(meeting);
+            handleViewTimeslotsOfTeacher(teacher_id, teacherName);
+        }
+
+    } else if (status == "8") {
+        vector<string> tokens = splitString(response, '|');
+        cout << tokens[1] << endl;
+    } else if (status == "9") {
+        vector<string> tokens = splitString(response, '|');
+        cout << tokens[1] << endl;
+    }
+}
+void handleStudentMenu();
+void handleViewAllTeacher() {
+    string request = "FETCH_ALL_TEACHER|<END>";
+    string response = sendRequestToServer(request);
+    string status = response.substr(0, response.find("|"));
+
+    if (status == "0") {
+        vector<User> teachers = studentController.getAllTeacher(response);
+
+        // Hiển thị giao diện Qt
+        ViewAllTeacherWidget* widget = new ViewAllTeacherWidget(teachers);
+        QEventLoop loop;
+        
+        QObject::connect(widget, &ViewAllTeacherWidget::teacherSelected, [&](const pair<string, int>& teacher) {
+            if (teacher.second != -1) {
+                handleViewTimeslotsOfTeacher(teacher.second, teacher.first);
+            }
+            loop.quit();
+        });
+
+        QObject::connect(widget, &ViewAllTeacherWidget::destroyed, [&]() {
+            loop.quit();
+        });
+
+        widget->show();
+        loop.exec();
+
+        handleViewAllTeacher();  // Quay lại giao diện sau khi xử lý
+    } else if (status == "8") {
+        vector<string> tokens = splitString(response, '|');
+        cout << tokens[1] << endl;
+    }
+}
+
+
+
+
 
 void handleCancelMeeting() {
     string requestMeeting = "FETCH_STUDENT_METTINGS|" + to_string(user_id) + "|<END>";
@@ -479,7 +553,7 @@ void handleStudentMenu() {
         logout();
         break;
     case 1:
-        handleViewAndBookTeacherSlots();
+        handleViewAllTeacher();
         handleStudentMenu();
         break;
     case 2:
@@ -497,7 +571,7 @@ void handleStudentMenu() {
     }
 }
 
-void handleUserMenu();
+
 void handleLogin() {
     LoginWidget* loginWidget = new LoginWidget();
     

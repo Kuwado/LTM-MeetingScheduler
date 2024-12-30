@@ -64,7 +64,9 @@ SOURCES       = src/client/Client1.cpp \
 		src/views/teacherviews/viewweeklymeetingsdialog.cpp \
 		src/views/userviews/loginwidget.cpp \
 		src/views/userviews/mainmenu.cpp \
-		src/views/userviews/registerwidget.cpp moc_timeslotdialog.cpp \
+		src/views/userviews/registerwidget.cpp \
+		src/views/teacherviews/TeacherMenuWidget.cpp \
+		src/views/studentviews/ViewAllTeacherWidget.cpp moc_timeslotdialog.cpp \
 		moc_viewtimeslotsdialog.cpp \
 		moc_update_timeslot_dialog.cpp \
 		moc_teacherviewmeetingsdialog.cpp \
@@ -75,7 +77,9 @@ SOURCES       = src/client/Client1.cpp \
 		moc_viewweeklymeetingsdialog.cpp \
 		moc_loginwidget.cpp \
 		moc_mainmenu.cpp \
-		moc_registerwidget.cpp
+		moc_registerwidget.cpp \
+		moc_TeacherMenuWidget.cpp \
+		moc_ViewAllTeacherWidget.cpp
 OBJECTS       = Client1.o \
 		timeslotdialog.o \
 		viewtimeslotsdialog.o \
@@ -89,6 +93,8 @@ OBJECTS       = Client1.o \
 		loginwidget.o \
 		mainmenu.o \
 		registerwidget.o \
+		TeacherMenuWidget.o \
+		ViewAllTeacherWidget.o \
 		moc_timeslotdialog.o \
 		moc_viewtimeslotsdialog.o \
 		moc_update_timeslot_dialog.o \
@@ -100,7 +106,9 @@ OBJECTS       = Client1.o \
 		moc_viewweeklymeetingsdialog.o \
 		moc_loginwidget.o \
 		moc_mainmenu.o \
-		moc_registerwidget.o
+		moc_registerwidget.o \
+		moc_TeacherMenuWidget.o \
+		moc_ViewAllTeacherWidget.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -187,7 +195,9 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		src/views/teacherviews/viewweeklymeetingsdialog.h \
 		src/views/userviews/loginwidget.h \
 		src/views/userviews/mainmenu.h \
-		src/views/userviews/registerwidget.h src/client/Client1.cpp \
+		src/views/userviews/registerwidget.h \
+		src/views/teacherviews/TeacherMenuWidget.h \
+		src/views/studentviews/ViewAllTeacherWidget.h src/client/Client1.cpp \
 		src/views/teacherviews/timeslotdialog.cpp \
 		src/views/teacherviews/viewtimeslotsdialog.cpp \
 		src/views/teacherviews/update_timeslot_dialog.cpp \
@@ -199,7 +209,9 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		src/views/teacherviews/viewweeklymeetingsdialog.cpp \
 		src/views/userviews/loginwidget.cpp \
 		src/views/userviews/mainmenu.cpp \
-		src/views/userviews/registerwidget.cpp
+		src/views/userviews/registerwidget.cpp \
+		src/views/teacherviews/TeacherMenuWidget.cpp \
+		src/views/studentviews/ViewAllTeacherWidget.cpp
 QMAKE_TARGET  = client1
 DESTDIR       = 
 TARGET        = client1
@@ -208,7 +220,7 @@ TARGET        = client1
 first: all
 ####### Build rules
 
-client1: ui_timeslotdialog.h ui_viewtimeslotsdialog.h ui_update_timeslot_dialog.h ui_teacherviewmeetingsdialog.h ui_meetingdetaildialog.h ui_meetinghistorydialog.h ui_viewmeetinghistorydialog.h ui_viewweeklymeetingsdialog.h ui_loginwidget.h ui_mainmenu.h ui_registerwidget.h $(OBJECTS)  
+client1: ui_timeslotdialog.h ui_viewtimeslotsdialog.h ui_update_timeslot_dialog.h ui_teacherviewmeetingsdialog.h ui_meetingdetaildialog.h ui_meetinghistorydialog.h ui_viewmeetinghistorydialog.h ui_viewweeklymeetingsdialog.h ui_loginwidget.h ui_mainmenu.h ui_registerwidget.h ui_TeacherMenuWidget.h ui_ViewAllTeacherWidget.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: LTM-MeetingScheduler.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -379,9 +391,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents src/views/teacherviews/timeslotdialog.h src/views/teacherviews/viewtimeslotsdialog.h src/views/teacherviews/update_timeslot_dialog.h src/views/teacherviews/teacherviewmeetingsdialog.h src/views/teacherviews/meetingdetaildialog.h src/views/teacherviews/meetingcalendarwidget.h src/views/teacherviews/meetinghistorydialog.h src/views/teacherviews/viewmeetinghistorydialog.h src/views/teacherviews/viewweeklymeetingsdialog.h src/views/userviews/loginwidget.h src/views/userviews/mainmenu.h src/views/userviews/registerwidget.h $(DISTDIR)/
-	$(COPY_FILE) --parents src/client/Client1.cpp src/views/teacherviews/timeslotdialog.cpp src/views/teacherviews/viewtimeslotsdialog.cpp src/views/teacherviews/update_timeslot_dialog.cpp src/views/teacherviews/teacherviewmeetingsdialog.cpp src/views/teacherviews/meetingdetaildialog.cpp src/views/teacherviews/meetingcalendarwidget.cpp src/views/teacherviews/meetinghistorydialog.cpp src/views/teacherviews/viewmeetinghistorydialog.cpp src/views/teacherviews/viewweeklymeetingsdialog.cpp src/views/userviews/loginwidget.cpp src/views/userviews/mainmenu.cpp src/views/userviews/registerwidget.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents src/views/teacherviews/timeslotdialog.ui src/views/teacherviews/viewtimeslotsdialog.ui src/views/teacherviews/update_timeslot_dialog.ui src/views/teacherviews/teacherviewmeetingsdialog.ui src/views/teacherviews/meetingdetaildialog.ui src/views/teacherviews/meetinghistorydialog.ui src/views/teacherviews/viewmeetinghistorydialog.ui src/views/teacherviews/viewweeklymeetingsdialog.ui src/views/userviews/loginwidget.ui src/views/userviews/mainmenu.ui src/views/userviews/registerwidget.ui $(DISTDIR)/
+	$(COPY_FILE) --parents src/views/teacherviews/timeslotdialog.h src/views/teacherviews/viewtimeslotsdialog.h src/views/teacherviews/update_timeslot_dialog.h src/views/teacherviews/teacherviewmeetingsdialog.h src/views/teacherviews/meetingdetaildialog.h src/views/teacherviews/meetingcalendarwidget.h src/views/teacherviews/meetinghistorydialog.h src/views/teacherviews/viewmeetinghistorydialog.h src/views/teacherviews/viewweeklymeetingsdialog.h src/views/userviews/loginwidget.h src/views/userviews/mainmenu.h src/views/userviews/registerwidget.h src/views/teacherviews/TeacherMenuWidget.h src/views/studentviews/ViewAllTeacherWidget.h $(DISTDIR)/
+	$(COPY_FILE) --parents src/client/Client1.cpp src/views/teacherviews/timeslotdialog.cpp src/views/teacherviews/viewtimeslotsdialog.cpp src/views/teacherviews/update_timeslot_dialog.cpp src/views/teacherviews/teacherviewmeetingsdialog.cpp src/views/teacherviews/meetingdetaildialog.cpp src/views/teacherviews/meetingcalendarwidget.cpp src/views/teacherviews/meetinghistorydialog.cpp src/views/teacherviews/viewmeetinghistorydialog.cpp src/views/teacherviews/viewweeklymeetingsdialog.cpp src/views/userviews/loginwidget.cpp src/views/userviews/mainmenu.cpp src/views/userviews/registerwidget.cpp src/views/teacherviews/TeacherMenuWidget.cpp src/views/studentviews/ViewAllTeacherWidget.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents src/views/teacherviews/timeslotdialog.ui src/views/teacherviews/viewtimeslotsdialog.ui src/views/teacherviews/update_timeslot_dialog.ui src/views/teacherviews/teacherviewmeetingsdialog.ui src/views/teacherviews/meetingdetaildialog.ui src/views/teacherviews/meetinghistorydialog.ui src/views/teacherviews/viewmeetinghistorydialog.ui src/views/teacherviews/viewweeklymeetingsdialog.ui src/views/userviews/loginwidget.ui src/views/userviews/mainmenu.ui src/views/userviews/registerwidget.ui src/views/teacherviews/TeacherMenuWidget.ui src/views/studentviews/ViewAllTeacherWidget.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -413,9 +425,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_timeslotdialog.cpp moc_viewtimeslotsdialog.cpp moc_update_timeslot_dialog.cpp moc_teacherviewmeetingsdialog.cpp moc_meetingdetaildialog.cpp moc_meetingcalendarwidget.cpp moc_meetinghistorydialog.cpp moc_viewmeetinghistorydialog.cpp moc_viewweeklymeetingsdialog.cpp moc_loginwidget.cpp moc_mainmenu.cpp moc_registerwidget.cpp
+compiler_moc_header_make_all: moc_timeslotdialog.cpp moc_viewtimeslotsdialog.cpp moc_update_timeslot_dialog.cpp moc_teacherviewmeetingsdialog.cpp moc_meetingdetaildialog.cpp moc_meetingcalendarwidget.cpp moc_meetinghistorydialog.cpp moc_viewmeetinghistorydialog.cpp moc_viewweeklymeetingsdialog.cpp moc_loginwidget.cpp moc_mainmenu.cpp moc_registerwidget.cpp moc_TeacherMenuWidget.cpp moc_ViewAllTeacherWidget.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_timeslotdialog.cpp moc_viewtimeslotsdialog.cpp moc_update_timeslot_dialog.cpp moc_teacherviewmeetingsdialog.cpp moc_meetingdetaildialog.cpp moc_meetingcalendarwidget.cpp moc_meetinghistorydialog.cpp moc_viewmeetinghistorydialog.cpp moc_viewweeklymeetingsdialog.cpp moc_loginwidget.cpp moc_mainmenu.cpp moc_registerwidget.cpp
+	-$(DEL_FILE) moc_timeslotdialog.cpp moc_viewtimeslotsdialog.cpp moc_update_timeslot_dialog.cpp moc_teacherviewmeetingsdialog.cpp moc_meetingdetaildialog.cpp moc_meetingcalendarwidget.cpp moc_meetinghistorydialog.cpp moc_viewmeetinghistorydialog.cpp moc_viewweeklymeetingsdialog.cpp moc_loginwidget.cpp moc_mainmenu.cpp moc_registerwidget.cpp moc_TeacherMenuWidget.cpp moc_ViewAllTeacherWidget.cpp
 moc_timeslotdialog.cpp: src/views/teacherviews/timeslotdialog.h \
 		src/models/Timeslot.h \
 		moc_predefs.h \
@@ -488,13 +500,24 @@ moc_registerwidget.cpp: src/views/userviews/registerwidget.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/dinhnam/Desktop/LTM-MeetingScheduler/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/dinhnam/Desktop/LTM-MeetingScheduler -I/home/dinhnam/Desktop/LTM-MeetingScheduler/src -I/home/dinhnam/Desktop/LTM-MeetingScheduler/src/views -I/home/dinhnam/Desktop/LTM-MeetingScheduler/src/controllers -I/home/dinhnam/Desktop/LTM-MeetingScheduler/src/utils -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include src/views/userviews/registerwidget.h -o moc_registerwidget.cpp
 
+moc_TeacherMenuWidget.cpp: src/views/teacherviews/TeacherMenuWidget.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/dinhnam/Desktop/LTM-MeetingScheduler/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/dinhnam/Desktop/LTM-MeetingScheduler -I/home/dinhnam/Desktop/LTM-MeetingScheduler/src -I/home/dinhnam/Desktop/LTM-MeetingScheduler/src/views -I/home/dinhnam/Desktop/LTM-MeetingScheduler/src/controllers -I/home/dinhnam/Desktop/LTM-MeetingScheduler/src/utils -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include src/views/teacherviews/TeacherMenuWidget.h -o moc_TeacherMenuWidget.cpp
+
+moc_ViewAllTeacherWidget.cpp: src/views/studentviews/ViewAllTeacherWidget.h \
+		src/models/User.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/dinhnam/Desktop/LTM-MeetingScheduler/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/dinhnam/Desktop/LTM-MeetingScheduler -I/home/dinhnam/Desktop/LTM-MeetingScheduler/src -I/home/dinhnam/Desktop/LTM-MeetingScheduler/src/views -I/home/dinhnam/Desktop/LTM-MeetingScheduler/src/controllers -I/home/dinhnam/Desktop/LTM-MeetingScheduler/src/utils -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include src/views/studentviews/ViewAllTeacherWidget.h -o moc_ViewAllTeacherWidget.cpp
+
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_timeslotdialog.h ui_viewtimeslotsdialog.h ui_update_timeslot_dialog.h ui_teacherviewmeetingsdialog.h ui_meetingdetaildialog.h ui_meetinghistorydialog.h ui_viewmeetinghistorydialog.h ui_viewweeklymeetingsdialog.h ui_loginwidget.h ui_mainmenu.h ui_registerwidget.h
+compiler_uic_make_all: ui_timeslotdialog.h ui_viewtimeslotsdialog.h ui_update_timeslot_dialog.h ui_teacherviewmeetingsdialog.h ui_meetingdetaildialog.h ui_meetinghistorydialog.h ui_viewmeetinghistorydialog.h ui_viewweeklymeetingsdialog.h ui_loginwidget.h ui_mainmenu.h ui_registerwidget.h ui_TeacherMenuWidget.h ui_ViewAllTeacherWidget.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_timeslotdialog.h ui_viewtimeslotsdialog.h ui_update_timeslot_dialog.h ui_teacherviewmeetingsdialog.h ui_meetingdetaildialog.h ui_meetinghistorydialog.h ui_viewmeetinghistorydialog.h ui_viewweeklymeetingsdialog.h ui_loginwidget.h ui_mainmenu.h ui_registerwidget.h
+	-$(DEL_FILE) ui_timeslotdialog.h ui_viewtimeslotsdialog.h ui_update_timeslot_dialog.h ui_teacherviewmeetingsdialog.h ui_meetingdetaildialog.h ui_meetinghistorydialog.h ui_viewmeetinghistorydialog.h ui_viewweeklymeetingsdialog.h ui_loginwidget.h ui_mainmenu.h ui_registerwidget.h ui_TeacherMenuWidget.h ui_ViewAllTeacherWidget.h
 ui_timeslotdialog.h: src/views/teacherviews/timeslotdialog.ui \
 		/usr/lib/qt5/bin/uic
 	/usr/lib/qt5/bin/uic src/views/teacherviews/timeslotdialog.ui -o ui_timeslotdialog.h
@@ -539,6 +562,14 @@ ui_registerwidget.h: src/views/userviews/registerwidget.ui \
 		/usr/lib/qt5/bin/uic
 	/usr/lib/qt5/bin/uic src/views/userviews/registerwidget.ui -o ui_registerwidget.h
 
+ui_TeacherMenuWidget.h: src/views/teacherviews/TeacherMenuWidget.ui \
+		/usr/lib/qt5/bin/uic
+	/usr/lib/qt5/bin/uic src/views/teacherviews/TeacherMenuWidget.ui -o ui_TeacherMenuWidget.h
+
+ui_ViewAllTeacherWidget.h: src/views/studentviews/ViewAllTeacherWidget.ui \
+		/usr/lib/qt5/bin/uic
+	/usr/lib/qt5/bin/uic src/views/studentviews/ViewAllTeacherWidget.ui -o ui_ViewAllTeacherWidget.h
+
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
 compiler_yacc_impl_make_all:
@@ -562,7 +593,6 @@ Client1.o: src/client/Client1.cpp src/controllers/ClientController.h \
 		src/models/Meeting.h \
 		src/repository/MeetingRepository.h \
 		src/models/Attendance.h \
-		src/repository/AttendanceRepository.h \
 		src/controllers/TeacherController.h \
 		src/controllers/ResponseController.h \
 		src/controllers/UserController.h \
@@ -577,11 +607,13 @@ Client1.o: src/client/Client1.cpp src/controllers/ClientController.h \
 		src/views/teacherviews/teacherviewmeetingsdialog.h \
 		src/views/teacherviews/meetingdetaildialog.h \
 		src/views/teacherviews/meetinghistorydialog.h \
+		src/views/teacherviews/TeacherMenuWidget.h \
 		src/views/teacherviews/viewmeetinghistorydialog.h \
 		src/views/teacherviews/viewweeklymeetingsdialog.h \
 		src/views/userviews/loginwidget.h \
 		src/views/userviews/mainmenu.h \
-		src/views/userviews/registerwidget.h
+		src/views/userviews/registerwidget.h \
+		src/views/studentviews/ViewAllTeacherWidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Client1.o src/client/Client1.cpp
 
 timeslotdialog.o: src/views/teacherviews/timeslotdialog.cpp src/views/teacherviews/timeslotdialog.h \
@@ -643,6 +675,15 @@ registerwidget.o: src/views/userviews/registerwidget.cpp src/views/userviews/reg
 		ui_registerwidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o registerwidget.o src/views/userviews/registerwidget.cpp
 
+TeacherMenuWidget.o: src/views/teacherviews/TeacherMenuWidget.cpp src/views/teacherviews/TeacherMenuWidget.h \
+		ui_TeacherMenuWidget.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o TeacherMenuWidget.o src/views/teacherviews/TeacherMenuWidget.cpp
+
+ViewAllTeacherWidget.o: src/views/studentviews/ViewAllTeacherWidget.cpp src/views/studentviews/ViewAllTeacherWidget.h \
+		src/models/User.h \
+		ui_ViewAllTeacherWidget.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ViewAllTeacherWidget.o src/views/studentviews/ViewAllTeacherWidget.cpp
+
 moc_timeslotdialog.o: moc_timeslotdialog.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_timeslotdialog.o moc_timeslotdialog.cpp
 
@@ -678,6 +719,12 @@ moc_mainmenu.o: moc_mainmenu.cpp
 
 moc_registerwidget.o: moc_registerwidget.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_registerwidget.o moc_registerwidget.cpp
+
+moc_TeacherMenuWidget.o: moc_TeacherMenuWidget.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_TeacherMenuWidget.o moc_TeacherMenuWidget.cpp
+
+moc_ViewAllTeacherWidget.o: moc_ViewAllTeacherWidget.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_ViewAllTeacherWidget.o moc_ViewAllTeacherWidget.cpp
 
 ####### Install
 

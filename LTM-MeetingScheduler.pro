@@ -17,6 +17,8 @@ SOURCES += \
     src/views/userviews/loginwidget.cpp \
     src/views/userviews/mainmenu.cpp \
     src/views/userviews/registerwidget.cpp \
+    src/views/teacherviews/TeacherMenuWidget.cpp \
+    src/views/studentviews/ViewAllTeacherWidget.cpp \
     # Thêm các file .cpp khác
 
 HEADERS += \
@@ -32,6 +34,8 @@ HEADERS += \
     src/views/userviews/loginwidget.h \
     src/views/userviews/mainmenu.h \
     src/views/userviews/registerwidget.h \
+    src/views/teacherviews/TeacherMenuWidget.h \
+    src/views/studentviews/ViewAllTeacherWidget.h \
     # Thêm các file .h khác
 
 FORMS += \
@@ -46,6 +50,8 @@ FORMS += \
     src/views/userviews/loginwidget.ui \
     src/views/userviews/mainmenu.ui \
     src/views/userviews/registerwidget.ui \
+    src/views/teacherviews/TeacherMenuWidget.ui \
+    src/views/studentviews/ViewAllTeacherWidget.ui \
 
 
 INCLUDEPATH += \
