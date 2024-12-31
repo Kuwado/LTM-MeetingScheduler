@@ -474,7 +474,7 @@ void handleStudentMenu() {
         break;
     case 2:
         handleStudentViewMeetings();
-        handleTeacherMenu();
+        handleStudentMenu();
         break;
 
     default:
